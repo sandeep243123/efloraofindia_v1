@@ -24,7 +24,7 @@ export default function Navbar() {
             <a href='#' target="_blank">Explore</a>
             <a href='#' target="_blank">About us</a>
             <a href='#' target="_blank">Contact us</a>
-            <a href='#' target="_blank">Login</a>
+            <Link to={'/login'}>Login</Link>
           </div>
       </div>
     </div>
