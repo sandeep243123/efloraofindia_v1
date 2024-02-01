@@ -1,13 +1,11 @@
 import React from 'react';
 import '../login/login.css';
+import img from '../assets/glogo.png'
+import { colors } from '@mui/material';
 export default function Login() {
     return (
         <div className='d'>
             <div className='parent'>
-                <div className='title'>
-                    <h1 style={{ color: 'white' }}>Welcome back to </h1>
-                    <h1 style={{ color: '#06FF96' }}>eFloraOfIndia</h1>
-                </div>
                 <div className="content">
                     <div className='log'>
                         <h1>Login</h1>
@@ -18,28 +16,30 @@ export default function Login() {
                     </div>
                     <div className='chk'>
                         <div>
-
                             <input type="checkbox" id='remeber' />
-                            <label htmlFor="remeber">Remeber me</label>
+                            <label htmlFor="remeber" style={{marginLeft:'3px'}}>Remeber me</label>
                         </div>
-                        <p>Forget password</p>
+                        <p>Forget password?</p>
                     </div>
                     <div className='tc'>
-                        <div>
+                        <div style={{marginRight:'5px',fontSize:'0.7em',marginTop:'4px', color:'#54AEFF'}}>
                             <p>Terms & Conditions</p>
-
                         </div>
                         <div>
-                            <input type="checkbox" id='accept' />
+                            <input type="checkbox" id='accept' style={{marginRight:'4px'}}/>
                             <label htmlFor="accept" >I accept this</label>
                         </div>
                     </div>
-                    <div className='btn'>
-                        <button>Login</button>
-                        <button>Continue with google</button>
+                    <div className='btn1'>
+                        <p>Login</p>
+                    </div>
+                    <div className='btn2'>
+                        <img src={img} alt="" />
+                        <p>Continue with Login</p>
                     </div>
                     <div className='start'>
-                        <p>Dont have an account? Get started</p>
+                        <p>Don't have an account?</p>
+                        <div>Get started</div>
                     </div>
                 </div>
             </div>
