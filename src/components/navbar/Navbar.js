@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 import './style.css';
+import img1 from './logo-removebg-preview.png'
 
 export default function Navbar() {
   return (
@@ -9,7 +10,7 @@ export default function Navbar() {
         <input type="checkbox" id="nav-check"/>
           <div class="nav-header">
             <div class="nav-title">
-              JoGeek
+             <Link to='/'><img src={img1} alt="" /></Link> 
             </div>
           </div>
           <div class="nav-btn">
@@ -25,6 +26,7 @@ export default function Navbar() {
             <a href='#' target="_blank">About us</a>
             <a href='#' target="_blank">Contact us</a>
             <Link to={'/login'}>Login</Link>
+            <Link to={'/signup'}>Signup</Link>
           </div>
       </div>
     </div>
