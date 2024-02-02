@@ -168,3 +168,9 @@
         margin-top:10%
     }
 }
+@media (max-width:430px){
+    .parent1{
+        margin-top: 10%;
+        height: 62vh;
+    }
+}

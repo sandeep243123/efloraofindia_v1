@@ -23,8 +23,8 @@ export default function Navbar() {
 
           <div class="nav-links">
             <a href='#' target="_blank">Explore</a>
-            <a href='#' target="_blank">About us</a>
-            <a href='#' target="_blank">Contact us</a>
+            <Link to={'/about'}>About us</Link>
+            <Link to={'/contact'}>Contact us</Link>
             <Link to={'/login'}>Login</Link>
             <Link to={'/signup'}>Signup</Link>
           </div>

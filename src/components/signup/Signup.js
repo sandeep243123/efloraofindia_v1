@@ -1,5 +1,6 @@
 import React from 'react'
 import '../signup/signup.css'
+import { Link } from 'react-router-dom'
 export default function Signup() {
   return (
     <div className='d1'>
@@ -38,7 +39,7 @@ export default function Signup() {
                             <label htmlFor="accept" >I accept this</label>
                         </div>
                         <div>
-                            <p>Terms & Conditions</p>
+                            <Link to={'/terms'}><p>Terms & Conditions</p></Link>
                         </div>
                     </div>
                     <div className='start1'>

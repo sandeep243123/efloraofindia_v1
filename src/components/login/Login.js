@@ -1,7 +1,7 @@
 import React from 'react';
 import '../login/login.css';
 import img from '../assets/glogo.png'
-import { colors } from '@mui/material';
+import { Link } from 'react-router-dom'
 export default function Login() {
     return (
         <div className='d'>
@@ -23,7 +23,7 @@ export default function Login() {
                     </div>
                     <div className='tc'>
                         <div style={{marginRight:'5px',fontSize:'0.7em',marginTop:'4px', color:'#54AEFF'}}>
-                            <p>Terms & Conditions</p>
+                        <Link to={'/terms'}><p>Terms & Conditions</p></Link>
                         </div>
                         <div>
                             <input type="checkbox" id='accept' style={{marginRight:'4px'}}/>
@@ -39,7 +39,7 @@ export default function Login() {
                     </div>
                     <div className='start'>
                         <p>Don't have an account?</p>
-                        <div>Get started</div>
+                        <Link to={'/signup'}><div>Get started</div></Link>
                     </div>
                 </div>
             </div>

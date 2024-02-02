@@ -45,8 +45,7 @@
     flex-direction: column;
 }
 
-input[type="input"],
-input[type="password"] {
+.ifield input{
     width: 32vw;
     height: 7vh;
     padding: 10px;
