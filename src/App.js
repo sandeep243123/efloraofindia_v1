@@ -7,7 +7,9 @@ import Contribute from './components/contribute/Contribute.js'
 import Terms from './components/terms & condition/term.js'
 import About from './components/about us/about.js'
 import Contact from './components/contact us/contact.js'
-import {Routes, Route } from 'react-router-dom';
+import Explore from './components/explore/Explore.js';
+import ShowPost from './components/showPosts/ShowPosts.js';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path='/terms' element={<Terms></Terms>}></Route>
         <Route path='/about' element={<About></About>}></Route>
         <Route path='/contact' element={<Contact></Contact>}></Route>
+        <Route path='/explore' element={<Explore></Explore>}></Route>
+        <Route path='/showposts' element={<ShowPost></ShowPost>}></Route>
       </Routes>
 
     </div>

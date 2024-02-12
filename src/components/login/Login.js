@@ -12,7 +12,7 @@ export default function Login() {
                     </div>
                     <div className='ifield'>
                         <input type="input" placeholder='Email' />
-                        <input type="password" placeholder='password' />
+                        <input id='input2' type="password" placeholder='password' />
                     </div>
                     <div className='chk'>
                         <div>
@@ -22,13 +22,14 @@ export default function Login() {
                         <p>Forget password?</p>
                     </div>
                     <div className='tc'>
-                        <div style={{marginRight:'5px',fontSize:'0.7em',marginTop:'4px', color:'#54AEFF'}}>
-                        <Link to={'/terms'}><p>Terms & Conditions</p></Link>
-                        </div>
                         <div>
                             <input type="checkbox" id='accept' style={{marginRight:'4px'}}/>
                             <label htmlFor="accept" >I accept this</label>
                         </div>
+                        <div style={{marginRight:'5px',fontSize:'1em',paddingLeft:'3px', color:'#54AEFF'}}>
+                        <Link to={'/terms'}><p>Terms & Conditions</p></Link>
+                        </div>
+                        
                     </div>
                     <div className='btn1'>
                         <p>Login</p>

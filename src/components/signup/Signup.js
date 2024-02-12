@@ -7,7 +7,7 @@ export default function Signup() {
         <div className='parent1'>
             <div className='registration-from1'>
                 <div className='title1'>
-                    <h1>Let's get you started</h1>
+                    <h1>Let's get you started!</h1>
                 </div>
                 <div className='input-form1'>
                     <div className='ifield1'>
@@ -53,7 +53,7 @@ export default function Signup() {
                     <p>eFloraOfIndia</p>
                 </div>
                 <div className='q'>
-                    <p>It has the largest database on net on Indian Flora with more than 14,000 species (along with more than 4,00,000 pictures)</p>
+                    <p>&nbsp;It has the largest database on net on Indian Flora with more than 14,000 species (along with more than 4,00,000 pictures)&nbsp;</p>
                 </div>
             </div>
         </div>
