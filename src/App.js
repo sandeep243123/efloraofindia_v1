@@ -12,6 +12,7 @@ import ShowPost from './components/showPosts/ShowPosts.js';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
+
   return (
     <div>
       <Navbar></Navbar>
