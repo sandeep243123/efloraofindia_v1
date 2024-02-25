@@ -3,7 +3,7 @@ import chImg from './check.png'
 import penImg from './expired.png'
 function List() {
     return (
-        <div className='max-h-96 overflow-y-scroll rounded-md'>
+        <div className='max-h-96 overflow-y-scroll rounded-md my-4'>
             <table className="w-full">
                 <thead>
                     <tr className="bg-gray-100 sticky top-0">

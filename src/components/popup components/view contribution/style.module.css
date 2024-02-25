@@ -1,0 +1,134 @@
+.modalWrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.modalContainer {
+    position: absolute;
+    margin-top: 3%;
+    /* margin-left: 15%; */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 100%;
+    /* padding: 0.5%; */
+    border-radius: 10px;
+
+}
+
+.topSection {
+    display: flex;
+    justify-content: space-between;
+    height: 8%;
+}
+
+.title {
+    color: #F41070;
+    font-weight: 900;
+    font-size: 2em;
+    height: 40px;
+    margin-left: 2%;
+    font-style: italic;
+}
+
+.btn {
+    height: 30px;
+    width: 30px;
+    margin-top: 4px;
+    font-size: 1.2em;
+    margin-right: 1%;
+}
+
+.bottomSection {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+
+.leftSection {
+    /* border-right: 1px solid rgb(195, 194, 194); */
+    width: 28%;
+}
+
+.liTitle {
+    font-size: 1.3em;
+    text-align: center;
+    margin-top: 8px;
+    color: gray;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.listContainer {
+    margin-top: 5%;
+    height: 480px;
+    overflow-y: scroll;
+}
+
+
+.rightSection {
+    width: 75%;
+    height: 100%;
+}
+
+.rightTitle {
+    font-size: 1.3em;
+    text-align: center;
+    margin-top: 8px;
+    color: gray;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.rightListContainer {
+    margin: 0 2%;
+    height: 83%;
+    overflow-x: auto;
+}
+
+.rightList {
+    background-color: rgb(228, 228, 228);
+    width: 97%;
+    height: 60px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px 1px rgb(180, 180, 180);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 1.4em;
+    margin-bottom: 2%;
+}
+
+.rightListT1 {
+    display: flex;
+    align-items: center;
+    width: 85%;
+}
+
+.rightListT1 img {
+    height: 30px;
+    width: 30px;
+    margin-right: 2%;
+}
+
+.rightListT2 {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 15%;
+}
+
+.rightListT2 img {
+    height: 30px;
+    width: 30px;
+    margin-right: 2%;
+}

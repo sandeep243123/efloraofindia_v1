@@ -9,10 +9,11 @@ import About from './components/about us/about.js'
 import Contact from './components/contact us/contact.js'
 import Explore from './components/explore/Explore.js';
 import ShowPost from './components/showPosts/ShowPosts.js';
+import UploadImg from './components/upload photo/UploadImg.js';
 import { Routes, Route } from 'react-router-dom';
+import Next from './components/uploadNext/Next.js';
 
 function App() {
-
   return (
     <div>
       <Navbar></Navbar>
@@ -26,6 +27,9 @@ function App() {
         <Route path='/contact' element={<Contact></Contact>}></Route>
         <Route path='/explore' element={<Explore></Explore>}></Route>
         <Route path='/showposts' element={<ShowPost></ShowPost>}></Route>
+        <Route path='/upload' element={<UploadImg></UploadImg>}></Route>
+        <Route path='/next' element={<Next></Next>}></Route>
+        {/* <Route path='/viewcontribution' element={<ViewContribute></ViewContribute>}></Route> */}
       </Routes>
 
     </div>

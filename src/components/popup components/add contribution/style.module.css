@@ -36,7 +36,13 @@
 }
 
 .title {
-    color: #F41070;
+    color: #f1f1f1;
     font-size: 1.7rem;
     font-weight: 800;
+}
+
+@media (max-width:960px) {
+    .modalContainer {
+        width: 95%;
+    }
 }

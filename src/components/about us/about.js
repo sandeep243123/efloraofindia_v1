@@ -1,23 +1,42 @@
-import React from 'react'
-import '../about us/about.css';
-export default function about() {
+import React from "react";
+import "../about us/about.css";
+export default function About() {
     return (
-        <div className='d'>
-            <div className='parent2'>
-                <h1 className='t'>Our story</h1>
-                <div className='story'>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed, nulla consequuntur. Quia ipsa eos molestias suscipit veniam voluptatem tempora odio reiciendis harum quisquam deleniti ducimus animi, rerum, voluptates dignissimos sunt debitis repellendus, a autem. Exercitationem, vitae doloremque? Odio aut cumque, consequatur vitae tempora repellat laboriosam architecto nesciunt nihil deserunt iste doloremque officia at amet neque ipsam alias? Architecto quaerat sint, soluta ratione officiis voluptatibus molestias perferendis quibusdam recusandae a! Incidunt deleniti voluptatem, quis maxime quae magnam quisquam, dolore eligendi consequuntur alias vero! Tenetur, beatae accusamus recusandae facere maiores, incidunt quasi reiciendis, nobis explicabo minima sequi qui unde eaque aut laborum!</p>
+        <div className="d">
+            <div className="parent2">
+                <div className="sidebar" style={{ width: '2000px' }}>
+                    <a href="../about us/about.js">About Us</a><br /><hr />
+                    <a href="../outstanding/outstanding.js">Outstanding Contributors</a><br /><hr />
+                    <a href="../pillars/pillars.js">The Pillars</a><br /><hr />
+                    <a href="../experts/experts.js">Subject/ Area Experts</a><br /><hr />
+                    <a href="../moderators/moderators.js">Moderators</a><br /><hr />
+                    <a href="../contributors/contributors.js">Major contributors</a><br /><hr />
+                    <a href="../top_contributors/top_contributors.js">Top 10 contributors over the years</a><br /><hr />
+                    <a href="../important_contributors/important_contributors.js">Details of some important contributors</a>
                 </div>
-                <div className='section'>
-                    <div className='s1'>
-                        <h1>Outstanding Contributors</h1>
-                        <div>
-                            <p>Outstanding Contributors: . Name (Main area of expertise on Flora of India) Sh. J.M. Garg (efloraofindia website) Sh. Saroj Kumar Kasaju (Flora Documentation of Nepal) Dr. Gurcharan Singh  (Western Himalayas) Dr Pankaj Kumar (Orchidaceae) Sh. Dinesh Valke (Compilation of names in Indian languages & Flora Documentation) Dr. Nidhan Singh (Western Himalayas) Dr. Manoj Chandran (Poaceae) Dr. D. S. Rawat (Western Himalayas)</p>
-                        </div>
-                    </div>
+
+                <div className="story">
+                    <h1 className="t">About Us</h1>
+                    <p>
+                        eFloraofIndia (eFI in short and eFlora of India in expanded form)
+                        website is one of the biggest non-commercial site, one of its kind
+                        in the world & also without advertisements, based on the collection
+                        of photographic images of plants, where no money or professional
+                        organisation is involved except for the selfless efforts of its
+                        members (and experts from all over the world) from diverse
+                        backgrounds. It is documenting flora of Indian Subcontinent that is
+                        being discussed on eFloraofIndia google e-group along with
+                        supplementing the working of the group. It also has the largest
+                        database on net on Indian Flora with more than 14,000 species (along
+                        with more than 4,00,000 pictures, from some of the best Flora
+                        Photographers, at its eFloraofIndia e-group). It also includes some
+                        species from around the world, which has been posted by our members.
+                        More than 3,00,000 images have already been displayed at species’
+                        pages along with displaying these at genera & family pages for
+                        comparative purposes for easy identification.
+                    </p>
                 </div>
-                
             </div>
         </div>
-    )
+    );
 }
