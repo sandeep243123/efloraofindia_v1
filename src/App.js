@@ -12,8 +12,11 @@ import ShowPost from './components/showPosts/ShowPosts.js';
 import UploadImg from './components/upload img/UploadImg.js';
 import { Routes, Route } from 'react-router-dom';
 import Next from './components/uploadNext/Next.js';
+import { useState } from 'react';
 
 function App() {
+  const [data, setData] = useState("Initial data")
+
   return (
     <div>
       <Navbar></Navbar>
@@ -27,12 +30,12 @@ function App() {
         <Route path='/contact' element={<Contact></Contact>}></Route>
         <Route path='/explore' element={<Explore></Explore>}></Route>
         <Route path='/showposts' element={<ShowPost></ShowPost>}></Route>
-        <Route path='/upload' element={<UploadImg></UploadImg>}></Route>
-        <Route path='/next' element={<Next></Next>}></Route>
-        {/* <Route path='/viewcontribution' element={<ViewContribute></ViewContribute>}></Route> */}
-      </Routes>
+        <Route path='/upload' element={<UploadImg data={data} setData={setData}></UploadImg>}></Route>
+        <Route path='/next' element={<Next data={data}></Next>}></Route>
 
-    </div>
+      </Routes >
+
+    </div >
   );
 }
 

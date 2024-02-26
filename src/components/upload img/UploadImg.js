@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react'
 import styles from './style.module.css'
 import img from '../assets/img1.png'
 import { Link } from 'react-router-dom'
-export default function UploadImg() {
+import Next from '../uploadNext/Next'
+export default function UploadImg(props) {
     const [images, setImages] = useState([])
     const [isDragging, setIsDragging] = useState(false)
     const fileInputRef = useRef(null)
@@ -26,6 +27,17 @@ export default function UploadImg() {
             }
         }
     }
+    function onDrop(event) {
+        event.preventDefault();
+        setIsDragging(false);
+        const files = event.dataTransfer.files
+        const x = []
+        for (let i = 0; i < files.length; i++) {
+            x.push({ name: files[i].name, url: URL.createObjectURL(files[i]) })
+
+        }
+        setImages(x)
+    }
     function deleteImage(index) {
         setImages((prevImages) =>
             prevImages.filter((_, i) => i !== index)
@@ -41,17 +53,7 @@ export default function UploadImg() {
         event.preventDefault();
         setIsDragging(false);
     }
-    function onDrop(event) {
-        event.preventDefault();
-        setIsDragging(false);
-        const files = event.dataTransfer.files
-        const x = []
 
-        for (let i = 0; i < files.length; i++)
-            x.push({ name: files[i].name, url: URL.createObjectURL(files[i]) })
-
-        setImages(x)
-    }
     return (
         <div className={styles.parent}>
             <div className={styles.container}>
@@ -108,7 +110,7 @@ export default function UploadImg() {
 
                     <div className={styles.btnContainer}>
                         <div className={styles.btn1}>Previous</div>
-                        <Link to={'/next'}><div className={styles.btn2}>Next</div></Link>
+                        <Link to={'/next'}><div className={styles.btn2} onClick={() => props.setData(images)}>Next</div></Link>
                     </div>
                 </div>
             </div>
