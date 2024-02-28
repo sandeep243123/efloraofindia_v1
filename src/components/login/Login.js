@@ -61,11 +61,11 @@ export default function Login() {
                         <input type="input" placeholder='Email' value={inputemail}
                             onChange={(e) => {
                                 setEmail(e.target.value.toLowerCase());
-                            }} />
+                            }} required />
                         <input id='input2' type="password" placeholder='password'
                             onChange={(e) => {
                                 setPassword(e.target.value.toLowerCase());
-                            }} />
+                            }} required />
                     </div>
                     <div className='chk'>
                         <div>
@@ -77,7 +77,7 @@ export default function Login() {
                     <div className='tc'>
                         <div>
                             <input type="checkbox" id='accept' style={{ marginRight: '4px' }} />
-                            <label htmlFor="accept" >I accept this</label>
+                            <label htmlFor="accept" required>I accept this</label>
                         </div>
                         <div style={{ marginRight: '5px', fontSize: '1em', paddingLeft: '3px', color: '#54AEFF' }}>
                             <Link to={'/terms'}><p>Terms & Conditions</p></Link>

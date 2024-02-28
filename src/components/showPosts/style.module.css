@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.parent1 {
+    height: 92vh;
+    width: 99%;
+    margin: 0.5%;
+    background-color: #ffffff70;
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+}
+
+.listContainer {
+
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    margin: 0 5%;
+    max-height: 88vh;
+    padding-top: 10px;
+    padding-bottom: 40px;
+}
+
+.listContainer ::-webkit-scrollbar {
+    display: none;
+}
+
+.listContainer {
+    scrollbar-width: none;
+    -ms-overflow-style: none
+}
+
+.listOptions {
+    display: flex;
+    margin-bottom: 2%;
+}
+
+.search {
+    margin-left: 2%;
+    border-radius: 20px;
+    width: 25%;
+    height: 4vh;
+    background-color: #444444;
+    padding: 0 20px;
+    color: white;
+    border: none;
+}
+
+.search::placeholder {
+    font-weight: 700;
+    font-size: 1.1em;
+    color: wheat;
+}
+
+.filterContainer {
+    margin-left: 5%;
+    border-radius: 20px;
+    width: 25vw;
+    height: 4vh;
+    background-color: #444444;
+    padding: 0 20px;
+    align-items: center;
+    border: none;
+    display: flex;
+    font-weight: 700;
+    font-size: 1.1em;
+    color: wheat;
+
+}
+
+.filterContainer p {
+    width: 20vw;
+}
+
+select {
+    background-color: #444444;
+}
+
+option {
+    background-color: white;
+    color: black;
+}
+
+.listItem {
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin: 1%;
+    cursor: pointer;
+    font-size: 1.3em;
+}
+
+.listItem:hover {
+    background-color: rgb(255, 179, 64);
+    color: white;
+    transition: 0.5s;
+    font-size: 1.4em;
+    border: 10px;
+    box-shadow: 3px 3px 8px 1px rgb(0, 0, 0);
+}
+
+.itemContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center */
+}
+
+.itemTitle {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.itemDesc {
+    font-size: 0.8em;
+}
+
+.listImage {
+    height: 120px;
+    width: 120px;
+    margin-right: 3%;
+    border-radius: 10px 0 0px 10px;
+}
+
+@media (max-width:1200px) {
+    .search {
+        width: 35vw;
+    }
+
+    .filterContainer {
+        width: 35vw;
+
+    }
+}
+
+@media (max-width:880px) {
+    .search {
+        width: 40vw;
+    }
+
+    .filterContainer {
+        width: 40vw;
+
+    }
+}
+
+@media (max-width:750px) {
+    .search {
+        width: 35vw;
+    }
+
+    .filterContainer {
+        width: 45vw;
+
+    }
+}

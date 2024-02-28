@@ -39,6 +39,7 @@ export default function Navbar() {
 
           <Link to={'/contact'}><img src={logoutImg} className="icon-img" alt=""></img>Sign out</Link>
           <Link to={'/upload'}>Upload</Link>
+          <Link to={'/showposts'}>Show Posts</Link>
         </div>
       </div>
     </div>

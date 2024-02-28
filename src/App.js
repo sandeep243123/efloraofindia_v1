@@ -12,7 +12,7 @@ import ShowPost from './components/showPosts/ShowPosts.js';
 import UploadImg from './components/upload img/UploadImg.js';
 import { Routes, Route } from 'react-router-dom';
 import Next from './components/uploadNext/Next.js';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function App() {
   const [data, setData] = useState([]);
@@ -32,7 +32,6 @@ function App() {
         <Route path='/showposts' element={<ShowPost></ShowPost>}></Route>
         <Route path='/upload' element={<UploadImg data={data} setData={setData}></UploadImg>}></Route>
         <Route path='/next' element={<Next data={data}></Next>}></Route>
-
       </Routes >
 
     </div >

@@ -60,18 +60,7 @@ export default function contact() {
                         Dont's hesitate and write to us!<br></br>
                         <br></br>
                         <br></br>
-
-
-
-
                         <p className="style"> the efloraOfIndia team </p>
-
-
-
-
-
-
-
                     </div>
                 </div>
             </div>

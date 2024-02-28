@@ -1,7 +1,6 @@
-import { Link, useNavigate, Route } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
-import styles from '../showPosts/showPosts.css';
+import styles from '../showPosts/style.module.css';
 import Contribute from '../contribute/Contribute.js';
 import img1 from '../a1.jpg';
 function ShowPost() {
@@ -78,21 +77,36 @@ function ShowPost() {
 
         <div >
             {postinfo != null && <Contribute postInfo={postinfo} />}
-            <div className="parent1">
+            <div className={styles.parent1}>
                 {
-                    <ul>
+                    <ul className={styles.listContainer}>
+                        <div className={styles.listOptions}>
+                            <input type="text" className={styles.search} placeholder='Search Obsevation' />
+                            <div className={styles.filterContainer}>
+                                <p>Sort by:</p>
+                                <select name="filters">
+                                    <option value="Recently">Recently Uploaded</option>
+                                    <option value="Recently">Verified Obsevation</option>
+                                    <option value="Recently">Pending Obsevation</option>
+                                    <option value="Recently">Ascending order</option>
+                                    <option value="Recently">Descending order</option>
+                                </select>
+                            </div>
+                        </div>
                         {
                             pList?.map((post) => (
 
-                                <li className="d2" style={{ display: 'flex', flexDirection: 'row', listStyleType: 'none', padding: 0, marginRight: '10px' }} onClick={() => {
+                                <li className={styles.listItem} style={{ display: 'flex', flexDirection: 'row', listStyleType: 'none', padding: 0, marginRight: '10px' }} onClick={() => {
                                     setpost(post)
                                 }}>
 
-                                    <img src={img1} alt='r2'></img>
+                                    <img src={img1} alt='r2' className={styles.listImage}></img>
 
 
-                                    <h3>{post.postedBy}</h3>
-                                    <p>{post.description}</p>
+                                    <div className={styles.itemContent}>
+                                        <h3 className={styles.itemTitle}>{post.postedBy}</h3>
+                                        <p className={styles.itemDesc}>{post.description}</p>
+                                    </div>
 
                                 </li>
                             ))
@@ -101,7 +115,7 @@ function ShowPost() {
                 }
 
             </div>
-        </div>
+        </div >
 
 
 
