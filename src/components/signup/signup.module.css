@@ -34,11 +34,6 @@
 }
 
 .registrationFrom1 {
-    /* display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center; */
-
     width: 100%;
 }
 
@@ -136,8 +131,8 @@
 }
 
 .quotes1 {
-    width: 90%;
-    height: 75vh;
+    width: 75%;
+    height: 70vh;
     margin-right: 5%;
     margin-top: 4%;
     display: flex;
@@ -150,12 +145,12 @@
 }
 
 .title2 {
-    margin-top: 5%;
+    margin-top: 10%;
     color: #66d208;
     /* color: #2A6C50; */
     font-size: 2.7em;
     font-weight: 600;
-    margin-left: 10%;
+    margin-left: 20%;
 }
 
 .title2 p {
@@ -165,7 +160,7 @@
 .q {
     /* padding: 10%; */
     margin-top: 5%;
-    margin-left: 7%;
+    margin-left: 10%;
     font-size: 2em;
     font-weight: 600;
     text-align: center;
@@ -197,8 +192,14 @@
 
 @media (max-width:1200px) {
     .q {
-        padding-left: 5%;
+        padding-left: 0%;
         padding-right: 5%;
+        width: 29vw;
+    }
+
+    .title2 {
+        margin-left: 10%;
+        margin-top: 2%;
     }
 
     .passwordConstraints {
@@ -206,7 +207,7 @@
     }
 }
 
-@media (max-width:930px) {
+@media (max-width:1050px) {
     .quotes1 {
         display: none;
     }
