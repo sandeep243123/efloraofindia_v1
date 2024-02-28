@@ -1,9 +1,15 @@
 import React from 'react'
 import chImg from './check.png'
 import penImg from './expired.png'
-function List() {
+function List(props) {
+
+
+
+
+    const { contributionList } = props.contributionList;
+    console.log(contributionList)
     return (
-        <div className='max-h-96 overflow-y-scroll rounded-md my-4'>
+        <div className='max-h-96 overflow-y-scroll rounded-md'>
             <table className="w-full">
                 <thead>
                     <tr className="bg-gray-100 sticky top-0">
@@ -13,92 +19,26 @@ function List() {
                     </tr>
                 </thead>
                 <tbody className="bg-white">
-                    <tr>
-                        <td className="py-4 px-6 border-b border-gray-200">John Doe</td>
-                        <td className="py-4 px-6 border-b border-gray-200 truncate">johndoe@gmail.com</td>
-                        <td className="py-4 px-6 border-b border-gray-200">
-                            <div className='flex gap-4'>
-                                <h1>555-555-5555</h1>
-                                <img src={chImg} alt="" style={{ height: '1.5vh', width: '1.5vw' }} className='mt-1' />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="py-4 px-6 border-b border-gray-200">John Doe</td>
-                        <td className="py-4 px-6 border-b border-gray-200 truncate">johndoe@gmail.com</td>
-                        <td className="py-4 px-6 border-b border-gray-200">
-                            <div className='flex gap-4'>
-                                <h1>555-555-5555</h1>
-                                <img src={penImg} alt="" style={{ height: '2vh', width: '2vw' }} className='mt-1' />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="py-4 px-6 border-b border-gray-200">John Doe</td>
-                        <td className="py-4 px-6 border-b border-gray-200 truncate">johndoe@gmail.com</td>
-                        <td className="py-4 px-6 border-b border-gray-200">
-                            <div className='flex gap-4'>
-                                <h1>555-555-5555</h1>
-                                <img src={penImg} alt="" style={{ height: '2vh', width: '2vw' }} className='mt-1' />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="py-4 px-6 border-b border-gray-200">John Doe</td>
-                        <td className="py-4 px-6 border-b border-gray-200 truncate">johndoe@gmail.com</td>
-                        <td className="py-4 px-6 border-b border-gray-200">
-                            <div className='flex gap-4'>
-                                <h1>555-555-5555</h1>
-                                <img src={chImg} alt="" style={{ height: '1.5vh', width: '1.5vw' }} className='mt-1' />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="py-4 px-6 border-b border-gray-200">John Doe</td>
-                        <td className="py-4 px-6 border-b border-gray-200 truncate">johndoe@gmail.com</td>
-                        <td className="py-4 px-6 border-b border-gray-200">
-                            <div className='flex gap-4'>
-                                <h1>555-555-5555</h1>
-                                <img src={chImg} alt="" style={{ height: '1.5vh', width: '1.5vw' }} className='mt-1' />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="py-4 px-6 border-b border-gray-200">John Doe</td>
-                        <td className="py-4 px-6 border-b border-gray-200 truncate">johndoe@gmail.com</td>
-                        <td className="py-4 px-6 border-b border-gray-200">
-                            <div className='flex gap-4'>
-                                <h1>555-555-5555</h1>
-                                <img src={chImg} alt="" style={{ height: '1.5vh', width: '1.5vw' }} className='mt-1' />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="py-4 px-6 border-b border-gray-200">John Doe</td>
-                        <td className="py-4 px-6 border-b border-gray-200 truncate">johndoe@gmail.com</td>
-                        <td className="py-4 px-6 border-b border-gray-200">
-                            <div className='flex gap-4'>
-                                <h1>555-555-5555</h1>
-                                <img src={chImg} alt="" style={{ height: '1.5vh', width: '1.5vw' }} className='mt-1' />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="py-4 px-6 border-b border-gray-200">John Doe</td>
-                        <td className="py-4 px-6 border-b border-gray-200 truncate">johndoe@gmail.com</td>
-                        <td className="py-4 px-6 border-b border-gray-200">
-                            <div className='flex gap-4'>
-                                <h1>555-555-5555</h1>
-                                <img src={chImg} alt="" style={{ height: '1.5vh', width: '1.5vw' }} className='mt-1' />
-                            </div>
-                        </td>
-                    </tr>
 
+                    {
+                        contributionList?.map((eachContribution) => (
+                            <tr>
+                                <td className="py-4 px-6 border-b border-gray-200">{eachContribution.partName}</td>
+                                <td className="py-4 px-6 border-b border-gray-200 truncate">{eachContribution.FeatureName}</td>
+                                <td className="py-4 px-6 border-b border-gray-200">
+                                    <div className='flex gap-4'>
+                                        <h1>{eachContribution.FeaturePropertyName}</h1>
+                                        <img src={chImg} alt="" style={{ height: '1.5vh', width: '1.5vw' }} className='mt-1' />
+                                    </div>
+                                </td>
+                            </tr>
+                        ))
+                    }
 
                 </tbody>
             </table>
         </div>
-    )
+    );
 }
 
 export default List;

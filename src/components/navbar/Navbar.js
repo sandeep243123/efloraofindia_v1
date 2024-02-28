@@ -30,15 +30,15 @@ export default function Navbar() {
         </div>
         <div class="nav-links">
 
-          <Link to={'/explore'}><img src={exploreImg} className="icon-img"></img>Explore</Link>
+          <Link to={'/'}><img src={exploreImg} className="icon-img"></img>Explore</Link>
           <Link to={'/about'}><img src={aboutImg} className="icon-img"></img>About us</Link>
           <Link to={'/contact'}><img src={contactImg} className="icon-img"></img>Contact us</Link>
           {condition ? <Link to={'/login'}><img src={loginImg} className="icon-img"></img>Login</Link> : null}
           {condition ? <Link to={'/signup'}><img src={signupImg} className="icon-img"></img>Signup</Link> : null}
-          <Link><img src={contributeImg} className="icon-img" alt=""></img>Contribute</Link>
+          <Link to='/contribute'><img src={contributeImg} className="icon-img" alt=""></img>Contribute</Link>
 
           <Link to={'/contact'}><img src={logoutImg} className="icon-img" alt=""></img>Sign out</Link>
-
+          <Link to={'/upload'}>Upload</Link>
         </div>
       </div>
     </div>

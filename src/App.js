@@ -12,10 +12,10 @@ import ShowPost from './components/showPosts/ShowPosts.js';
 import UploadImg from './components/upload img/UploadImg.js';
 import { Routes, Route } from 'react-router-dom';
 import Next from './components/uploadNext/Next.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const [data, setData] = useState("Initial data")
+  const [data, setData] = useState([]);
 
   return (
     <div>

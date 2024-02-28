@@ -3,7 +3,7 @@ import styles from './style.module.css';
 import Selector from './Selector'
 function AddContribution(props) {
 
-
+    console.log(props)
     return (
         <div className={`${styles["modalBackground"]}`}>
             <div className={`${styles["modalContainer"]}`}>
@@ -14,7 +14,7 @@ function AddContribution(props) {
                     <button onClick={() => props.closeAddContribution(false)}>X</button>
                 </div>
                 <div className={styles.body}>
-                    <Selector></Selector>
+                    <Selector postID={props.postID}></Selector>
                 </div>
             </div>
 

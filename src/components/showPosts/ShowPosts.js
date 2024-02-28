@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import '../showPosts/showPosts.css'
-import { Link } from 'react-router-dom'
-import Query from "../../graphql_queries/graphql_queries.js"
+import { Link, useNavigate, Route } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
+import styles from '../showPosts/showPosts.css';
+import Contribute from '../contribute/Contribute.js';
+import img1 from '../a1.jpg';
+function ShowPost() {
 
-export default function ShowPosts() {
+    const [postinfo, setpost] = useState(null);
     const detailVar = {
         details: {
             "searchText": "",
@@ -14,13 +16,13 @@ export default function ShowPosts() {
 
     const [pList, setpList] = useState([]);
     const { data } = useQuery(gql`
-    {
+    query GetPosts($details: searchQuery) {
         getPosts(details: $details) {
-            createdAt
-            description
-            imagesLink
-            postID
-            postedBy
+        createdAt
+        description
+        imagesLink
+        postID
+        postedBy
         }
     }
 `, {
@@ -36,7 +38,17 @@ export default function ShowPosts() {
         }
     });
 
-    const [getpList] = useLazyQuery(Query.getpostquery, {
+    const [getpList] = useLazyQuery(gql`
+    query GetPosts($details: searchQuery) {
+        getPosts(details: $details) {
+        createdAt
+        description
+        imagesLink
+        postID
+        postedBy
+        }
+    }
+    `, {
         onCompleted: (data) => {
             setpList(data["getPosts"])
         },
@@ -60,10 +72,40 @@ export default function ShowPosts() {
             })
     }, [data]);
 
-    // return
-    // (
-    //     <div>
-    //         Hello
-    //     </div>
-    // )
+
+
+    return (
+
+        <div >
+            {postinfo != null && <Contribute postInfo={postinfo} />}
+            <div className="parent1">
+                {
+                    <ul>
+                        {
+                            pList?.map((post) => (
+
+                                <li className="d2" style={{ display: 'flex', flexDirection: 'row', listStyleType: 'none', padding: 0, marginRight: '10px' }} onClick={() => {
+                                    setpost(post)
+                                }}>
+
+                                    <img src={img1} alt='r2'></img>
+
+
+                                    <h3>{post.postedBy}</h3>
+                                    <p>{post.description}</p>
+
+                                </li>
+                            ))
+                        }
+                    </ul>
+                }
+
+            </div>
+        </div>
+
+
+
+    )
 }
+
+export default ShowPost

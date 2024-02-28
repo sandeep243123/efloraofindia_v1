@@ -1,10 +1,125 @@
-import React from 'react'
 import styles from '../view contribution/style.module.css'
 import img from './user.png'
 import img1 from './check.png'
-import { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 
 export default function ViewContribution(props) {
+
+
+    const [plantPartInfo, setplantPart] = useState([])
+    const [show, setShow] = useState(false);
+    const [partFeaturesInfo, SetpartFeature] = useState(null);
+    const [PropertyList, setProperty] = useState(null);
+
+    const { data } = useQuery(gql`
+    {
+        getPlantParts {
+                partID
+                name
+            }
+        }
+    `, {
+        onCompleted: (data) => {
+            setplantPart(data.getPlantParts);
+        }
+    });
+
+
+    const [cList, setcList] = useState([]);
+
+    const [getcList] = useLazyQuery(gql`
+    query GetContribution($details: GetContributionRequest!) {
+        getContribution(details: $details) {
+          FeatureName
+          FeaturePropertyName
+          contributionID
+          partName
+        }
+      }
+    `, {
+        onCompleted: (data) => {
+            setcList(data["getContribution"])
+
+        }
+
+    })
+
+
+
+    useEffect(() => {
+        if (data) {
+            getcList({
+                variables: {
+                    details: {
+                        "postID": props.postID,
+                        "showMyContribution": false
+                    }
+                }
+            })
+        }
+    }, [data]);
+
+
+    const [getPlantPartsList] = useLazyQuery(gql`
+    query Query {
+        getPlantParts {
+            partID
+            name
+        }
+      }
+    `, {
+        onCompleted: (data) => {
+            setplantPart(data.getPlantParts);
+        }
+    }
+    );
+
+
+    const [getPlantPlantFeature] = useLazyQuery(gql`
+    query GetPartsFeature($partId: ID!) {
+        getPartsFeature(partID: $partId) {
+          featureID
+          name
+        }
+      }
+    `, {
+        onCompleted: (data) => {
+            SetpartFeature(data["getPartsFeature"]);
+        }
+    })
+
+
+
+    const getPartFeature = (partdetails) => {
+        setShow(true);
+        console.log(partdetails)
+        getPlantPlantFeature({ variables: { partId: partdetails } })
+    }
+
+
+    const getProperty = (featureName) => {
+        console.log(featureName)
+        const filteredFeatures = cList.filter(feature => feature.FeatureName === featureName);
+        const propertyNames = filteredFeatures.map(feature => feature.FeaturePropertyName);
+        console.log(propertyNames)
+        setProperty(propertyNames)
+    }
+
+    const [expandedPart, setExpandedPart] = useState(null);
+
+    const togglePartExpansion = async (partID) => {
+        if (expandedPart === partID) {
+            setExpandedPart(null);
+        } else {
+
+            getPartFeature(partID);
+
+            setExpandedPart(partID);
+        }
+    };
+
+
     return (
         // onClick={() => props.closeViewContribution(false)}
         <div className={styles.modalWrapper} >
@@ -18,252 +133,55 @@ export default function ViewContribution(props) {
                     <div className={styles.leftSection}>
                         <h1 className={styles.liTitle}>Plant Category</h1>
                         <div className={`${styles['listContainer']} p-4 max-w-lg mx-auto mt-4 border-y-4`}>
-                            <details className="mb-2">
-                                <summary className="flex gap-1 bg-gray-200 pt-4 pb-4 pl-2 rounded-lg cursor-pointer shadow-md mb-4 w-60 mt-2">
-                                    <span className="font-semibold -mt-1">Leaf</span>
-                                    <div className='-mt-3'>
-                                        <h1 className='text-green-500 font-bold'>12</h1>
-                                    </div>
-                                </summary>
-                                <ul className="ml-8 space-y-4 max-h-52 overflow-y-scroll">
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
+                            {
+                                plantPartInfo.length > 0 &&
+                                plantPartInfo?.map((eachPart) => (
+                                    <details className="mb-2" onClick={async () => togglePartExpansion(eachPart.partID)}
+                                        aria-expanded={expandedPart === eachPart.partID} >
+                                        <summary className="flex gap-1 bg-gray-200 pt-4 pb-4 pl-2 rounded-lg cursor-pointer shadow-md mb-4 w-60 mt-2">
+                                            <span className="font-semibold -mt-1">{eachPart?.name}</span>
+                                            <div className='-mt-3'>
+                                                <h1 className='text-green-500 font-bold'>12</h1>
+                                            </div>
+                                        </summary>
+                                        <ul className="ml-8 space-y-4 max-h-52 overflow-y-scroll">
+                                            {
+                                                partFeaturesInfo?.map((FeatureInfo) => (
+                                                    <li key={FeatureInfo?.featureID} onClick={async () => {
+                                                        await getProperty(FeatureInfo?.name)
+                                                    }}>
+                                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
+                                                            <p className="text-gray-800">{FeatureInfo?.name}</p>
+                                                            {/* <h1 className='text-green-500'>11</h1> */}
+                                                        </div>
+                                                    </li>
+                                                ))}
+                                        </ul>
 
-
-
-                                </ul>
-                            </details>
-                            <details className="mb-2">
-                                <summary className="flex gap-1 bg-gray-200 pt-4 pb-4 pl-2 rounded-lg cursor-pointer shadow-md mb-4 w-60 mt-2">
-                                    <span className="font-semibold -mt-1">Root</span>
-                                    <div className='-mt-3'>
-                                        <h1 className='text-green-500 font-bold'>12</h1>
-                                    </div>
-                                </summary>
-                                <ul className="ml-8 space-y-4 max-h-52 overflow-y-scroll">
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </details>
-                            <details className="mb-2">
-                                <summary className="flex gap-1 bg-gray-200 pt-4 pb-4 pl-2 rounded-lg cursor-pointer shadow-md mb-4 w-60 mt-2">
-                                    <span className="font-semibold -mt-1">Stem</span>
-                                    <div className='-mt-3'>
-                                        <h1 className='text-green-500 font-bold'>12</h1>
-                                    </div>
-                                </summary>
-                                <ul className="ml-8 space-y-4 max-h-52 overflow-y-scroll">
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </details>
-                            <details className="mb-2">
-                                <summary className="flex gap-1 bg-gray-200 pt-4 pb-4 pl-2 rounded-lg cursor-pointer shadow-md mb-4 w-60 mt-2">
-                                    <span className="font-semibold -mt-1">Flower</span>
-                                    <div className='-mt-3'>
-                                        <h1 className='text-green-500 font-bold'>12</h1>
-                                    </div>
-                                </summary>
-                                <ul className="ml-8 space-y-4 max-h-52 overflow-y-scroll">
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20">
-                                            <p className="text-gray-800">Option 1</p>
-                                            <h1 className='text-green-500'>11</h1>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </details>
-
+                                    </details>
+                                ))
+                            }
 
                         </div>
                     </div>
                     <div className={styles.rightSection}>
                         <h1 className={styles.rightTitle}>Contribution</h1>
                         <div className={styles.rightListContainer}>
-                            <div className={styles.rightList}>
-                                <div className={styles.rightListT1}>
-                                    <img src={img} alt="" />
-                                    <h1>Brown</h1>
-                                </div>
-                                <div className={styles.rightListT2}>
-                                    <img src={img1} alt="" />
-                                    <p>12</p>
-                                </div>
-                            </div>
-                            <div className={styles.rightList}>
-                                <div className={styles.rightListT1}>
-                                    <img src={img} alt="" />
-                                    <h1>Brown</h1>
-                                </div>
-                                <div className={styles.rightListT2}>
-                                    <img src={img1} alt="" />
-                                    <p>12</p>
-                                </div>
-                            </div>
-                            <div className={styles.rightList}>
-                                <div className={styles.rightListT1}>
-                                    <img src={img} alt="" />
-                                    <h1>Brown</h1>
-                                </div>
-                                <div className={styles.rightListT2}>
-                                    <img src={img1} alt="" />
-                                    <p>12</p>
-                                </div>
-                            </div>
-                            <div className={styles.rightList}>
-                                <div className={styles.rightListT1}>
-                                    <img src={img} alt="" />
-                                    <h1>Brown</h1>
-                                </div>
-                                <div className={styles.rightListT2}>
-                                    <img src={img1} alt="" />
-                                    <p>12</p>
-                                </div>
-                            </div>
-                            <div className={styles.rightList}>
-                                <div className={styles.rightListT1}>
-                                    <img src={img} alt="" />
-                                    <h1>Brown</h1>
-                                </div>
-                                <div className={styles.rightListT2}>
-                                    <img src={img1} alt="" />
-                                    <p>12</p>
-                                </div>
-                            </div>
-                            <div className={styles.rightList}>
-                                <div className={styles.rightListT1}>
-                                    <img src={img} alt="" />
-                                    <h1>Brown</h1>
-                                </div>
-                                <div className={styles.rightListT2}>
-                                    <img src={img1} alt="" />
-                                    <p>12</p>
-                                </div>
-                            </div>
-                            <div className={styles.rightList}>
-                                <div className={styles.rightListT1}>
-                                    <img src={img} alt="" />
-                                    <h1>Brown</h1>
-                                </div>
-                                <div className={styles.rightListT2}>
-                                    <img src={img1} alt="" />
-                                    <p>12</p>
-                                </div>
-                            </div>
-                            <div className={styles.rightList}>
-                                <div className={styles.rightListT1}>
-                                    <img src={img} alt="" />
-                                    <h1>Brown</h1>
-                                </div>
-                                <div className={styles.rightListT2}>
-                                    <img src={img1} alt="" />
-                                    <p>12</p>
-                                </div>
-                            </div>
-                            <div className={styles.rightList}>
-                                <div className={styles.rightListT1}>
-                                    <img src={img} alt="" />
-                                    <h1>Brown</h1>
-                                </div>
-                                <div className={styles.rightListT2}>
-                                    <img src={img1} alt="" />
-                                    <p>12</p>
-                                </div>
-                            </div>
-                            <div className={styles.rightList}>
-                                <div className={styles.rightListT1}>
-                                    <img src={img} alt="" />
-                                    <h1>Brown</h1>
-                                </div>
-                                <div className={styles.rightListT2}>
-                                    <img src={img1} alt="" />
-                                    <p>12</p>
-                                </div>
-                            </div>
+                            {
+                                PropertyList?.map((eachproperty) => (
+                                    <div className={styles.rightList}>
+                                        <div className={styles.rightListT1}>
+                                            <img src={img} alt="" />
+                                            <h1>{eachproperty}</h1>
+                                        </div>
+                                        <div className={styles.rightListT2}>
+                                            <img src={img1} alt="" />
+                                            <p>12</p>
+                                        </div>
+                                    </div>
+                                ))
+                            }
+
                         </div>
                     </div>
                 </div>

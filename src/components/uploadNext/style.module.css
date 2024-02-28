@@ -136,6 +136,7 @@ textarea {
     border-radius: 10px;
     font-style: italic;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .btn2 {
@@ -147,4 +148,5 @@ textarea {
     border-radius: 10px;
     font-style: italic;
     font-weight: bold;
+    cursor: pointer;
 }
