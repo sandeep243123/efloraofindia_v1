@@ -61,7 +61,7 @@ body {
   display: none;
 }
 
-@media (max-width:1500px) {
+@media (max-width:2000px) {
   .nav>.nav-btn {
     display: inline-block;
     position: absolute;
