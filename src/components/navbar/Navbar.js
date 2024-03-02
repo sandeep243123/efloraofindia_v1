@@ -16,19 +16,19 @@ export default function Navbar() {
   const [condition, setCondition] = useState(true)
   return (
     <div>
-      <div class="nav">
+      <div className="nav">
         <input type="checkbox" id="nav-check" />
-        <div class="nav-header">
-          <div class="nav-title">
+        <div className="nav-header">
+          <div className="nav-title">
             <Link to='/'><img src={img1} alt="" /></Link>
           </div>
         </div>
-        <div class="nav-btn">
+        <div className="nav-btn">
           <label className="userImg" htmlFor="nav-check">
             <img src={userImg} alt="" style={{ width: "100%", height: '100%' }} />
           </label>
         </div>
-        <div class="nav-links">
+        <div className="nav-links">
 
           <Link to={'/'}><img src={exploreImg} className="icon-img"></img>Explore</Link>
           <Link to={'/about'}><img src={aboutImg} className="icon-img"></img>About us</Link>
@@ -40,6 +40,7 @@ export default function Navbar() {
           <Link to={'/contact'}><img src={logoutImg} className="icon-img" alt=""></img>Sign out</Link>
           <Link to={'/upload'}>Upload</Link>
           <Link to={'/showposts'}>Show Posts</Link>
+          <Link to={'/dashboard'}>Leaderboard</Link>
         </div>
       </div>
     </div>

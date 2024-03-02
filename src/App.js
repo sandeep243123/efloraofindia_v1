@@ -6,12 +6,13 @@ import Signup from './components/signup/Signup.js';
 import Contribute from './components/contribute/Contribute.js'
 import Terms from './components/terms & condition/term.js'
 import About from './components/about us/about.js'
-import Contact from './components/contact us/contact.js'
+import Contact from './components/contact us/Contact.js'
 import Explore from './components/explore/Explore.js';
 import ShowPost from './components/showPosts/ShowPosts.js';
 import UploadImg from './components/upload img/UploadImg.js';
 import { Routes, Route } from 'react-router-dom';
 import Next from './components/uploadNext/Next.js';
+import Dashboard from './components/dashboard/Dashboard.js';
 import { useState } from 'react';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path='/contact' element={<Contact></Contact>}></Route>
         <Route path='/explore' element={<Explore></Explore>}></Route>
         <Route path='/showposts' element={<ShowPost></ShowPost>}></Route>
+        <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
         <Route path='/upload' element={<UploadImg data={data} setData={setData}></UploadImg>}></Route>
         <Route path='/next' element={<Next data={data}></Next>}></Route>
       </Routes >

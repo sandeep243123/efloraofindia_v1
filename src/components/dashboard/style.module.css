@@ -1,0 +1,68 @@
+.container {
+    background-color: rgba(124, 124, 124, 0.331);
+    backdrop-filter: blur(2px);
+    height: 100vh;
+    margin: 0;
+    overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.tileContainer {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.tileContainer div {
+    margin-top: 15px;
+    height: 15vh;
+    width: 18vw;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.tileContainer div h1 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.tileContainer div p {
+    font-weight: bold;
+    font-family: serif;
+}
+
+.verified {
+    background-color: green;
+    background-image: linear-gradient(to bottom left, green, rgb(130, 220, 160));
+}
+
+.pending {
+    background-color: orange;
+}
+
+.recentlyActive {
+    background-color: wheat;
+}
+
+.contribution {
+    background-color: wheat;
+}
+
+.total {
+    background-color: wheat;
+}
+
+.chart {
+    margin: 2%;
+    /* background-color: red; */
+    /* display: flex;
+    justify-content: space-evenly;
+    background-color: wheat; */
+    padding-bottom: 9%;
+}
