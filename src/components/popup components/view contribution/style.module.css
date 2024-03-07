@@ -1,3 +1,8 @@
+* {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    box-sizing: border-box;
+}
+
 .modalWrapper {
     position: fixed;
     top: 0;
@@ -55,7 +60,6 @@
 
 
 .leftSection {
-    /* border-right: 1px solid rgb(195, 194, 194); */
     width: 28%;
 }
 
@@ -74,6 +78,36 @@
     overflow-y: scroll;
 }
 
+.leftList {
+    background-color: rgb(180, 180, 180);
+    border-radius: 10px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    cursor: pointer;
+    border-top: 3px solid black;
+    background-image: linear-gradient(to right, rgb(76, 174, 99), rgb(173, 216, 235));
+
+}
+
+.leftListTitle {
+    text-align: center;
+    color: black;
+    font-weight: 900;
+    margin-left: 5%;
+}
+
+
+.listCount {
+    background-color: #F41070;
+    color: white;
+    border-radius: 20px;
+    width: 25px;
+    padding-left: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
 
 .rightSection {
     width: 75%;
@@ -88,6 +122,7 @@
     font-style: italic;
     font-weight: 500;
 }
+
 
 .rightListContainer {
     margin: 0 2%;

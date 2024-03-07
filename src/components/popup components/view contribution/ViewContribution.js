@@ -5,13 +5,10 @@ import React, { useEffect, useState } from 'react'
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 
 export default function ViewContribution(props) {
-
-
     const [plantPartInfo, setplantPart] = useState([])
     const [show, setShow] = useState(false);
     const [partFeaturesInfo, SetpartFeature] = useState(null);
     const [PropertyList, setProperty] = useState(null);
-
     const { data } = useQuery(gql`
     {
         getPlantParts {
@@ -24,10 +21,7 @@ export default function ViewContribution(props) {
             setplantPart(data.getPlantParts);
         }
     });
-
-
     const [cList, setcList] = useState([]);
-
     const [getcList] = useLazyQuery(gql`
     query GetContribution($details: GetContributionRequest!) {
         getContribution(details: $details) {
@@ -44,9 +38,6 @@ export default function ViewContribution(props) {
         }
 
     })
-
-
-
     useEffect(() => {
         if (data) {
             getcList({
@@ -138,11 +129,11 @@ export default function ViewContribution(props) {
                                 plantPartInfo?.map((eachPart) => (
                                     <details className="mb-2" onClick={async () => togglePartExpansion(eachPart.partID)}
                                         aria-expanded={expandedPart === eachPart.partID} >
-                                        <summary className="flex gap-1 bg-gray-200 pt-4 pb-4 pl-2 rounded-lg cursor-pointer shadow-md mb-4 w-60 mt-2">
-                                            <span className="font-semibold -mt-1">{eachPart?.name}</span>
-                                            <div className='-mt-3'>
-                                                <h1 className='text-green-500 font-bold'>12</h1>
-                                            </div>
+                                        <summary className={styles.leftList}>
+                                            <span className={styles.leftListTitle}>{eachPart?.name}</span>
+                                            {/* <div className=''> */}
+                                            <h1 className={styles.listCount}>12</h1>
+                                            {/* </div> */}
                                         </summary>
                                         <ul className="ml-8 space-y-4 max-h-52 overflow-y-scroll">
                                             {
