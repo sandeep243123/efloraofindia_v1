@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import Action from "./Action";
 import style from './Comment.module.css'
+import like from '../assets/like.png';
+import dislike from '../assets/dont-like.png';
 import { ReactComponent as DownArrow } from "../assets/down-arrow.svg";
 import { ReactComponent as UpArrow } from "../assets/up-arrow.svg";
 const Comment = ({
@@ -53,7 +55,7 @@ const Comment = ({
               autoFocus
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="type..."
+              placeholder="Type your reply message here..."
             />
 
             <Action
@@ -65,8 +67,12 @@ const Comment = ({
         ) : (
           <>
             <div className={style.commentBox}>
-              <p className={style.userName}>UserName</p>
+              <div className={style.userInfo}>
+                <img src="" alt="profileImage" className={style.profileImage}></img>
+                <p className={style.userName}>UserName</p>
+              </div>
               <span
+              className={style.text}
                 contentEditable={editMode}
                 suppressContentEditableWarning={editMode}
                 ref={inputRef}
@@ -75,58 +81,72 @@ const Comment = ({
                 {comment.name}
               </span>
             </div>
-            
-            <div style={{ display: "flex", marginTop: "5px" }}>
-              {editMode ? (
-                <>
-                
-                  <Action
-                    className={style.reply}
-                    type="SAVE"
-                    handleClick={onAddComment}
-                  />
-                  <Action
-                    className={style.reply}
-                    type="CANCEL"
-                    handleClick={() => {
-                      if (inputRef.current)
-                        inputRef.current.innerText = comment.name;
-                      setEditMode(false);
-                    }}
-                  />
-                </>
-              ) : (
-                <>
-                  <Action
-                  
-                    className={style.reply}
-                    type={
-                      <>
-                        {expand ? (
-                          <UpArrow width="10px" height="10px" />
-                        ) : (
-                          <DownArrow width="10px" height="10px" />
-                        )}{" "}
-                        REPLY
-                      </>
-                    }
-                    handleClick={handleNewComment}
-                  />
-                  <Action
-                    className={style.reply}
-                    type="EDIT"
-                    handleClick={() => {
-                      setEditMode(true);
-                    }}
-                  />
-                  <Action
-                    className={style.reply}
-                    type="DELETE"
-                    handleClick={handleDelete}
-                  />
-                </>
-              )}
+            <div className={style.footer}>
+                <div style={{ display: "flex", marginTop: "5px" }}>
+                  {editMode ? (
+                    <>
+                    
+                      <Action
+                        className={style.reply}
+                        type="SAVE"
+                        handleClick={onAddComment}
+                      />
+                      <Action
+                        className={style.reply}
+                        type="CANCEL"
+                        handleClick={() => {
+                          if (inputRef.current)
+                            inputRef.current.innerText = comment.name;
+                          setEditMode(false);
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Action
+                      
+                        className={style.reply}
+                        type={
+                          <>
+                            {expand ? (
+                              <UpArrow width="10px" height="10px" />
+                            ) : (
+                              <DownArrow width="10px" height="10px"  />
+                            )}{"  "}
+                            REPLY
+                          </>
+                        }
+                        handleClick={handleNewComment}
+                      />
+                      <Action
+                        className={style.reply}
+                        type="EDIT"
+                        handleClick={() => {
+                          setEditMode(true);
+                        }}
+                      />
+                      <Action
+                        className={style.reply}
+                        type="DELETE"
+                        handleClick={handleDelete}
+                      />
+                    </> 
+                  )}
+                </div>
+                        {/* like and dislike button */}
+
+                <div className={style.vote}>
+                        <div className={style.upvote}>
+                          <img src={like} alt="like" name="vote" />
+                          <p>0</p>
+                        </div>
+                        <div className={style.downvote}>
+                          <img src={dislike} alt="dislike" name="vote"/>
+                          <p>0</p>
+                        </div>
+                </div>
             </div>
+            
           </>
         )}
       </div>
