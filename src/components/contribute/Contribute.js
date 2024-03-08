@@ -63,7 +63,7 @@ export default function Contribute() {
 
       </div>
 
-      <div className='mt-20 ml-6 mb-10'>
+      <div className='mt-20 mb-10'>
            <Comments></Comments>
         </div>
     </div>
