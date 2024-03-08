@@ -66,6 +66,14 @@
     border-radius: 5px; 
 }
 
+.leftImg img:hover{
+    scale: 1.02;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    transition-property: all;
+    box-shadow: 2px 2px 12px rgb(172, 211, 114), -2px -2px 12px rgb(172, 211, 114);
+}
+
 .rightImg{
     width: 39%;
     margin-left: 5px;
@@ -81,10 +89,27 @@
     
 }
 
+.rightImg1 img:hover{
+    scale: 1.02;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    transition-property: all;
+    box-shadow: 2px 2px 12px rgb(172, 211, 114), -2px -2px 12px rgb(172, 211, 114);
+}
+
+
 .rightImg2 img{
     width: 90%;
     height: 28vh;
     border-radius: 5px;
+}
+
+.rightImg2 img:hover{
+    scale: 1.02;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    transition-property: all;
+    box-shadow: 2px 2px 12px rgb(172, 211, 114), -2px -2px 12px rgb(172, 211, 114);
 }
 
 .desc textarea{
@@ -105,25 +130,46 @@
 .viewContri{
     width: fit-content;
     height: fit-content;
-    padding: 5px;
+    padding: 5px 5px;
     border: 2px solid black;
     border-radius: 10px;
+    
+    text-transform: uppercase;
+    text-decoration: #b4abab;
     background-color: orange;
     color: aliceblue;
     font-weight: bold;
     /* margin-top: -0.5rem; */
 }
 
+
+.viewContri:hover{
+    font-size: 1.2rem;
+    box-shadow: 2px 2px 2px, -2px -2px 2px;
+    transition: 0.5s ease;
+    color: rgb(82, 65, 65);
+    background-image: linear-gradient(124deg, orange 0%, rgb(199, 163, 95) 100%);
+}
+
+
 .addContri{
     width: fit-content;
     height: fit-content;
-    padding: 5px;
+    padding: 5px 5px;
     border: 2px solid black;
     border-radius: 10px;
     background-color: green;
     color: aliceblue;
     font-weight: bold;
     /* margin-top: -0.5rem; */
+}
+
+.addContri:hover{
+    font-size: 1.2rem;
+    box-shadow: 2px 2px 2px, -2px -2px 2px;
+    transition: 0.5s ease;
+    color: rgb(82, 65, 65);
+    background-image: linear-gradient(124deg, rgb(8, 215, 29) 0%, rgb(63, 158, 59) 100%);
 }
 
 
