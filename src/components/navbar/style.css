@@ -93,8 +93,8 @@ body {
   }
 
   .nav-links {
-    background-color: #ffffff10;
-    backdrop-filter: blur(25px);
+    background-color: #5c5c5cfe;
+    /* backdrop-filter: blur(5px); */
   }
 
   .nav>.nav-links {

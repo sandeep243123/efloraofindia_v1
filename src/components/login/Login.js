@@ -103,7 +103,7 @@ export default function Login() {
                             <input type="checkbox" id='remeber' />
                             <label htmlFor="remeber" style={{ marginLeft: '3px' }}>Remember me</label>
                         </div>
-                        <p>Forget password?</p>
+                        <Link to={'/findacc'}>Forget password?</Link>
                     </div>
                     <div className='tc'>
                         <div>

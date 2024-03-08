@@ -10,27 +10,27 @@ export default function Home() {
 
           {/* left-section */}
           <div className='left-section'>
-              {/* Quote */}
-              <div>
-                <p className='quote'>A plant is the most patient and forgiving teacher.</p>
-              </div>
+            {/* Quote */}
+            <div>
+              <p className='quote'>A plant is the most patient and forgiving teacher.</p>
+            </div>
 
-              {/* search Bar */}
-              <div className='searchbar'>
-              
-                <input id='search-bar' type="text" placeholder='Have a question? Ask or enter search term...' />
+            {/* search Bar */}
+            <div className='searchbar'>
 
-                {/* search button */}
-                <div className='search-btn'>Search</div>
-              </div>
+              <input id='search-bar' type="text" placeholder='Have a question? Ask or enter search term...' />
 
-                  {/* explore-btn */}
-              <div className='explore-btn'>Explore</div>
+              {/* search button */}
+              <div className='search-btn'>Search</div>
+            </div>
+
+            {/* explore-btn */}
+            {/* <div className='explore-btn'>Explore</div> */}
           </div>
 
           {/* right-section */}
-          <div className='right-section' style={{right:'0'}}>
-              <img src={img1} alt="main-leaf"></img>
+          <div className='right-section' style={{ right: '0' }}>
+            <img src={img1} alt="main-leaf"></img>
           </div>
         </div>
       </div>

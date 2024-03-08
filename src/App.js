@@ -14,6 +14,9 @@ import { Routes, Route } from 'react-router-dom';
 import Next from './components/uploadNext/Next.js';
 import Dashboard from './components/dashboard/Dashboard.js';
 import { useState } from 'react';
+import FindAcc from './components/forgot password/find acc/FindAcc.js';
+import Otp from './components/forgot password/Otp/Otp.js';
+import SetPassword from './components/forgot password/set password/SetPassword.js';
 
 function App() {
   const [data, setData] = useState([]);
@@ -34,6 +37,9 @@ function App() {
         <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
         <Route path='/upload' element={<UploadImg data={data} setData={setData}></UploadImg>}></Route>
         <Route path='/next' element={<Next data={data}></Next>}></Route>
+        <Route path='/findacc' element={<FindAcc></FindAcc>}></Route>
+        <Route path='/otp' element={<Otp></Otp>}></Route>
+        <Route path='/setPass' element={<SetPassword></SetPassword>}></Route>
       </Routes >
 
     </div >
