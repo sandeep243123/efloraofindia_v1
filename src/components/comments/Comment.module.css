@@ -2,6 +2,9 @@
     font-family: Monaco, sans-serif;
   }
   
+  body{
+    backdrop-filter: blur(30px);
+  }
   .App {
     margin-top: 20px;
     width: fit-content;
@@ -10,17 +13,18 @@
   .commentContainer {
     margin: 0 auto;
     margin-top: 6px;
-    background-color: #d3d3d3e0;
+    /* background-color: #d3d3d3e0; */
     display: flex;
     flex-direction: column;
     padding: 5px 10px;
     width: 70%;
     cursor: pointer;
+    border: 0.2px solid white;
     border-radius: 5px;
   }
   
   .commentContainer:hover {
-    background-color: #d3d3d3bf;
+    /* background-color: #d3d3d3bf; */
   }
   
   .inputContainer {
@@ -28,6 +32,7 @@
     display: flex;
     align-items: baseline;
     gap: 5px;
+   
   }
   
   .inputContainer > span {
@@ -35,6 +40,9 @@
   }
   
   .inputContainer__input {
+    width: 70%;
+    max-width: 700px;
+    height: 2.5rem;
     margin: 6px 0 0px 0;
     padding: 5px;
     display: flex;
@@ -43,33 +51,49 @@
     justify-content: space-between;
     cursor: pointer;
     border-radius: 5px;
-    background-color: #e7e7e7;
+    /* background-color: #e7e7e7; */
+    background-color: #5f5b5b;
+    margin-bottom: 2rem;
   }
   
-  .first_input {
-    margin: 0;
+
+  .inputContainer__input::placeholder{
+    padding-left: 0.5rem;
+    font-family:'Times New Roman', Times, serif;
+    letter-spacing: 1.5px;
   }
+  /* .first_input {
+    margin: 0;
+  } */
   
   .commentContainer > span {
     margin: 0 5px;
   }
+  /* span{
+    margin: 0 10px;
+  } */
   
   .reply {
     font-size: 12px;
     padding: 5px;
     border-radius: 5px;
-    color: #4e4e4e;
+    /* color: #4e4e4e; */
     color: white;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
+    gap: 0 .5rem;
+    font-family:'Times New Roman', Times, serif;
+    letter-spacing: 1.5px;
   }
   
   .comment {
     color: #ffffff;
     background-color: #228a10;
     letter-spacing: 0.8px;
+    /* height: 2.5rem; */
+    
   }
 
   .comment:hover{
@@ -79,11 +103,87 @@
 
   .commentBox{
     display: flex;
-
-    gap: 10px;
+    flex-direction: column;
+    gap: 0.4rem;
+    
   }
 
+  .userInfo{
+    display: flex;
+    justify-content: baseline;
+    gap: 0 0.75rem;
+  }
+
+  .profileImage{
+    width: 30px;
+    height: 30px;
+    border: 2px solid whitesmoke;
+    border-radius: 50%;
+    box-shadow: 2px ;
+  }
   .userName{
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.3rem;
+    font-weight: 400;
+    font-family:'Times New Roman', Times, serif;
+    letter-spacing: 1.5px;
+    color: rgb(221, 214, 214);
+  }
+
+  .text{
+    color: white;
+    display: flex;
+    justify-content: start;
+    margin-left: 3rem;
+    font-family:'Times New Roman', Times, serif;
+    letter-spacing: 1.5px;
+  }
+
+  .footer{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .vote{
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .upvote{
+    display: flex;
+    gap: 0.2rem;
+  }
+
+  .upvote img{
+    /* background-color:rgb(221, 214, 214); */
+    width: 25px;
+    height: 25px;
+  }
+
+  .upvote:hover{
+      scale: 1.3;
+      transition: 0.5s;
+  }
+
+  .downvote{
+    display: flex;
+    gap: 0.2rem;
+    
+  }
+  .downvote img{
+    width: 25px;
+    height: 25px;
+  }
+
+  .downvote:hover{
+    scale: 1.3;
+    transition: 0.5s;
+  }
+
+  .upvote p:first-of-type{
+    color: aliceblue;
+  }
+
+  .downvote p:first-of-type{
+    color: aliceblue;
   }
