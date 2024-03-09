@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&family=Patua+One&display=swap');
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Handjet:wght@100&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+.wrapper{
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* background-image : linear-gradient(160deg, #112d4e 0%, #3f72af 50%, rgb(20, 174, 251) 100% ); */
+}
+
+.wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.heading{
+    width: 100%;
+    height: 5rem;
+    color: #DFE33D;
+    text-align: left;
+    display: flex;  
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    background-color: #005D5F;
+}
+.heading p{
+    font-size: 2.5em;
+    margin: 0 1rem;
+    font-family: "Patua One", serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 1px;
+  /* margin-left: 4%; */
+}
+.heading p:first-of-type{
+    color: white;
+    margin-left: 0%;
+}
+
+.container{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 69px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+/* .parent1{
+    position:absolute;
+    top: 5px;
+    margin: 4px;
+    width: 100%;
+    height: auto;
+    border: 2px solid purple;
+} */
+
+
+.parentLeft{
+    background-color: #fbfcec;
+    margin: 0px 0px;
+    display: flex;
+    padding: 0 5rem;
+    width: 100%;
+    gap: 0 5rem;
+}
+
+.aboutImg{
+    width: 40%;
+    height: 60vh;
+    max-height: 800px;
+    display: flex;
+    justify-content: center;
+}
+.parentLeft img{
+    width: 100%;
+    height: 100%;
+    
+}
+.contentLeft{
+    width: 50%;
+    float: left;
+    color: rgb(47, 52, 49);
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    font-family: cursive;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+
+.parentRight{
+    background-color: #f1f2f6;
+    margin: 0px 0px;
+    padding: 0 4rem;
+    gap: 5rem;
+    display: flex;
+    width: 100%;
+    
+}
+.contentRight{
+    width: 50%;
+    color: rgb(47, 52, 49);
+    font-weight: 500;
+    letter-spacing: 1.75px;
+    font-family: cursive;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    
+}
+
+
+.more{
+    display: inline-block;
+    margin-left: 30px;
+    color: black;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.more:hover{
+   
+    color: rgb(18, 29, 33);
+    font-family: cursive;
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc,
+                0 3px 0 #ccc, 0 4px 0 #ccc,
+                
+                0 10px 15px rgba(0, 0, 0, 0.5);
+}
+
+.head{
+    font-size: 1.8rem;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-family: "Lora", serif;
+    font-style: normal;
+    text-shadow: 0 2px 5px bisque;
+    margin: 0.5rem 0;
+}
+
+.mainContent{
+    font-family: "Lora", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: italic;
+}
+
+
+
+
+/* Our team - section CSS  start from here*/
+
+/* .ourTeam{
+    background-color: #f1f2f6;
+    margin: 0px 0px;
+    width: 100%;
+    height: 50vh;
+    max-height: fit-content;
+}
+
+.heading2{
+    font-family: "Lora", serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+
+.top{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+
+.quote{
+    width: 40%; 
+    max-width: 500px;
+    font-family: "Lora", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: italic;
+    color: gray;
+} */
