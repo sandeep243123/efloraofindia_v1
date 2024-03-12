@@ -5,7 +5,7 @@ import Login from './components/login/Login.js';
 import Signup from './components/signup/Signup.js';
 import Contribute from './components/contribute/Contribute.js'
 import Terms from './components/terms & condition/term.js'
-import About from './components/about us/about.js'
+import About from './components/about us/About.js'
 import Contact from './components/contact us/Contact.js'
 import Explore from './components/explore/Explore.js';
 import ShowPost from './components/showPosts/ShowPosts.js';
