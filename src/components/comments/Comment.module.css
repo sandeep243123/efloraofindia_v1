@@ -13,7 +13,6 @@
   .commentContainer {
     margin: 0 auto;
     margin-top: 6px;
-    /* background-color: #d3d3d3e0; */
     display: flex;
     flex-direction: column;
     padding: 5px 10px;
@@ -28,7 +27,7 @@
   }
   
   .inputContainer {
-    margin-left: 10%;
+    margin-left: 14%;
     display: flex;
     align-items: baseline;
     gap: 5px;
@@ -53,7 +52,9 @@
     border-radius: 5px;
     /* background-color: #e7e7e7; */
     background-color: #5f5b5b;
+    color: aliceblue;
     margin-bottom: 2rem;
+    
   }
   
 
