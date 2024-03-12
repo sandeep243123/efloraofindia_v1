@@ -7,19 +7,19 @@ import { ReactComponent as DownArrow } from "../assets/down-arrow.svg";
 import { ReactComponent as UpArrow } from "../assets/up-arrow.svg";
 const Comment = ({
   handleInsertNode,
-  handleEditNode,
+  // handleEditNode,
   handleDeleteNode,
   comment,
 }) => {
   const [input, setInput] = useState("");
-  const [editMode, setEditMode] = useState(false);
+  // const [editMode, setEditMode] = useState(false);
   const [showInput, setShowInput] = useState(false);
-  const [expand, setExpand] = useState(false);
+  const [expand, setExpand] = useState(true);
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    inputRef?.current?.focus();
-  }, [editMode]);
+  // useEffect(() => {
+  //   inputRef?.current?.focus();
+  // }, [editMode]);
 
   const handleNewComment = () => {
     setExpand(!expand);
@@ -27,16 +27,16 @@ const Comment = ({
   };
 
   const onAddComment = () => {
-    if (editMode) {
-      handleEditNode(comment.id, inputRef?.current?.innerText);
-    } else {
+    // if (editMode) {
+    //   handleEditNode(comment.id, inputRef?.current?.innerText);
+    // } else {
       setExpand(true);
       handleInsertNode(comment.id, input);
       setShowInput(false);
       setInput("");
-    }
+    // }
 
-    if (editMode) setEditMode(false);
+    // if (editMode) setEditMode(false);
   };
 
   const handleDelete = () => {
@@ -69,21 +69,21 @@ const Comment = ({
             <div className={style.commentBox}>
               <div className={style.userInfo}>
                 <img src="" alt="profileImage" className={style.profileImage}></img>
-                <p className={style.userName}>UserName</p>
+                <p className={style.userName}>{comment.name}</p>
               </div>
               <span
               className={style.text}
-                contentEditable={editMode}
-                suppressContentEditableWarning={editMode}
+                // contentEditable={editMode}
+                // suppressContentEditableWarning={editMode}
                 ref={inputRef}
                 style={{ wordWrap: "break-word" }}
               >
-                {comment.name}
+                {comment.text}
               </span>
             </div>
             <div className={style.footer}>
                 <div style={{ display: "flex", marginTop: "5px" }}>
-                  {editMode ? (
+                  {/* {editMode ? (
                     <>
                     
                       <Action
@@ -102,7 +102,7 @@ const Comment = ({
                       />
                     </>
                   ) : (
-                    <>
+                    <> */}
                       <Action
                       
                         className={style.reply}
@@ -118,20 +118,20 @@ const Comment = ({
                         }
                         handleClick={handleNewComment}
                       />
-                      <Action
+                      {/* <Action
                         className={style.reply}
                         type="EDIT"
                         handleClick={() => {
                           setEditMode(true);
                         }}
-                      />
+                      /> */}
                       <Action
                         className={style.reply}
                         type="DELETE"
                         handleClick={handleDelete}
                       />
-                    </> 
-                  )}
+                    {/* </>  */}
+                  {/* ) */}
                 </div>
                         {/* like and dislike button */}
 
@@ -177,7 +177,7 @@ const Comment = ({
             <Comment
               key={cmnt.id}
               handleInsertNode={handleInsertNode}
-              handleEditNode={handleEditNode}
+              // handleEditNode={handleEditNode}
               handleDeleteNode={handleDeleteNode}
               comment={cmnt}
             />
