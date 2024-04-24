@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 function FindAcc() {
     return (
         <div className={styles.container}>
+            <img src="" alt="" />
             <div className={styles.contentContainer}>
                 <h1>Forgot Password?</h1>
                 <p>input your email or phone no to reset password</p>

@@ -1,10 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styles from './style.module.css'
-import img from '../assets/img1.png'
+import img from './t1.png'
 import { Link } from 'react-router-dom'
-// import Next from '../uploadNext/Next'
-// import { grey } from '@mui/material/colors'
-// import { click } from '@testing-library/user-event/dist/click'
 export default function UploadImg(props) {
     const [images, setImages] = useState([])
     const [isDragging, setIsDragging] = useState(false)
@@ -61,40 +58,19 @@ export default function UploadImg(props) {
 
     useEffect(() => {
         if (images.length < 3) {
-            btnRef.current.style.backgroundColor = "grey"
-            btnRef.current.style.pointerEvents = "none"
             labelRef.current.style.display = "inline"
             setPath('')
         } else {
-            btnRef.current.style.backgroundColor = "rgb(88, 88, 255)"
-            btnRef.current.style.pointerEvents = "auto"
             labelRef.current.style.display = "none"
             setPath('/next')
         }
     })
     return (
         <div className={styles.parent}>
+            <img src={img} alt="" />
             <div className={styles.container}>
-                <div className={styles.left}>
-                    <div className={styles.leftContainer}>
-                        <div className={styles.k1}>
-                            <div className={styles.k11}>
-                                <p style={{ color: "black", backgroundColor: "white" }}>1</p>
-                                <p >2</p>
-                            </div>
-                            <div className={styles.line1}></div>
-                        </div>
-                        <div className={styles.imgDiv}>
-                            <img src={img} alt="" />
-                            <h1 className={styles.addPhoto}>Add Photos</h1>
-                            <p className={styles.addPhoto1}>
-                                Please add atleast 3 photos of the plant for correct identification and contribution
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.right}>
-                    <h1>Upload Photos</h1>
+                <div>
+                    <h1 className={styles.uploadT}>Upload Images</h1>
                     <div className={styles.card}>
                         <div className={styles.dragArea} onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
                             {
@@ -102,20 +78,19 @@ export default function UploadImg(props) {
                                     <span className={styles.select}>
                                         drop images here
                                     </span>
-
                                 ) : (
-                                    <>
+                                    <p>
                                         Drag & Drop images here {" "}
                                         <span className={styles.select} role='button' onClick={selectFiles}>
                                             Browse
                                         </span>
-                                    </>
+                                    </p>
                                 )
                             }
                             <input name='file' type="file" className={styles.file} accept='image/*' multiple ref={fileInputRef} onChange={onFileSelect} />
                         </div>
                     </div>
-                    <label htmlFor="" ref={labelRef} style={{ color: 'red' }}>*Please upload atleast 3 images</label>
+                    <label htmlFor="" ref={labelRef} style={{ color: 'orange' }}>*Please upload atleast 3 images</label>
                     <div className={styles.imgContainer}>
                         {
                             images.map((images, index) => (
@@ -126,11 +101,10 @@ export default function UploadImg(props) {
                             ))
                         }
                     </div>
-                    <div className={styles.btnContainer}>
-                        <div className={styles.btn1}>Previous</div>
-                        <Link to={path} >
-                            <div ref={btnRef} className={styles.btn2}>Next</div>
-                        </Link>
+                    <div className={styles.desc}>Description</div>
+                    <textarea name="txtArea" id="" cols="10" rows="5" className={styles.tt} placeholder="Write description.."></textarea>
+                    <div className={styles.btnSection}>
+                        <Link to={'contribute'}><buttot className={styles.submit}>Submit</buttot></Link>
                     </div>
                 </div>
             </div>

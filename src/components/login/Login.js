@@ -2,8 +2,9 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLazyQuery, gql } from "@apollo/client";
 import { AuthContext } from '../../services/AuthContext.js';
-import '../login/login.css';
-import img from '../assets/glogo.png'
+import styles from '../login/login.module.css';
+import img from './google.png'
+import img1 from './tr.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -86,54 +87,39 @@ export default function Login() {
     }, [loggedIn, navigate]);
 
     return (
-        <div className='d'>
-            <div className='parent'>
-                <div className="content">
-                    <div className='log'>
-                        <h1>Login</h1>
-                    </div>
-                    <div className='ifield'>
-                        <input ref={inputRef1} type="input" placeholder='Email' value={inputemail}
-                            onChange={(e) => setEmail(e.target.value.toLowerCase())} required />
-                        <input ref={inputRef2} id='input2' type="password" placeholder='password'
-                            onChange={(e) => setPassword(e.target.value.toLowerCase())} required />
-                    </div>
-                    <div className='chk'>
-                        <div>
-                            <input type="checkbox" id='remeber' />
-                            <label htmlFor="remeber" style={{ marginLeft: '3px' }}>Remember me</label>
-                        </div>
-                        <Link to={'/findacc'}>Forget password?</Link>
-                    </div>
-                    <div className='tc'>
-                        <div>
-                            <input type="checkbox" id='accept' style={{ marginRight: '4px' }} />
-                            <label htmlFor="accept" required>I accept this</label>
-                        </div>
-                        <div style={{ marginRight: '5px', fontSize: '1em', paddingLeft: '3px', color: '#54AEFF' }}>
-                            <Link to={'/terms'}><p>Terms & Conditions</p></Link>
-                        </div>
-                    </div>
-                    <div ref={btnRef} className='btn1' onClick={() => {
-                        if (validateLogin())
-                            Loginfunc({ variables: { details: { "usermail": inputemail, "password": inputpassword } } }).then(() => {
-                                if (!loggedIn)
-                                    notifyError()
-                            })
-                    }}>
-                        <p>Login</p>
-                    </div>
-                    <div className='btn2'>
-                        <img src={img} alt="" />
-                        <p>Continue with Login</p>
-                    </div>
-                    <div className='start'>
-                        <p>Don't have an account?</p>
-                        <Link to={'/signup'}><div>Get started</div></Link>
-                    </div>
-                </div>
-            </div>
+        <div className={styles.parent}>
+            <img src={img1} alt="" />
+            <div className={styles.content}>
 
+                <h1 className={styles.log}>Login</h1>
+
+                <div className={styles.ifield}>
+                    <input ref={inputRef1} type="input" placeholder='Email' value={inputemail}
+                        onChange={(e) => setEmail(e.target.value.toLowerCase())} required />
+                    <input ref={inputRef2} id='input2' type="password" placeholder='password'
+                        onChange={(e) => setPassword(e.target.value.toLowerCase())} required />
+                </div>
+
+                <div ref={btnRef} className={styles.btn1} onClick={() => {
+                    if (validateLogin())
+                        Loginfunc({ variables: { details: { "usermail": inputemail, "password": inputpassword } } }).then(() => {
+                            if (!loggedIn)
+                                notifyError()
+                        })
+                }}>
+                    <p>Login</p>
+                </div>
+                <div className={styles.btn2}>
+                    <img src={img} alt="" />
+                    <p>Continue with Login</p>
+                </div>
+                <Link to={'/findacc'} className={styles.forgot}>Forgot password?</Link>
+                <div className={styles.start}>
+                    <p>Don't have an account?</p>
+                    <Link to={'/signup'}><div>Get started</div></Link>
+                </div>
+
+            </div>
             <ToastContainer containerId="Error" />
             <ToastContainer containerId="Warning" />
         </div>

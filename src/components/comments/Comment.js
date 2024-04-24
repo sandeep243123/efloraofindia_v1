@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useEffect, useState, useRef } from 'react'
+import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 import Action from "./Action";
 import style from './Comment.module.css'
 import like from '../assets/like.png';
@@ -7,19 +8,56 @@ import { ReactComponent as DownArrow } from "../assets/down-arrow.svg";
 import { ReactComponent as UpArrow } from "../assets/up-arrow.svg";
 const Comment = ({
   handleInsertNode,
-  // handleEditNode,
+  handleEditNode,
   handleDeleteNode,
   comment,
 }) => {
+
+
+  const [commentList, setCommentList] = useState([]);
+
+  const [getComments] = useLazyQuery(gql`
+  query GetComments($details: getComment!) {
+    getComments(details: $details) {
+      commentID
+      commentText
+      postedBy
+      repliedTo
+    }
+  }
+`, {
+
+
+
+
+    onCompleted: (data) => {
+      console.log(data[getComments], "hii data")
+      setCommentList(data)
+      //setCommentList(data["getPosts"])
+    },
+    //variables: {"postID":props.postID}
+
+    onError: (error) => {
+      console.error('Error signing up:', error.message);
+
+
+
+
+    }
+  });
+
+
+
+
   const [input, setInput] = useState("");
-  // const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [showInput, setShowInput] = useState(false);
-  const [expand, setExpand] = useState(true);
+  const [expand, setExpand] = useState(false);
   const inputRef = useRef(null);
 
-  // useEffect(() => {
-  //   inputRef?.current?.focus();
-  // }, [editMode]);
+  useEffect(() => {
+    inputRef?.current?.focus();
+  }, [editMode]);
 
   const handleNewComment = () => {
     setExpand(!expand);
@@ -27,16 +65,13 @@ const Comment = ({
   };
 
   const onAddComment = () => {
-    // if (editMode) {
-    //   handleEditNode(comment.id, inputRef?.current?.innerText);
-    // } else {
-      setExpand(true);
-      handleInsertNode(comment.id, input);
-      setShowInput(false);
-      setInput("");
-    // }
 
-    // if (editMode) setEditMode(false);
+    setExpand(true);
+    console.log(commentList)
+    // setCommentList([...commentList, comment])
+    handleInsertNode(comment.commentId, input);
+    setShowInput(false);
+    setInput("");
   };
 
   const handleDelete = () => {
@@ -48,7 +83,7 @@ const Comment = ({
       <div className={comment.id === 1 ? `${style.inputContainer}` : `${style.commentContainer}`}>
         {comment.id === 1 ? (
           <>
-            
+
             <input
               type="text"
               className={`${style.inputContainer__input} ${style.first_input}`}
@@ -69,84 +104,82 @@ const Comment = ({
             <div className={style.commentBox}>
               <div className={style.userInfo}>
                 <img src="" alt="profileImage" className={style.profileImage}></img>
-                <p className={style.userName}>{comment.name}</p>
+                <p className={style.userName}>{comment.postedBy}</p>
               </div>
               <span
-              className={style.text}
-                // contentEditable={editMode}
-                // suppressContentEditableWarning={editMode}
+                className={style.text}
+                contentEditable={editMode}
+                suppressContentEditableWarning={editMode}
                 ref={inputRef}
                 style={{ wordWrap: "break-word" }}
               >
-                {comment.text}
+                {comment.commentText}
               </span>
             </div>
             <div className={style.footer}>
-                <div style={{ display: "flex", marginTop: "5px" }}>
-                  {/* {editMode ? (
-                    <>
-                    
-                      <Action
-                        className={style.reply}
-                        type="SAVE"
-                        handleClick={onAddComment}
-                      />
-                      <Action
-                        className={style.reply}
-                        type="CANCEL"
-                        handleClick={() => {
-                          if (inputRef.current)
-                            inputRef.current.innerText = comment.name;
-                          setEditMode(false);
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <> */}
-                      <Action
-                      
-                        className={style.reply}
-                        type={
-                          <>
-                            {expand ? (
-                              <UpArrow width="10px" height="10px" />
-                            ) : (
-                              <DownArrow width="10px" height="10px"  />
-                            )}{"  "}
-                            REPLY
-                          </>
-                        }
-                        handleClick={handleNewComment}
-                      />
-                      {/* <Action
-                        className={style.reply}
-                        type="EDIT"
-                        handleClick={() => {
-                          setEditMode(true);
-                        }}
-                      /> */}
-                      <Action
-                        className={style.reply}
-                        type="DELETE"
-                        handleClick={handleDelete}
-                      />
-                    {/* </>  */}
-                  {/* ) */}
-                </div>
-                        {/* like and dislike button */}
+              <div style={{ display: "flex", marginTop: "5px" }}>
+                {editMode ? (
+                  <>
+                    <Action
+                      className={style.reply}
+                      type="SAVE"
+                      handleClick={onAddComment}
+                    />
+                    <Action
+                      className={style.reply}
+                      type="CANCEL"
+                      handleClick={() => {
+                        if (inputRef.current)
+                          inputRef.current.innerText = comment.name;
+                        setEditMode(false);
+                      }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Action
 
-                <div className={style.vote}>
-                        <div className={style.upvote}>
-                          <img src={like} alt="like" name="vote" />
-                          <p>0</p>
-                        </div>
-                        <div className={style.downvote}>
-                          <img src={dislike} alt="dislike" name="vote"/>
-                          <p>0</p>
-                        </div>
+                      className={style.reply}
+                      type={
+                        <>
+                          {expand ? (
+                            <UpArrow width="10px" height="10px" />
+                          ) : (
+                            <DownArrow width="10px" height="10px" />
+                          )}{"  "}
+                          REPLY
+                        </>
+                      }
+                      handleClick={handleNewComment}
+                    />
+                    <Action
+                      className={style.reply}
+                      type="EDIT"
+                      handleClick={() => {
+                        setEditMode(true);
+                      }}
+                    />
+                    <Action
+                      className={style.reply}
+                      type="DELETE"
+                      handleClick={handleDelete}
+                    />
+                  </>
+                )}
+              </div>
+              {/* like and dislike button */}
+
+              <div className={style.vote}>
+                <div className={style.upvote}>
+                  <img src={like} alt="like" name="vote" />
+                  <p>0</p>
                 </div>
+                <div className={style.downvote}>
+                  <img src={dislike} alt="dislike" name="vote" />
+                  <p>0</p>
+                </div>
+              </div>
             </div>
-            
           </>
         )}
       </div>
@@ -159,6 +192,7 @@ const Comment = ({
               className={style.inputContainer__input}
               autoFocus
               onChange={(e) => setInput(e.target.value)}
+
             />
             <Action className={style.reply} type="REPLY" handleClick={onAddComment} />
             <Action
@@ -177,7 +211,7 @@ const Comment = ({
             <Comment
               key={cmnt.id}
               handleInsertNode={handleInsertNode}
-              // handleEditNode={handleEditNode}
+              handleEditNode={handleEditNode}
               handleDeleteNode={handleDeleteNode}
               comment={cmnt}
             />
@@ -187,5 +221,4 @@ const Comment = ({
     </div>
   );
 };
-
 export default Comment;

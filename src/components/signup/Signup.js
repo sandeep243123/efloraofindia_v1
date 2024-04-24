@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { gql, useMutation } from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../services/AuthContext.js';
+import img from './t1.png'
 
 export default function Signup() {
     const [inputname, setName] = useState("");
@@ -47,9 +48,9 @@ export default function Signup() {
         <div className={styles.d1}>
             <div className={styles.parent1}>
                 <div className={styles.registrationFrom1}>
-                    <div className={styles.title1}>
-                        <h1>Let's get you started!</h1>
-                    </div>
+
+                    <h1 className={styles.title1}>Let's get you started!</h1>
+
                     <div className={styles.inputForm1}>
                         <div className={styles.ifield1}>
                             <p>Full name</p>
@@ -93,19 +94,12 @@ export default function Signup() {
                         </div>
                         <div className={styles.start1}>
                             <p>Already a user?</p>
-                            <Link to="/login">Login</Link>
+                            <Link to="/login" style={{ color: 'orange' }}>Login</Link>
                         </div>
                     </div>
                 </div>
-                <div className={styles.quotes1}>
-                    <div className={styles.title2}>
-                        <p>eFloraOfIndia</p>
-                    </div>
-                    <div className={styles.q}>
-                        <p>&nbsp;It has the largest database on net on Indian Flora with more than 14,000 species (along with more than 4,00,000 pictures)&nbsp;</p>
-                    </div>
-                </div>
             </div>
+            <img src={img} alt="" />
         </div>
     )
 }

@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+nav {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(0, 130, 130);
+    padding: 20px 80px;
+}
+
+nav a {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 1.5rem;
+}
+
+.navBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navBar li {
+    list-style: none;
+    padding: 0 20px;
+    position: relative;
+}
+
+.navBar li a {
+    font-size: 1.2rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    transition: 0.3s ease-in-out;
+}
+
+.navBar li a:hover,
+.navBar li a.active {
+    color: rgb(118, 253, 106);
+
+}
+
+.navBar li a:hover::after,
+.navBar li a.active::after {
+    content: "";
+    width: 50%;
+    height: 2px;
+    background: rgb(118, 253, 106);
+    position: absolute;
+    bottom: -1px;
+    left: 20px;
+}
+
+.navBar li a:hover::after {}
+
+.mobile {
+    cursor: pointer;
+    margin-right: -40px;
+}
+
+@media screen and (max-width:769px) {
+    .navBar {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        position: fixed;
+        top: 76px;
+        right: -310px;
+        width: 300px;
+        height: 100vh;
+        background-color: rgb(0, 130, 130);
+        border-top: 3px solid rgb(118, 253, 106);
+        z-index: 999;
+        transition: 0.2s;
+    }
+}
+
+.navBar {
+    /* display: none; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: fixed;
+    top: 76px;
+    right: -310px;
+    width: 300px;
+    height: 100vh;
+    background-color: rgb(0, 130, 130);
+    border-top: 3px solid rgb(118, 253, 106);
+    z-index: 999;
+    transition: 0.5s;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.9);
+    border-radius: 10px 0px 0px 10px;
+}
+
+.navBar li {
+    margin: 5px 0;
+}
+
+.navBar.active {
+    transition: 0.5s;
+    display: flex;
+    right: 0px;
+}

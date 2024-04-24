@@ -3,43 +3,41 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloProvider, ApolloClient, InMemoryCache,createHttpLink } from "@apollo/client";
+import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { AuthProvider } from './services/AuthContext';
 
 const httpLink = createHttpLink({
-  uri: 'http://eflora.vangyaan.com/',
+  uri: 'https://eflora.vangyaan.com/',
 });
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('authToken');
   // return the headers to the context so httpLink can read them
-  if(!token)
-  {
-  return {
-    headers: {
-      ...headers,
-      // token,
+  if (!token) {
+    return {
+      headers: {
+        ...headers,
+        // token,
+      }
     }
   }
-}
-else
-{
-  return {
-    headers: {
-      ...headers,
-       token,
+  else {
+    return {
+      headers: {
+        ...headers,
+        token,
+      }
     }
   }
-}
 });
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  defaultOptions : {
+  defaultOptions: {
     watchQuery: {
       fetchPolicy: 'no-cache',
       errorPolicy: 'ignore',
@@ -57,11 +55,11 @@ root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <AuthProvider>
-        
+
         <Router><App /></Router>
       </AuthProvider>
     </ApolloProvider>
-    
+
   </React.StrictMode>
 );
 

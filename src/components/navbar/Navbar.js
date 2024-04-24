@@ -1,49 +1,52 @@
-import React from "react";
-import { Link } from 'react-router-dom'
-import './style.css';
-import img1 from './logo-removebg-preview.png'
-import userImg from '../popup components/view contribution/user.png'
-import logoutImg from '../assets/switch.png'
-import signupImg from '../assets/add-friend.png'
-import loginImg from '../assets/login.png'
-import contactImg from '../assets/customer-service.png'
-import aboutImg from '../assets/about-us.png'
-import exploreImg from '../assets/explore.png'
-import contributeImg from '../assets/jigsaw.png'
+import React, { useState, useRef, useEffect } from 'react';
+import style from './navbar.module.css'
+import { GiHamburgerMenu } from "react-icons/gi";
+import { GrClose } from "react-icons/gr";
+import { Link } from 'react-router-dom';
+function Navbar() {
+  const [toggle, setToggle] = useState(false)
+  const sideNavRef = useRef(null);
+  useEffect(() => {
+    // Add event listener to the document object
+    document.addEventListener('mousedown', handleClickOutside);
 
-import { useState } from "react";
-export default function Navbar() {
-  const [condition, setCondition] = useState(true)
+    // Remove event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  function handleClickOutside(event) {
+    if (sideNavRef.current && !sideNavRef.current.contains(event.target)) {
+      setToggle(false)
+    }
+  }
+
   return (
-    <div>
-      <div className="nav">
-        <input type="checkbox" id="nav-check" />
-        <div className="nav-header">
-          <div className="nav-title">
-            <Link to='/'><img src={img1} alt="" /></Link>
-          </div>
-        </div>
-        <div className="nav-btn">
-          <label className="userImg" htmlFor="nav-check">
-            <img src={userImg} alt="" style={{ width: "100%", height: '100%' }} />
-          </label>
-        </div>
-        <div className="nav-links">
+    <>
+      <nav>
+        {/* <a href="#">eFloraOfIndia</a> */}
+        <Link to={' '}>eFloraOfIndia</Link>
+        <div >
+          <ul ref={sideNavRef} className={toggle ? style.navBar + " " + style.active : style.navBar}>
 
-          <Link to={'/'}><img src={exploreImg} className="icon-img"></img>Explore</Link>
-          <Link to={'/about'}><img src={aboutImg} className="icon-img"></img>About us</Link>
-          <Link to={'/contact'}><img src={contactImg} className="icon-img"></img>Contact us</Link>
-          {condition ? <Link to={'/login'}><img src={loginImg} className="icon-img"></img>Login</Link> : null}
-          {condition ? <Link to={'/signup'}><img src={signupImg} className="icon-img"></img>Signup</Link> : null}
-          <Link to='/contribute'><img src={contributeImg} className="icon-img" alt=""></img>Contribute</Link>
+            <li><Link to={' '}>Home</Link></li>
+            <li><Link to={'/about'}>About us</Link></li>
+            <li><Link to={'/contact'}>Contact us</Link></li>
 
-          <Link to={'/contact'}><img src={logoutImg} className="icon-img" alt=""></img>Sign out</Link>
-          <Link to={'/upload'}>Upload</Link>
-          <Link to={'/showposts'}>Show Posts</Link>
-          <Link to={'/dashboard'}>Leaderboard</Link>
+            <li><Link to={'/login'}>Login</Link></li>
+            <li><Link to={'/signup'}>Sign up</Link></li>
+            <li><Link to={'/showposts'}>Show posts</Link></li>
+            <li><Link to={'/upload'}>Contribute</Link></li>
+            <li><Link to={'/dashboard'}>Dashboard</Link></li>
+          </ul>
         </div>
-      </div>
-    </div>
-
+        <div className={style.mobile} onClick={() => setToggle(!toggle)}>
+          {!toggle ? <GiHamburgerMenu></GiHamburgerMenu> : <GrClose></GrClose>}
+        </div>
+      </nav>
+    </>
   )
 }
+
+export default Navbar

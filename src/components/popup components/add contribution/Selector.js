@@ -67,12 +67,12 @@ function Selector(props) {
     );
 
     const [getAutoSuggestion] = useLazyQuery(gql`
-        query Query($details: autoCompleteFeaturePropety) {
-            getFeatureProperty(details: $details) {
-                featurePropertyID
-                value
-            }
-        } 
+    query GetFeatureProperty($details: GetFeaturePropertyRequest) {
+        getFeatureProperty(details: $details) {
+          featurePropertyID
+          value
+        }
+      }
     `, {
         onCompleted: (data) => {
             setsearchArray(data["getFeatureProperty"])
@@ -82,14 +82,14 @@ function Selector(props) {
     const [cList, setcList] = useState([]);
 
     const [getcList] = useLazyQuery(gql`
-            query($details: GetContribution!){
-                getContribution(details: $details) {
-                    partName
-                    FeaturePropertyName
-                    FeatureName
-                
-                }
-            }
+    query GetContribution($details: GetContributionRequest!) {
+        getContribution(details: $details) {
+          FeatureName
+          FeaturePropertyName
+          contributionID
+          partName
+        }
+      }
     `, {
         onCompleted: (data) => {
             setcList(data["getContribution"])
@@ -202,10 +202,11 @@ function Selector(props) {
         addFeatureProperty(details: $details)
       }
     `
-    const [addFeaturePropery] =
+    const [addFeatureProperty] =
         useMutation(addFeaturePropertyMutation, {
             onCompleted: (data) => {
-                setpropertyID(data["addFeaturePropery"])
+                setpropertyID(data["addFeatureProperty"])
+                
             },
             onError: (error) => {
                 console.error('Error signing up:', error.message);
@@ -333,7 +334,7 @@ function Selector(props) {
                             <div className='bg-white rounded-tr-lg rounded-br-lg'
                                 onClick={
                                     () => {
-                                        addFeaturePropery({
+                                        addFeatureProperty({
                                             variables: {
                                                 details: {
                                                     featureID: featureID,
@@ -369,7 +370,8 @@ function Selector(props) {
                     </div>
                     <button className="bg-green-600 text-zinc-100 h-10 w-32 px-2 rounded-md font-bold" onClick={
                         () => {
-                            console.log(props.postID, propertyID)
+                            console.log("HIIIIII")
+                            console.log("PP",props.postID, propertyID)
                             addContribution({ variables: { details: { "postID": props.postID, "featurePropertyID": propertyID } } })
                         }
                     }>
@@ -378,6 +380,9 @@ function Selector(props) {
                 </div>
             </div>
             <div className='-mt-72 py-5 flex flex-col justify-end gap-6 w-full'>
+                {
+                    console.log("bye",cList)
+                }
                 <List contributionList={cList} />
             </div>
         </div>

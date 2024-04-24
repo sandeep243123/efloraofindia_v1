@@ -1,36 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Agbalumo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* overflow-y: hidden; */
 }
 
 .d1 {
     width: 100vw;
     height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: white;
 
 }
 
 .parent1 {
-    height: 84%;
-    width: 80vw;
-    background-color: #ffffff;
-    border: 3px solid black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: 15%;
+    transform: translateY(-50%) translateX(-50%);
+    height: 84vh;
+    width: 500px;
     border-radius: 20px;
-    background-color: #ffffff10;
-    backdrop-filter: blur(15px);
-    border: 2px solid;
-    border-color: #fff;
-    border-right: 1px solid white;
-    border-top: 1px solid white;
+    background-color: #000000b9;
+    box-shadow: 0px 0px 10px white;
     color: white;
-    margin-top: -4%;
     display: flex;
+    transition: 0.8s;
+    /* overflow: hidden; */
+}
+
+.parent1:hover {
+    height: 83vh;
+    width: 510px;
+    transition: 0.8s;
+    box-shadow: 0px 0px 20px white;
 }
 
 .registrationFrom1 {
@@ -40,61 +47,67 @@
 .title1 {
     font-size: 1.6em;
     margin: 4% 5%;
-
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
 }
 
 .inputForm1 {
-    /* margin-top: 4%; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
 
 .ifield1 {
     margin-top: 4%;
-
 }
 
 .ifield1 p {
-    font-size: 1em;
+    font-size: 1.1em;
     margin-left: 3%;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
 }
 
 .ifield1 input {
     margin: 0;
     color: rgb(43, 43, 43);
-    width: 25vw;
-    height: 4.7vh;
-    border-radius: 10px;
-    padding-left: 10px;
+    width: 27vw;
+    height: 6vh;
+    min-width: 400px;
+    border-radius: 20px;
+    padding-left: 20px;
     background-color: #D9D9D9;
-    /* border: 2px solid rgb(121, 118, 118); */
     box-shadow: 2px 5px;
+    outline: none;
 }
 
 .btn11 {
-    width: 25vw;
-    height: 5vh;
-    text-align: center;
-    padding: 10px;
-    background-color: #2A6C50;
-    color: black;
-    border: none;
-    border-radius: 5px;
+    width: 27vw;
+    height: 6vh;
+    min-width: 400px;
+    background-color: #0fad6b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    margin-top: 10%;
     cursor: pointer;
-    margin-top: 4%;
-    border-radius: 10px;
-    border: 0.5px solid white;
-    font-size: 1.3em;
-    box-shadow: 5px 5px;
+}
+
+.btn11:hover {
+    background-color: #028a52;
 }
 
 .btn11 p {
-    position: relative;
-    top: -9px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 1.4em;
 }
+
 
 .passwordConstraints {
     margin-top: 2%;
@@ -116,9 +129,15 @@
     margin-left: 2%;
     width: 100%;
     font-size: 1em;
-    /* margin-top: 4%; */
-    font-style: italic;
+
 }
+
+p {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
 
 .start1 {
     display: flex;
@@ -130,112 +149,65 @@
     margin-left: 5px;
 }
 
-.quotes1 {
-    width: 75%;
-    height: 70vh;
-    margin-right: 5%;
-    margin-top: 4%;
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(41, 40, 40);
-    border-radius: 15px;
-    box-shadow: 3px 3px 10px;
-    /* filter: blur(8px);
-    -webkit-filter: blur(8px); */
+.start1 p {
+    margin-right: 10px;
 }
 
-.title2 {
-    margin-top: 10%;
-    color: #66d208;
-    /* color: #2A6C50; */
-    font-size: 2.7em;
-    font-weight: 600;
-    margin-left: 20%;
+
+.d1 img {
+    height: 80vh;
+    margin-left: 0%;
+    margin-top: 7%;
 }
 
-.title2 p {
-    font-family: 'Agbalumo', system-ui;
+@media (max-width:935px) {
+    .parent1 {
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        margin-left: 0;
+    }
 }
 
-.q {
-    /* padding: 10%; */
-    margin-top: 5%;
-    margin-left: 10%;
-    font-size: 2em;
-    font-weight: 600;
-    text-align: center;
-    width: 25vw;
-    border-radius: 8px;
-
-}
-
-.q p {
-    /* line-height: 1.7; */
-    background: none;
-    font-family: 'Agbalumo', system-ui;
-}
-
-.q p:before {
-    content: open-quote;
-    font-weight: bold;
-    font-size: 40px;
-    color: #889c0b;
-}
-
-.q p:after {
-    content: close-quote;
-    font-weight: bold;
-    font-size: 40px;
-    color: #889c0b;
-
-}
-
-@media (max-width:1200px) {
-    .q {
-        padding-left: 0%;
-        padding-right: 5%;
-        width: 29vw;
+@media (max-width:530px) {
+    .parent1 {
+        height: 78vh;
+        width: 80vw;
     }
 
-    .title2 {
-        margin-left: 10%;
-        margin-top: 2%;
+    .parent1:hover {
+        height: 79vh;
+        width: 81vw;
+    }
+
+    .ifield1 input,
+    .btn11 {
+        min-width: auto;
+        width: 60vw;
+    }
+}
+
+@media (max-width:520px) {
+    .tc1 {
+        margin-left: 22%;
     }
 
     .passwordConstraints {
-        margin-left: -5px;
-    }
-}
-
-@media (max-width:1050px) {
-    .quotes1 {
-        display: none;
-    }
-
-    .ifield1 input {
-        width: 45vw;
-    }
-
-    .inputForm1 {
-        margin-top: -5%;
-    }
-}
-
-@media (max-width:630px) {
-    .inputForm1 {
-        margin-top: 2%;
-    }
-}
-
-@media (max-width:1150px) {
-    .quotes1 p {
-        margin-top: 10%
+        margin-left: 10%;
     }
 }
 
 @media (max-width:430px) {
     .parent1 {
-        margin-top: 10%;
-        height: 62vh;
+        height: 75vh;
+    }
+
+    .tc1 {
+        margin-left: 7%;
+    }
+
+    .tc1 p {
+        font-size: 0.9em;
+
     }
 }
