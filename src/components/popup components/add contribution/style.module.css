@@ -1,9 +1,6 @@
 .modalBackground {
-    position: fixed;
-    margin-top: -550px;
-    margin-left: -0.5%;
-    width: 100vw;
-    height: 100vh;
+    /* width: 100vw;
+    height: 100vh; */
     z-index: 10;
     display: flex;
     justify-content: center;
@@ -11,10 +8,6 @@
 }
 
 .modalContainer {
-
-    /* background-color: white; */
-    /* border-radius: 10px; */
-    /* margin-top: -10%; */
     width: 60%;
     height: 75vh;
     border: 1px solid white;
@@ -23,10 +16,13 @@
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(40px);
-    position: relative;
+    position: absolute;
+    top: 30%;
+    left: 20%;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
+    z-index: 999;
+    padding: 10px;
 }
 
 .modald1 {
@@ -39,6 +35,11 @@
     color: #f1f1f1;
     font-size: 1.7rem;
     font-weight: 800;
+}
+
+.modald1 button {
+    margin-bottom: 15px;
+    margin-left: 15px;
 }
 
 @media (max-width:960px) {

@@ -31,6 +31,7 @@ function Navbar() {
           <ul ref={sideNavRef} className={toggle ? style.navBar + " " + style.active : style.navBar}>
 
             <li><Link to={' '}>Home</Link></li>
+            <li><Link to={'/profile'}>Profile</Link></li>
             <li><Link to={'/about'}>About us</Link></li>
             <li><Link to={'/contact'}>Contact us</Link></li>
 

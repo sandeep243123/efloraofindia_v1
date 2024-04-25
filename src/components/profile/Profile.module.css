@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.parent {
+    height: 100vh;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Profile {
+    height: 90vh;
+    width: 500px;
+    box-shadow: 0px 0px 10px 5px #cecece;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.imgSection {
+    height: 200px;
+    width: 100%;
+    background-color: rgb(0, 130, 130);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px 20px 0px 0px;
+}
+
+.imgSection h1 {
+    position: relative;
+    left: 57%;
+    top: -35%;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-weight: 450;
+    font-style: normal;
+    cursor: pointer;
+}
+
+.imgSection img {
+    height: 150px;
+    width: 150px;
+    background-color: white;
+    border-radius: 80px;
+}
+
+.userInfo {
+    height: 70%;
+    width: 92%;
+    background-color: white;
+    border-radius: 0px 0px 20px 20px;
+}
+
+.field {
+    margin: 15px 10px;
+
+}
+
+.field h1 {
+    color: gray;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.field input {
+    outline: none;
+    width: 100%;
+    padding: 5px 5px;
+    border-bottom: 1px solid rgb(222, 222, 222);
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    /* margin: 0px 0; */
+}
+
+.choice {
+    background-color: white;
+    outline: none;
+    width: 100%;
+    padding: 5px 5px;
+    border-bottom: 1px solid rgb(222, 222, 222);
+}
+
+.opValue {
+    background-color: red;
+}

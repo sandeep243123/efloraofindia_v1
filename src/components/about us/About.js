@@ -5,9 +5,6 @@ import aboutus2 from "../assets/aboutus2.png";
 export default function About() {
   return (
     <div className={style.wrapper}>
-      {/* <div className={style.heading}>
-        <p>About </p> <p>eFloraOfIndia</p>
-      </div> */}
       <div className={style.container}>
         <div className={style.parentLeft}>
           <div className={style.contentLeft}>

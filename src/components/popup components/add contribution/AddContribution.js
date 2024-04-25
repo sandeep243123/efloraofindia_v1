@@ -5,8 +5,8 @@ function AddContribution(props) {
 
     console.log(props)
     return (
-        <div className={`${styles["modalBackground"]}`}>
-            <div className={`${styles["modalContainer"]}`}>
+        <div className={styles.modalBackground}>
+            <div className={styles.modalContainer}>
                 <div className={`${styles["modald1"]}`}>
                     <div className={`${styles["title"]}`}>
                         Add Contribution

@@ -16,6 +16,7 @@ import { useState } from 'react';
 import FindAcc from './components/forgot password/find acc/FindAcc.js';
 import Otp from './components/forgot password/Otp/Otp.js';
 import SetPassword from './components/forgot password/set password/SetPassword.js';
+import Profile from './components/profile/Profile.js'
 
 function App() {
   const [data, setData] = useState([]);
@@ -38,6 +39,7 @@ function App() {
         <Route path='/findacc' element={<FindAcc></FindAcc>}></Route>
         <Route path='/otp' element={<Otp></Otp>}></Route>
         <Route path='/setPass' element={<SetPassword></SetPassword>}></Route>
+        <Route path='/profile' element={<Profile></Profile>}></Route>
       </Routes >
 
     </div >

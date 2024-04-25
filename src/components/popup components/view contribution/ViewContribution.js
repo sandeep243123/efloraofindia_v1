@@ -1,4 +1,4 @@
-import styles from '../view contribution/style.module.css'
+import styles from '../view contribution/view.module.css'
 import img from './user.png'
 import img1 from './check.png'
 import React, { useEffect, useState } from 'react'

@@ -22,6 +22,7 @@ body {
     display: flex;
     justify-content: center;
     background-color: black;
+    /* background: rgb(87, 168, 255); */
     width: 100%;
     color: white;
     margin-top: 10px;
@@ -76,6 +77,7 @@ body {
 
 .right {
     background-color: black;
+    /* background-color: white; */
     width: 100%;
 }
 
@@ -91,11 +93,7 @@ body {
     margin-left: 60%;
 }
 
-
-
 .container2 {
-    /* height: 100vh; */
-
     background-color: white;
     display: flex;
     flex-direction: column;
