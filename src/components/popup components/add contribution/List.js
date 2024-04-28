@@ -1,13 +1,9 @@
 import React from 'react'
 import chImg from './check.png'
-import penImg from './expired.png'
 function List(props) {
 
-
-
-
-    const  contributionList  = props.contributionList;
-    console.log("HI",contributionList)
+    const contributionList = props.contributionList;
+    console.log("HI", contributionList)
     return (
         <div className='max-h-96 overflow-y-scroll rounded-md'>
             <table className="w-full">

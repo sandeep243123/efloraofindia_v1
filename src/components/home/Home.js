@@ -15,6 +15,12 @@ function Home() {
           <p>
             To plant a garden is to believe in Tommorrow
           </p>
+          <div className={styles.quote}>
+            <p>“Even a plant is a living being, therefore we must also consider its mind and soul; just like we do in the case of a human being.”
+              
+              
+              ― Mwanandeke Kindembo</p>
+          </div>
           <div className={styles.search} type='text'>
             <input type="text" placeholder='Enter text to search' />
             <a>
@@ -23,7 +29,8 @@ function Home() {
           </div>
         </div>
         <img className={styles.timg} src={timg} alt="" />
-        <div className={styles.right}></div>
+        <div className={styles.right}>
+        </div>
       </div>
       <div className={styles.container2} >
         <p className={styles.cardT}>Our core <p id='pp'>Services</p></p>

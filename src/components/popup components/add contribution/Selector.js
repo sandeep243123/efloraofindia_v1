@@ -12,7 +12,7 @@ function Selector(props) {
     const [inputValue, setInputValue] = useState("");
     const [inputPart, setInputPart] = useState("");
     const [inputFeature, setInputFeature] = useState("");
-    const [countries, setCountries] = useState(null)
+    const [part, setpart] = useState(null)
     const [selected, setSelected] = useState("Select Item")
     const [selected1, setSelected1] = useState("Select Item")
     const [open1, setOpen1] = useState(false);
@@ -47,7 +47,7 @@ function Selector(props) {
       }
     `, {
         onCompleted: (data) => {
-            setCountries(data.getPlantParts);
+            setpart(data.getPlantParts);
         }
     }
     );
@@ -84,10 +84,10 @@ function Selector(props) {
     const [getcList] = useLazyQuery(gql`
     query GetContribution($details: GetContributionRequest!) {
         getContribution(details: $details) {
-          FeatureName
-          FeaturePropertyName
           contributionID
           partName
+          FeatureName
+          FeaturePropertyName
         }
       }
     `, {
@@ -98,7 +98,7 @@ function Selector(props) {
     })
     useEffect(() => {
         if (data) {
-            setCountries(data.getPlantParts);
+            setpart(data.getPlantParts);
             getcList({
                 variables: {
                     details: {
@@ -148,6 +148,7 @@ function Selector(props) {
     const [addContribution] =
         useMutation(contributionMutation, {
             onCompleted: (data) => {
+
                 getcList({
                     variables: {
                         details: {
@@ -165,9 +166,9 @@ function Selector(props) {
 
 
     const addPlantPartMutation = gql`
-                mutation AddPlantPart($partName: String!) {
-                    addPlantPart(partName: $partName)
-                }`
+    mutation AddPlantPart($partName: nonEmptyString!) {
+        addPlantPart(partName: $partName)
+      }`
 
     const [addPlantPart] =
         useMutation(addPlantPartMutation, {
@@ -205,6 +206,7 @@ function Selector(props) {
     const [addFeatureProperty] =
         useMutation(addFeaturePropertyMutation, {
             onCompleted: (data) => {
+                console.log(data)
                 setpropertyID(data["addFeatureProperty"])
                 
             },
@@ -247,7 +249,7 @@ function Selector(props) {
                             </div>
                         </div>
 
-                        {countries?.map((country) => (
+                        {part?.map((country) => (
                             <li
                                 key={country?.name}
                                 className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${country?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
@@ -336,6 +338,7 @@ function Selector(props) {
                                     () => {
                                         addFeatureProperty({
                                             variables: {
+                                                
                                                 details: {
                                                     featureID: featureID,
                                                     value: inputString
@@ -370,8 +373,6 @@ function Selector(props) {
                     </div>
                     <button className="bg-green-600 text-zinc-100 h-10 w-32 px-2 rounded-md font-bold" onClick={
                         () => {
-                            console.log("HIIIIII")
-                            console.log("PP",props.postID, propertyID)
                             addContribution({ variables: { details: { "postID": props.postID, "featurePropertyID": propertyID } } })
                         }
                     }>
@@ -380,9 +381,7 @@ function Selector(props) {
                 </div>
             </div>
             <div className='-mt-72 py-5 flex flex-col justify-end gap-6 w-full'>
-                {
-                    console.log("bye",cList)
-                }
+                
                 <List contributionList={cList} />
             </div>
         </div>

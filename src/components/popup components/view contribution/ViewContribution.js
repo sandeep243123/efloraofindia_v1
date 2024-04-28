@@ -1,32 +1,46 @@
-import styles from '../view contribution/view.module.css'
+import styles from '../view contribution/style.module.css'
 import img from './user.png'
 import img1 from './check.png'
 import React, { useEffect, useState } from 'react'
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
+import { propTypeChildren } from '@material-tailwind/react/types/components/timeline';
 
 export default function ViewContribution(props) {
 
 
-    const [plantPartInfo, setplantPart] = useState([])
-    const [show, setShow] = useState(false);
-    const [partFeaturesInfo, SetpartFeature] = useState(null);
-    const [PropertyList, setProperty] = useState(null);
+    const [PropertyList, setProperty] = useState([]);
+    const [nestedList, setNestedList] = useState([]);
 
+    const [cList, setcList] = useState([]);
     const { data } = useQuery(gql`
-    {
-        getPlantParts {
-                partID
-                name
-            }
+    query GetContribution($details: GetContributionRequest!) {
+        getContribution(details: $details) {
+          FeatureName
+          FeaturePropertyName
+          contributionID
+          partName
         }
+      }
     `, {
+        variables: {
+            details: {
+                "postID": props.postID,
+                "showMyContribution": false
+            }
+        },
         onCompleted: (data) => {
-            setplantPart(data.getPlantParts);
+            //setcList(data["getContribution"])
+            getList(data["getContribution"]);
+        },
+        onError: (error) => {
+            console.error('Error signing up:', error.message);
+
         }
+
+
     });
 
 
-    const [cList, setcList] = useState([]);
 
     const [getcList] = useLazyQuery(gql`
     query GetContribution($details: GetContributionRequest!) {
@@ -39,7 +53,11 @@ export default function ViewContribution(props) {
       }
     `, {
         onCompleted: (data) => {
-            setcList(data["getContribution"])
+            //setcList(data["getContribution"])
+            getList(data["getContribution"]);
+        },
+        onError: (error) => {
+            console.error('Error signing up:', error.message);
 
         }
 
@@ -61,67 +79,34 @@ export default function ViewContribution(props) {
     }, [data]);
 
 
-    const [getPlantPartsList] = useLazyQuery(gql`
-    query Query {
-        getPlantParts {
-            partID
-            name
+    function getList(data) {
+        const mainDict = {}
+        for (let eachInfo of data) {
+            if (mainDict[eachInfo.partName] == undefined) {
+                mainDict[eachInfo.partName] = {};
+            }
+
+            if (mainDict[eachInfo.partName][eachInfo.FeatureName] == undefined) {
+                mainDict[eachInfo.partName][eachInfo.FeatureName] = []
+            }
+            mainDict[eachInfo.partName][eachInfo.FeatureName].push(eachInfo)
         }
-      }
-    `, {
-        onCompleted: (data) => {
-            setplantPart(data.getPlantParts);
-        }
-    }
-    );
-
-
-    const [getPlantPlantFeature] = useLazyQuery(gql`
-    query GetPartsFeature($partId: ID!) {
-        getPartsFeature(partID: $partId) {
-          featureID
-          name
-        }
-      }
-    `, {
-        onCompleted: (data) => {
-            SetpartFeature(data["getPartsFeature"]);
-        }
-    })
-
-
-
-    const getPartFeature = (partdetails) => {
-        setShow(true);
-        console.log(partdetails)
-        getPlantPlantFeature({ variables: { partId: partdetails } })
+        setNestedList(mainDict)
     }
 
-
-    const getProperty = (featureName) => {
-        console.log(featureName)
-        const filteredFeatures = cList.filter(feature => feature.FeatureName === featureName);
-        const propertyNames = filteredFeatures.map(feature => feature.FeaturePropertyName);
-        console.log(propertyNames)
-        setProperty(propertyNames)
-    }
-
-    const [expandedPart, setExpandedPart] = useState(null);
-
-    const togglePartExpansion = async (partID) => {
-        if (expandedPart === partID) {
-            setExpandedPart(null);
-        } else {
-
-            getPartFeature(partID);
-
-            setExpandedPart(partID);
-        }
+    const [selectedPart, setSelectedPart] = useState(null);
+    const [selectedFeature, setSelectedFeature] = useState(null);
+    const handlePartClick = (partName) => {
+        setSelectedPart(partName);
+        setSelectedFeature(null);
     };
 
+    const handleFeatureClick = (featureName) => {
+        setSelectedFeature(featureName);
+
+    };
 
     return (
-        // onClick={() => props.closeViewContribution(false)}
         <div className={styles.modalWrapper} >
             <div className={styles.modalContainer}>
                 <div className={styles.topSection}>
@@ -134,29 +119,29 @@ export default function ViewContribution(props) {
                         <h1 className={styles.liTitle}>Plant Category</h1>
                         <div className={`${styles['listContainer']} p-4 max-w-lg mx-auto mt-4 border-y-4`}>
                             {
-                                plantPartInfo.length > 0 &&
-                                plantPartInfo?.map((eachPart) => (
-                                    <details className="mb-2" onClick={() => togglePartExpansion(eachPart.partID)}
-                                        aria-expanded={expandedPart === eachPart.partID} >
+
+                                Object.keys(nestedList).length > 0 &&
+                                Object.keys(nestedList).map((partName) => (
+                                    <details className="mb-2" onClick={() => handlePartClick(partName)} >
                                         <summary className="flex gap-1 bg-gray-200 pt-4 pb-4 pl-2 rounded-lg cursor-pointer shadow-md mb-4 w-60 mt-2">
-                                            <span className="font-semibold -mt-1">{eachPart?.name}</span>
+                                            <span className="-mt-1">{partName}</span>
                                             <div className='-mt-3'>
                                                 <h1 className='text-green-500 font-bold'>12</h1>
                                             </div>
                                         </summary>
-                                        <ul className="ml-8 space-y-4 max-h-52 overflow-y-scroll">
-                                            {
-                                                partFeaturesInfo?.map((FeatureInfo) => (
-                                                    <li key={FeatureInfo?.featureID} onClick={() => {
-                                                        getProperty(FeatureInfo?.name)
-                                                    }}>
-                                                        <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20 cursor-pointer">
-                                                            <p className="text-gray-800">{FeatureInfo?.name}</p>
-                                                        </div>
-                                                    </li>
-                                                ))}
-                                        </ul>
-
+                                        {
+                                            selectedPart === partName && (
+                                                <ul className="ml-8 space-y-4 max-h-52 overflow-y-scroll">
+                                                    {
+                                                        Object.keys(nestedList[partName]).map((featureName) => (
+                                                            <li key={featureName} onClick={() => setProperty(nestedList[partName][featureName])}>
+                                                                <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20 cursor-pointer">
+                                                                    <p className="text-gray-800">{featureName}</p>
+                                                                </div>
+                                                            </li>
+                                                        ))}
+                                                </ul>
+                                            )}
                                     </details>
                                 ))
                             }
@@ -167,11 +152,11 @@ export default function ViewContribution(props) {
                         <h1 className={styles.rightTitle}>Contribution</h1>
                         <div className={styles.rightListContainer}>
                             {
-                                PropertyList?.map((eachproperty) => (
+                                PropertyList.map((property) => (
                                     <div className={styles.rightList}>
                                         <div className={styles.rightListT1}>
                                             <img src={img} alt="" />
-                                            <h1>{eachproperty}</h1>
+                                            <h1>{property.FeaturePropertyName}</h1>
                                         </div>
                                         <div className={styles.rightListT2}>
                                             <img src={img1} alt="" />
@@ -186,5 +171,6 @@ export default function ViewContribution(props) {
                 </div>
             </div>
         </div>
-    )
+    );
+
 }

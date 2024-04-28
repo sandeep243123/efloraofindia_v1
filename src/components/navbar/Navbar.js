@@ -1,15 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect,useContext } from 'react';
 import style from './navbar.module.css'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GrClose } from "react-icons/gr";
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../services/AuthContext.js';
 function Navbar() {
   const [toggle, setToggle] = useState(false)
   const sideNavRef = useRef(null);
+
+  
+  const { isLoggedIn, login, logout, user, setUser } = useContext(AuthContext);
   useEffect(() => {
+   
+
     // Add event listener to the document object
     document.addEventListener('mousedown', handleClickOutside);
-
     // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -21,6 +26,13 @@ function Navbar() {
       setToggle(false)
     }
   }
+
+
+  const handleLogout = () => {
+    logout();
+    setUser(null);
+    localStorage.removeItem('authToken');
+  };
 
   return (
     <>
@@ -35,11 +47,21 @@ function Navbar() {
             <li><Link to={'/about'}>About us</Link></li>
             <li><Link to={'/contact'}>Contact us</Link></li>
 
-            <li><Link to={'/login'}>Login</Link></li>
-            <li><Link to={'/signup'}>Sign up</Link></li>
-            <li><Link to={'/showposts'}>Show posts</Link></li>
-            <li><Link to={'/upload'}>Contribute</Link></li>
-            <li><Link to={'/dashboard'}>Dashboard</Link></li>
+            {
+              localStorage.getItem("authToken") ? (
+                <>
+                  <li><Link to={'/showposts'}>Show posts</Link></li>
+                  <li><Link to={'/upload'}>Contribute</Link></li>
+                  <li><Link to={'/dashboard'}>Dashboard</Link></li>
+                  <li><Link to={'/'} onClick={handleLogout}>Sign out</Link></li>
+                </>
+              ) : (
+                <>
+                  <li><Link to={'/login'}>Login</Link></li>
+                  <li><Link to={'/signup'}>Sign up</Link></li>
+                </>
+              )
+          }
           </ul>
         </div>
         <div className={style.mobile} onClick={() => setToggle(!toggle)}>

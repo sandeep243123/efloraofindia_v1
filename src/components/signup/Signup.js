@@ -12,37 +12,8 @@ export default function Signup() {
     const [inputemail, setEmail] = useState("");
     const navigate = useNavigate();
 
-    const { isLoggedIn, login } = useContext(AuthContext);
+    
 
-    const signupMutation = gql`
-        mutation Signup($details: SignupDetails) {
-        signup(details: $details) {
-            token
-        }
-      }
-    `
-    const [signupfunc] =
-        useMutation(signupMutation, {
-            onCompleted: (data) => {
-                if (data.signup && data.signup.token) {
-                    const token = data.signup.token;
-                    localStorage.setItem('authToken', token);
-                    login()
-
-                }
-                else {
-                    console.error('Error signing up: No token received.');
-                }
-            },
-            onError: (error) => {
-                console.error('Error signing up:', error.message);
-
-            }
-        })
-
-    if (isLoggedIn) {
-        navigate('/');
-    }
 
     return (
         <div className={styles.d1}>
@@ -77,11 +48,8 @@ export default function Signup() {
                             <p>Password must contain a minimum 8 characters</p>
                             <p>Password must contain at least one symbol e.g @,!</p>
                         </div>
-                        <div className={styles.btn11} onClick={() => {
-                            signupfunc({ variables: { details: { "email": inputemail, "name": inputname, "password": inputpassword } } })
-
-                        }}>
-                            <p>Sign Up</p>
+                        <div className={styles.btn11}>
+                        <p><Link to={'/otpsignup'} state={{email:inputemail,password:inputpassword,name:inputname}}>Sign Up</Link></p>  
                         </div>
                         <div className={styles.tc1}>
                             <div>
