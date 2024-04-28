@@ -15,12 +15,12 @@ function Home() {
           <p>
             To plant a garden is to believe in Tommorrow
           </p>
-          <div className={styles.quote}>
+          {/* <div className={styles.quote}>
             <p>“Even a plant is a living being, therefore we must also consider its mind and soul; just like we do in the case of a human being.”
               
               
               ― Mwanandeke Kindembo</p>
-          </div>
+          </div> */}
           <div className={styles.search} type='text'>
             <input type="text" placeholder='Enter text to search' />
             <a>
