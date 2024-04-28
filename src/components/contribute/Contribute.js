@@ -1,5 +1,6 @@
 // import { Navbar } from '@material-tailwind/react'
-import React from 'react';
+import React, { useEffect, useState } from 'react'
+import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 import style from './Contribute.module.css'
 import Comments from '../comments/Comments';
 import img1 from '../assets/t1.png';
@@ -20,14 +21,18 @@ import slide_image8 from '../assets/im8.jpg'
 import { IoSend } from "react-icons/io5";
 import useFunction from './useFunction';
 import { commentsData } from './commentsData';
-import { useState } from 'react';
+import { Link ,useLocation} from 'react-router-dom'
 import Comment from './Comment';
 import pp from './pp.png';
 import AddContribution from '../popup components/add contribution/AddContribution'
 import ViewContribution from '../popup components/view contribution/ViewContribution'
-export default function Contribute() {
+
+
+export default function Contribute(props) {
   const { addComment, deleteComment } = useFunction();
   const [comments, setComments] = useState(commentsData)
+
+
   const handleAddComments = (commentId, comment) => {
     const updatedTree = addComment(comments, commentId, comment);
     setComments(updatedTree)
@@ -37,8 +42,175 @@ export default function Contribute() {
     const updatedTree = deleteComment(comments, commentId)
     setComments(updatedTree)
   }
+
   const [openAddContribution, setOpenAddContribution] = useState(false)
   const [openViewContribution, setOpenViewContribution] = useState(false)
+
+
+  const location = useLocation();
+
+  const {postinfo} = location.state || {};
+
+  const [selectedImage, setSelectedImage] = useState(postinfo.imagesLink[0]); 
+
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+  };
+ 
+
+  const postID=postinfo.postID;
+  console.log("postID",postID)
+  
+  const [input, setInput] = useState("");
+
+
+  const [commentList,setCommentList]=useState(null)
+
+  const { data } = useQuery(gql`
+  query Query($details: getCommentV1Input) {
+    getCommentsV1(details: $details)
+  }
+`, {
+      onCompleted: (data) => {
+        console.log("Comment",data)
+          //setComments(data["getCommentsV1"])
+      },
+      variables: {details:{"postID":props.postID}}
+      ,
+      onError: (error) => {
+          console.error('Error:', error.message);
+
+      }
+  });
+
+
+
+
+  const addCommentMutation = gql`
+  mutation PostComment($details: PostCommentRequest!) {
+    postComment(details: $details)
+  }
+  `
+  const [addComments] =
+      useMutation(addCommentMutation, {
+          onCompleted: (data) => {
+             //console.log(data,"Success")
+             setInput("")
+             getComments({
+              variables: {
+                  details: {
+                    "postID":props.postID
+                  }
+              }});
+          },
+          onError: (error) => {
+              console.error('Error:', error.message);
+          }
+      })
+
+
+
+
+
+
+      const deleteCommentMutation = gql`
+      mutation DeleteComment($commentId: ID!) {
+        deleteComment(commentID: $commentId)
+      }
+      `
+      const [deleteComments] =
+          useMutation(deleteCommentMutation, {
+              onCompleted: (data) => {
+                  console.log(data,"Success")
+                  getComments({
+                    variables: {
+                        details: {
+                          "postID":props.postID
+                        }
+                    }});
+                 
+              },
+              onError: (error) => {
+                  console.error('Error:', error.message);
+              }
+          })
+
+
+
+  const updateVotemutation = gql`
+  mutation UpdateVote($details: updateVoteDetail!) {
+    updateVote(details: $details)
+  }`
+  const [updatevotes] = useMutation(updateVotemutation,{
+    onCompleted:(data)=>{
+
+    },
+    onError: (error) => {
+      console.error('Error:', error.message);
+  }
+  })
+
+
+
+  const [ getComments ] = useLazyQuery(gql`
+  query Query($details: getCommentV1Input) {
+    getCommentsV1(details: $details)
+  }
+`, {
+      onCompleted: (data) => {
+        console.log("commentlist",data)
+        //setComments(data["getCommentsV1"])
+      },
+      onError: (error) => {
+          console.error('Error:', error.message);
+      }
+  });
+
+
+
+
+  useEffect(() => {
+    if (data)
+        getComments({
+            variables: {
+                details: {
+                  "postID":props.postID
+                }
+            }
+        })
+}, [data]);
+
+
+  
+    const handleInsertNode = (folderId, item) => {
+
+        if(folderId=="")
+        {
+            addComments({ variables: { details: {"postID":postID,"commentText":item}}})
+        }
+        else
+        {
+          addComments({ variables: { details: {"postID":postID,"commentText":item,"repliedTo":folderId}}})
+        }
+  
+    };
+ 
+    const handleDeleteNode = (folderId) => {
+      console.log("delete the node",folderId)
+      deleteComments({ variables: {"commentId": folderId}})
+
+
+    };
+
+    const handlevote=(commentid,action)=>{
+      console.log("handle vote: ",action ," ",commentid)
+      updatevotes({variables:{details: {
+        "action": action,
+        "commentID":commentid
+      }}})
+    }
+
+
   return (
     <div className={style.wrapper}>
       <div className={style.imageAndDesc}>
@@ -62,25 +234,22 @@ export default function Contribute() {
             className={style.swiper_container + " " + style.tt}
             style={{ backgroundColor: 'white' }}
           >
-            <SwiperSlide><img className={style.slide_img} src={slide_image1} alt="" /></SwiperSlide>
-            <SwiperSlide><img className={style.slide_img} src={slide_image2} alt="" /></SwiperSlide>
-            <SwiperSlide><img className={style.slide_img} src={slide_image3} alt="" /></SwiperSlide>
-            <SwiperSlide><img className={style.slide_img} src={slide_image4} alt="" /></SwiperSlide>
-            <SwiperSlide><img className={style.slide_img} src={slide_image5} alt="" /></SwiperSlide>
-            <SwiperSlide><img className={style.slide_img} src={slide_image6} alt="" /></SwiperSlide>
-            <SwiperSlide><img className={style.slide_img} src={slide_image7} alt="" /></SwiperSlide>
-            <SwiperSlide><img className={style.slide_img} src={slide_image8} alt="" /></SwiperSlide>
+            {
+              postinfo.imagesLink.map((image,index)=>(
+                <SwiperSlide><img className={style.slide_img} src={`https://eflora.vangyaan.com/images/${image}`} alt="" /></SwiperSlide>))
+            }
           </Swiper>
         </div>
         <div className={style.tt + " " + style.tt1}>
           <h1>Discussion</h1>
           <div className={style.commentParent}>
             <div className={style.commentContainer}>
-              <Comment key={comments.id} comments={comments} handleAddComments={handleAddComments} handleCommentDelete={handleCommentDelete}></Comment>
+              <Comment comments={comments} handleAddComments={handleAddComments} handleCommentDelete={handleCommentDelete}></Comment>
             </div>
             <div className={style.discussionFooter}>
-              <input type="text" placeholder='comment here..' />
-              <div className={style.cicon}>
+              <input type="text" placeholder='comment here..' value={input}
+              onChange={(e) => setInput(e.target.value)}/>
+              <div className={style.cicon} onClick={() => handleInsertNode("", input)}>
                 <IoSend style={{ width: '100%', height: '100%' }}></IoSend>
               </div>
             </div>
@@ -92,35 +261,21 @@ export default function Contribute() {
           <h1>Plant information</h1>
           <hr />
           <div className={style.iDetails}>
-            <div className={style.irow}>
-              <p>Name</p>
-              <p>info</p>
+             <div className={style.irow}>
+              <p>Posted By:</p>
+              <p>{postinfo.postedBy}</p>
             </div>
             <div className={style.irow}>
-              <p>Root</p>
-              <p>info</p>
+              <p>Date:</p>
+              <p>{postinfo.createdAt}</p>
             </div>
             <div className={style.irow}>
-              <p>Leaf</p>
-              <p>info</p>
+              <p>Description</p>
+              <p>{postinfo.description}</p>
             </div>
-            <div className={style.irow}>
-              <p>Branch</p>
-              <p>info</p>
-            </div>
-            <div className={style.irow}>
-              <p>Color</p>
-              <p>info</p>
-            </div>
-            <div className={style.irow}>
-              <p>Shape</p>
-              <p>info</p>
-            </div>
-            <div className={style.irow}>
-              <p>Name</p>
-              <p>info</p>
-            </div>
-          </div>
+           
+          </div> 
+          
         </div>
         <div className={style.infoRight}>
 
@@ -148,8 +303,8 @@ export default function Contribute() {
               <p onClick={() => setOpenViewContribution(true)}>View Contribution</p>
             </div>
           </div>
-          {openAddContribution && <AddContribution closeAddContribution={setOpenAddContribution}></AddContribution>}
-          {openViewContribution && <ViewContribution closeViewContribution={setOpenViewContribution}></ViewContribution>}
+          {openAddContribution && <AddContribution closeAddContribution={setOpenAddContribution}  postID={postinfo.postID} ></AddContribution>}
+          {openViewContribution && <ViewContribution closeViewContribution={setOpenViewContribution} postID={postinfo.postID}></ViewContribution>}
         </div>
       </div>
 

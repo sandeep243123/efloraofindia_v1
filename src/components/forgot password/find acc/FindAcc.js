@@ -1,21 +1,70 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './FindAcc.module.css'
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate} from 'react-router-dom'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function FindAcc() {
+
+    const [email,setemail]=useState("");
+const navigate = useNavigate();
+    const handleResetPassword = () => {
+        if (!email) {
+            console.log("Hi")
+          notifyWarning('Please provide your email address');
+        }
+        else
+        {
+            console.log("biye");
+            
+            navigate('/otp', { state: { email: email } });
+            // <Link
+            // to={{ pathname: '/otp', state: { email: email } }}>
+            // </Link>
+        }
+      };
+
+
+    const notifyWarning = (msg) => {
+        toast.warning(` ${msg}!`, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            containerId: 'Warning'
+        });
+    }
+      
     return (
-        <div className={styles.container}>
-            <img src="" alt="" />
-            <div className={styles.contentContainer}>
-                <h1>Forgot Password?</h1>
-                <p>input your email or phone no to reset password</p>
-                <div className={styles.ifield}>
-                    <input type="text" placeholder='Email' />
-                    <p>or</p>
-                    <input type="text" placeholder='Phone number' />
-                    <Link to={'/otp'} className={styles.resetBtn}>Reset</Link>
-                </div>
-            </div>
+        <div className='d'>
+                <div className={styles.container}>
+                    <div className={styles.contentContainer}>
+                        <h1>Forgot Password</h1>
+                        <p>Provide your registered email address</p>
+                        <div className={styles.ifield}>
+                        <input
+                            type="email"
+                            placeholder='Email'
+                            value={email}
+                            onChange={(e) => setemail(e.target.value)}
+                        
+                        /> 
+                        <div className={styles.resetBtn} onClick={handleResetPassword}>
+                        Reset Password
+                        </div>
+                            
+                    
+                        </div>
+                    </div>
+                    
+                    <ToastContainer containerId="Warning" />
+                    </div>
         </div>
+        
     )
 }
 

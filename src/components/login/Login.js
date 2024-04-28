@@ -13,7 +13,7 @@ export default function Login() {
     const [inputemail, setEmail] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
     const navigate = useNavigate();
-    const { isLoggedIn, login } = useContext(AuthContext);
+    const { isLoggedIn, login, setUser } = useContext(AuthContext);
     const inputRef1 = useRef(null);
     const inputRef2 = useRef(null);
     const btnRef = useRef(null);
@@ -63,12 +63,18 @@ export default function Login() {
         query Login($details: userLogin) {
             login(details: $details) {
                 token
+                currentRating
+                name
+                email
+                accountType
             }
         }`, {
         onCompleted: (data) => {
             if (data.login && data.login.token) {
-                const token = data.login.token;
+                
+                const { token, ...userData } = data.login;
                 localStorage.setItem('authToken', token);
+                setUser(userData);
                 setLoggedIn(true);
                 login();
             } else {
@@ -77,6 +83,7 @@ export default function Login() {
         },
         onError: (error) => {
             console.error('Error signing up:', error.message);
+            notifyWarning(error.message)
         }
     });
 

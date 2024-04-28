@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 body {
-    background-color: black;
+    background-color: rgb(250, 239, 223);
     overflow-x: hidden;
 }
 
@@ -21,12 +21,13 @@ body {
 .left {
     display: flex;
     justify-content: center;
-    background-color: black;
+    background-color: rgb(250, 239, 223);
     /* background: rgb(87, 168, 255); */
     width: 100%;
-    color: white;
+    color: rgb(0, 130, 130);
     margin-top: 10px;
 }
+
 
 .left p {
     /* position: absolute; */
@@ -34,21 +35,35 @@ body {
     font-family: "Poppins", sans-serif;
     font-weight: 700;
     font-style: normal;
-    font-size: 4em;
+    font-size: 3.8em;
     transition: 0.2s;
 }
-
+.quote {
+    position: fixed;
+    margin-right: 50%;
+    top: 25%;
+    left: 5%;
+}
+.quote p{
+    
+    top: 10%;
+    left: 20%;
+    margin: -1%;
+    font-size: medium;
+    transition: 0.2s;
+    display: flex;
+}
 .search {
     top: 58%;
     position: fixed;
-    width: 25vw;
-    height: 7vh;
+    width: 30vw;
+    height: 9vh;
     border-radius: 28px;
-    border: 5px solid rgb(255, 142, 77);
+    border: 5px solid #b76f3e;
     background-color: white;
     display: flex;
     transition: 0.8s;
-    margin-right: 55%;
+    margin-right: 50%;
     top: 40%;
     left: 20%;
     transform: translateX(-50%) translateY(-50%);
@@ -70,16 +85,17 @@ body {
 .search img {
     /* position: absolute; */
     color: blue;
-    height: 25px;
-    width: 25px;
+    height: 35px;
+    width: 30px;
     margin: 10px 20px;
 }
 
 .right {
-    background-color: black;
+    background-color: rgb(250, 239, 223);
     /* background-color: white; */
     width: 100%;
 }
+
 
 .search:hover {
     width: 30vw;

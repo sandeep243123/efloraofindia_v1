@@ -17,9 +17,9 @@ import FindAcc from './components/forgot password/find acc/FindAcc.js';
 import Otp from './components/forgot password/Otp/Otp.js';
 import SetPassword from './components/forgot password/set password/SetPassword.js';
 import Profile from './components/profile/Profile.js'
+import OTPSignup from './components/signup/OtpForm.js'
 
 function App() {
-  const [data, setData] = useState([]);
   return (
     <div>
       <Navbar></Navbar>
@@ -28,14 +28,16 @@ function App() {
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signup' element={<Signup></Signup>}></Route>
         <Route path='/discussion' element={<Contribute></Contribute>}></Route>
-        {/* <Route path='/showposts/:postID' element={<Contribute></Contribute>}></Route> */}
+        
+        <Route path='/otpsignup' element={<OTPSignup></OTPSignup>}></Route>
+        <Route path='/showposts/:postID' element={<Contribute></Contribute>}></Route>
         <Route path='/terms' element={<Terms></Terms>}></Route>
         <Route path='/about' element={<About></About>}></Route>
         <Route path='/contact' element={<Contact></Contact>}></Route>
         <Route path='/explore' element={<Explore></Explore>}></Route>
         <Route path='/showposts' element={<ShowPost></ShowPost>}></Route>
         <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
-        <Route path='/upload' element={<UploadImg data={data} setData={setData}></UploadImg>}></Route>
+        <Route path='/upload' element={<UploadImg></UploadImg>}></Route>
         <Route path='/findacc' element={<FindAcc></FindAcc>}></Route>
         <Route path='/otp' element={<Otp></Otp>}></Route>
         <Route path='/setPass' element={<SetPassword></SetPassword>}></Route>
