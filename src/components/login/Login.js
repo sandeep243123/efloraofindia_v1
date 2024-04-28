@@ -21,7 +21,7 @@ export default function Login() {
 
     const notifyError = () => {
         toast.error(' Invalid user!', {
-            position: "bottom-right",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -71,7 +71,7 @@ export default function Login() {
         }`, {
         onCompleted: (data) => {
             if (data.login && data.login.token) {
-                
+
                 const { token, ...userData } = data.login;
                 localStorage.setItem('authToken', token);
                 setUser(userData);

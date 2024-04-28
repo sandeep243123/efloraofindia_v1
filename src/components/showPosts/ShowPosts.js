@@ -7,17 +7,17 @@ import img from '../assets/t1.png'
 import { Link } from 'react-router-dom';
 function ShowPost() {
 
-        const [postinfo, setpost] = useState(null);
+    const [postinfo, setpost] = useState(null);
 
-        const detailVar = {
-            details: {
-                "showMyPosts": false
-            }
+    const detailVar = {
+        details: {
+            "showMyPosts": false
         }
+    }
 
-        const [pList, setpList] = useState([]);
+    const [pList, setpList] = useState([]);
 
-        const { data } = useQuery(gql`
+    const { data } = useQuery(gql`
         query GetPosts($details: searchQuery) {
             getPosts(details: $details) {
             createdAt
@@ -27,17 +27,17 @@ function ShowPost() {
             }
         }
     `, {
-            onCompleted: (data) => {
-                setpList(data["getPosts"])
-            },
-            variables: detailVar
-            ,
-            onError: (error) => {
-                console.error('Error signing up:', error.message);
-            }
-        });
+        onCompleted: (data) => {
+            setpList(data["getPosts"])
+        },
+        variables: detailVar
+        ,
+        onError: (error) => {
+            console.error('Error signing up:', error.message);
+        }
+    });
 
-        const [getpList] = useLazyQuery(gql`
+    const [getpList] = useLazyQuery(gql`
         query GetPosts($details: searchQuery) {
             getPosts(details: $details) {
             createdAt
@@ -48,27 +48,27 @@ function ShowPost() {
             }
         }
         `, {
-            onCompleted: (data) => {
-                setpList(data["getPosts"])
-            },
-            onError: (error) => {
-                console.error('Error signing up:', error.message);
+        onCompleted: (data) => {
+            setpList(data["getPosts"])
+        },
+        onError: (error) => {
+            console.error('Error signing up:', error.message);
 
-            }
+        }
 
-        })
+    })
 
 
-        useEffect(() => {
-            if (data)
-                getpList({
-                    variables: {
-                        details: {
-                            "showMyPosts": false
-                        }
+    useEffect(() => {
+        if (data)
+            getpList({
+                variables: {
+                    details: {
+                        "showMyPosts": false
                     }
-                })
-        }, [data]);
+                }
+            })
+    }, [data]);
 
 
 
@@ -79,39 +79,29 @@ function ShowPost() {
             <div className={styles.parent1}>
                 <div className={styles.listOptions}>
                     <input type="text" className={styles.search} placeholder='Search Obsevation' onChange={(e) => {
-                        if(e.target.value.length > 0)
-                        getpList({ variables: { details: { "showMyPosts": false,"searchText": e.target.value } } });
+                        if (e.target.value.length > 0)
+                            getpList({ variables: { details: { "showMyPosts": false, "searchText": e.target.value } } });
                         else
-                        getpList({ variables: { details: { "showMyPosts": false} } });
+                            getpList({ variables: { details: { "showMyPosts": false } } });
                     }} />
-                    {/* <div className={styles.filterContainer}>
-                        <p>Sort by:</p>
-                        <select name="filters">
-                            <option value="Recently">Recently Uploaded</option>
-                            <option value="Recently">Verified Obsevation</option>
-                            <option value="Recently">Pending Obsevation</option>
-                            <option value="Recently">Ascending order</option>
-                            <option value="Recently">Descending order</option>
-                        </select>
-                    </div> */}
                 </div>
 
                 <ul className={styles.listContainer}>
                     {
-                        pList?.map((post)=> (
-                        <Link
-                            to={{pathname: `/showposts/${post.postID}`}}
+                        pList?.map((post) => (
+                            <Link
+                                to={{ pathname: `/showposts/${post.postID}` }}
 
-                            state={{ postinfo: post }}>
+                                state={{ postinfo: post }}>
 
-                            <li className={styles.listItem}>
-                                <img src={`https://eflora.vangyaan.com/images/${post.imagesLink[0]}`} alt='r2'></img>
-                                <div className={styles.itemContent}>
-                                    <h3>{post.postedBy}</h3>
-                                    <p>{post.description}</p>
-                                </div>
-                            </li>
-                        </Link>
+                                <li className={styles.listItem}>
+                                    <img src={`https://eflora.vangyaan.com/images/${post.imagesLink[0]}`} alt='r2'></img>
+                                    <div className={styles.itemContent}>
+                                        <h3>{post.postedBy}</h3>
+                                        <p>{post.description}</p>
+                                    </div>
+                                </li>
+                            </Link>
                         ))
                     }
                 </ul>
