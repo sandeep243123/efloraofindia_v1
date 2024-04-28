@@ -53,12 +53,14 @@ function Selector(props) {
     );
 
     const [getPlantPartInfo] = useLazyQuery(gql`
-        query GetPlantPartInfo($partID: ID!) {
-            getPartsFeature(partID: $partID){
-                name
-                featureID
-            }
+    query GetPartsFeature($partId: MongoID!) {
+        getPartsFeature(partID: $partId) {
+          partID
+          featureID
+          name
+          isPending
         }
+      }
     `, {
         onCompleted: (plantPartInfo) => {
             setpartFeatures(plantPartInfo.getPartsFeature)
@@ -281,7 +283,7 @@ function Selector(props) {
                                     value={inputFeature}
                                     onChange={(e) => {
                                         setInputFeature(e.target.value.toLowerCase());
-                                        getPlantPartInfo({ variables: { partID } })
+                                        getPlantPartInfo({ variables: { "partId":partID } })
                                     }}
                                 />
                                 <div onClick={
