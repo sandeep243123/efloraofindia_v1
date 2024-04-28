@@ -82,6 +82,7 @@ export default function UploadImg(props) {
                     }
                
             }
+            notifySuccess("Image uploaded Successfully");
         }
     }
 
@@ -90,6 +91,7 @@ export default function UploadImg(props) {
         setImages((prevImages) =>
             prevImages.filter((_, i) => i !== index)
         );
+        notifySuccess("Image deleted Successfully");
     }
 
 
@@ -126,6 +128,7 @@ export default function UploadImg(props) {
                     ...prevImages,p
                 ]);
             }
+            notifySuccess("Image uploaded Successfully");
         }
     }
 
