@@ -10,6 +10,7 @@ function Navbar() {
 
   
   const { isLoggedIn, login, logout, user, setUser } = useContext(AuthContext);
+  const [islogin,setLogin]=useState(false);
   useEffect(() => {
    
 
@@ -20,6 +21,14 @@ function Navbar() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  useEffect(()=>{
+    if(localStorage.getItem('authToken'))
+    setLogin(true);
+    else
+    setLogin(false);
+  })
+
 
   function handleClickOutside(event) {
     if (sideNavRef.current && !sideNavRef.current.contains(event.target)) {
@@ -48,7 +57,7 @@ function Navbar() {
             <li><Link to={'/contact'}>Contact us</Link></li>
 
             {
-              localStorage.getItem("authToken") ? (
+              islogin ? (
                 <>
                   <li><Link to={'/showposts'}>Show posts</Link></li>
                   <li><Link to={'/upload'}>Contribute</Link></li>

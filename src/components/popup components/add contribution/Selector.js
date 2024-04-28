@@ -113,15 +113,15 @@ function Selector(props) {
     }, [data]);
 
 
-    const handleItemClick = (country) => {
-        if (country.name.toLowerCase() !== selected.toLowerCase()) {
-            setSelected(country.name);
+    const handleItemClick = (partdetail) => {
+        if (partdetail.name.toLowerCase() !== selected.toLowerCase()) {
+            setSelected(partdetail.name);
 
             setOpen1(false);
-            setPartID(country.partID)
-            // setPartID(country.partID);
+            setPartID(partdetail.partID)
+            // setPartID(partdetail.partID);
             // Trigger the GraphQL query for additional information
-            getPlantPartInfo({ variables: { partID: country.partID } });
+            getPlantPartInfo({ variables: { partID: partdetail.partID } });
         }
     };
 
@@ -225,7 +225,7 @@ function Selector(props) {
                 <div className='w-72 font-medium h-80 z-10'>
                     <div onClick={() => setOpen1(!open1)}
                         className='bg-white text-black w-full  p-2 flex  item-center justify-between rounded'>
-                        {selected ? selected.length > 25 ? selected?.substring(0, 25) + "..." : selected : "Select Country"}
+                        {selected ? selected.length > 25 ? selected?.substring(0, 25) + "..." : selected : "Select partdetail"}
                         <BiChevronDown size={20} className={`${open1 && "rotate-180"}`}></BiChevronDown>
                     </div>
                     <ul className={`bg-white text-black  mt-2 overflow-y-auto   ${open1 ? 'max-h-80' : 'max-h-0'}`}>
@@ -251,16 +251,16 @@ function Selector(props) {
                             </div>
                         </div>
 
-                        {part?.map((country) => (
+                        {part?.map((partdetail) => (
                             <li
-                                key={country?.name}
-                                className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${country?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
+                                key={partdetail?.name}
+                                className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${partdetail?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
                             `}
                                 onClick={() => {
-                                    handleItemClick(country)
+                                    handleItemClick(partdetail)
                                 }}
                             >
-                                {country?.name}
+                                {partdetail?.name}
                             </li>
                         ))}
                     </ul>
@@ -272,7 +272,7 @@ function Selector(props) {
                 <div className='w-72 font-medium h-80 z-10'>
                     <div onClick={() => setOpen2(!open2)}
                         className='bg-white text-black w-full  p-2 flex  item-center justify-between rounded'>
-                        {selected1 ? selected1.length > 25 ? selected1?.substring(0, 25) + "..." : selected1 : "Select Country"}
+                        {selected1 ? selected1.length > 25 ? selected1?.substring(0, 25) + "..." : selected1 : "Select partdetail"}
                         <BiChevronDown size={20} className={`${open2 && "rotate-180"}`}></BiChevronDown>
                     </div>
                     <ul className={`bg-white text-black  mt-2 overflow-y-auto   ${open2 ? 'max-h-80' : 'max-h-0'}`}>
