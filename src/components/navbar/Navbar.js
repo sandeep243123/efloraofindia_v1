@@ -1,18 +1,18 @@
-import React, { useState, useRef, useEffect,useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import style from './navbar.module.css'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GrClose } from "react-icons/gr";
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../services/AuthContext.js';
-function Navbar() {
+function Navbar({ setTheme, theme }) {
   const [toggle, setToggle] = useState(false)
   const sideNavRef = useRef(null);
 
-  
+
   const { isLoggedIn, login, logout, user, setUser } = useContext(AuthContext);
-  const [islogin,setLogin]=useState(false);
+  const [islogin, setLogin] = useState(false);
   useEffect(() => {
-   
+
 
     // Add event listener to the document object
     document.addEventListener('mousedown', handleClickOutside);
@@ -22,11 +22,11 @@ function Navbar() {
     };
   }, []);
 
-  useEffect(()=>{
-    if(localStorage.getItem('authToken'))
-    setLogin(true);
+  useEffect(() => {
+    if (localStorage.getItem('authToken'))
+      setLogin(true);
     else
-    setLogin(false);
+      setLogin(false);
   })
 
 
@@ -50,7 +50,7 @@ function Navbar() {
         <Link to={' '}>eFloraOfIndia</Link>
         <div >
           <ul ref={sideNavRef} className={toggle ? style.navBar + " " + style.active : style.navBar}>
-
+            <li onClick={() => theme == "dark" ? setTheme("light") : setTheme("dark")} style={{ marginTop: '20px' }}>{theme === "light" ? "Dark" : "Light"}</li>
             <li><Link to={' '}>Home</Link></li>
             <li><Link to={'/profile'}>Profile</Link></li>
             <li><Link to={'/about'}>About us</Link></li>
@@ -70,7 +70,7 @@ function Navbar() {
                   <li><Link to={'/signup'}>Sign up</Link></li>
                 </>
               )
-          }
+            }
           </ul>
         </div>
         <div className={style.mobile} onClick={() => setToggle(!toggle)}>

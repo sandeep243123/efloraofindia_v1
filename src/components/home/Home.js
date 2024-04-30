@@ -6,12 +6,12 @@ import sample1 from './l1.jpg'
 import sample2 from './l2.jpg'
 import sample3 from './l3.jpg'
 import { Link } from 'react-router-dom';
-function Home() {
+function Home({ theme }) {
 
   return (
     <div className={styles.t}>
-      <div className={styles.container1} >
-        <div className={styles.left}>
+      <div style={theme === "light" ? { backgroundColor: 'rgb(250, 239, 223)' } : { backgroundColor: "black" }} className={styles.container1} >
+        <div style={theme === "light" ? { color: "rgb(0, 130, 130)" } : { color: 'white' }} className={styles.left}>
           <p>
             To plant a garden is to believe in Tommorrow
           </p>
