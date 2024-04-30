@@ -14,9 +14,7 @@ export default function UploadImg(props) {
     const fileInputRef = useRef(null)
     const btnRef = useRef()
     const labelRef = useRef()
-
     const navigate = useNavigate();
-
     const notifySuccess = (msg) => {
         toast.success(` ${msg}!`, {
             position: "top-right",
@@ -30,10 +28,9 @@ export default function UploadImg(props) {
             containerId: 'Success'
         });
     }
-
-    const notifyError = () => {
-        toast.error(' Invalid user!', {
-            position: "bottom-right",
+    const notifyError = (msg) => {
+        toast.error(` ${msg}!`, {
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -44,10 +41,9 @@ export default function UploadImg(props) {
             containerId: 'Error'
         });
     }
-
     const notifyWarning = (msg) => {
         toast.warning(` ${msg}!`, {
-            position: "bottom-right",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -58,7 +54,6 @@ export default function UploadImg(props) {
             containerId: 'Warning'
         });
     }
-
     function selectFiles() {
         fileInputRef.current.click();
     }
@@ -86,12 +81,11 @@ export default function UploadImg(props) {
         }
     }
 
-
     function deleteImage(index) {
         setImages((prevImages) =>
             prevImages.filter((_, i) => i !== index)
         );
-        notifySuccess("Image deleted Successfully");
+        notifyWarning("Image deleted Successfully");
     }
 
 
@@ -101,14 +95,10 @@ export default function UploadImg(props) {
         event.dataTransfer.dropEffect = "copy";
 
     }
-
-
     function onDragLeave(event) {
         event.preventDefault();
         setIsDragging(false);
     }
-
-
     function onDrop(event) {
         event.preventDefault();
         setIsDragging(false);
@@ -153,12 +143,11 @@ export default function UploadImg(props) {
         useMutation(createpostmut, {
             onCompleted: (data) => {
                 notifySuccess("Successfully Uploaded")
-
                 navigate("/")
             },
             onError: (error) => {
                 console.error('Error signing up:', error.message);
-                notifyWarning("Please enter your password")
+                notifyError(error.message)
             }
         })
 

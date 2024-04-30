@@ -38,15 +38,15 @@ import Action from "./Action"
 // }
 // ]
 
-function Comments(props){
+function Comments(props) {
 
-  const postID=props.postID;
-  console.log("postID",postID)
-  
+  const postID = props.postID;
+  console.log("postID", postID)
+
   const [input, setInput] = useState("");
 
 
-  const [commentList,setCommentList]=useState(null)
+  const [commentList, setCommentList] = useState(null)
 
   const { data } = useQuery(gql`
   query GetComments($details: getComment!) {
@@ -61,16 +61,16 @@ function Comments(props){
     }
   }
 `, {
-      onCompleted: (data) => {
-        console.log("Comment",data)
-          setCommentList(data["getComments"])
-      },
-      variables: {details:{"postID":props.postID}}
-      ,
-      onError: (error) => {
-          console.error('Error:', error.message);
+    onCompleted: (data) => {
+      console.log("Comment", data)
+      setCommentList(data["getComments"])
+    },
+    variables: { details: { "postID": props.postID } }
+    ,
+    onError: (error) => {
+      console.error('Error:', error.message);
 
-      }
+    }
   });
 
 
@@ -82,48 +82,50 @@ function Comments(props){
   }
   `
   const [addComments] =
-      useMutation(addCommentMutation, {
-          onCompleted: (data) => {
-             //console.log(data,"Success")
-             setInput("")
-             getComments({
-              variables: {
-                  details: {
-                    "postID":props.postID
-                  }
-              }});
-          },
-          onError: (error) => {
-              console.error('Error:', error.message);
+    useMutation(addCommentMutation, {
+      onCompleted: (data) => {
+        //console.log(data,"Success")
+        setInput("")
+        getComments({
+          variables: {
+            details: {
+              "postID": props.postID
+            }
           }
-      })
+        });
+      },
+      onError: (error) => {
+        console.error('Error:', error.message);
+      }
+    })
 
 
 
 
 
 
-      const deleteCommentMutation = gql`
+  const deleteCommentMutation = gql`
       mutation DeleteComment($commentId: MongoID!) {
         deleteComment(commentID: $commentId)
       }
       `
-      const [deleteComments] =
-          useMutation(deleteCommentMutation, {
-              onCompleted: (data) => {
-                  console.log(data,"Success")
-                  getComments({
-                    variables: {
-                        details: {
-                          "postID":props.postID
-                        }
-                    }});
-                 
-              },
-              onError: (error) => {
-                  console.error('Error:', error.message);
-              }
-          })
+  const [deleteComments] =
+    useMutation(deleteCommentMutation, {
+      onCompleted: (data) => {
+        console.log(data, "Success")
+        getComments({
+          variables: {
+            details: {
+              "postID": props.postID
+            }
+          }
+        });
+
+      },
+      onError: (error) => {
+        console.error('Error:', error.message);
+      }
+    })
 
 
 
@@ -131,24 +133,25 @@ function Comments(props){
   mutation UpdateVote($details: updateVoteDetail!) {
     updateVote(details: $details)
   }`
-  const [updatevotes] = useMutation(updateVotemutation,{
-    onCompleted:(data)=>{
+  const [updatevotes] = useMutation(updateVotemutation, {
+    onCompleted: (data) => {
       getComments({
         variables: {
-            details: {
-              "postID":props.postID
-            }
-        }});
+          details: {
+            "postID": props.postID
+          }
+        }
+      });
 
     },
     onError: (error) => {
       console.error('Error:', error.message);
-  }
+    }
   })
 
 
 
-  const [ getComments ] = useLazyQuery(gql`
+  const [getComments] = useLazyQuery(gql`
   query GetComments($details: getComment!) {
     getComments(details: $details) {
       commentID
@@ -161,13 +164,13 @@ function Comments(props){
     }
   }
 `, {
-      onCompleted: (data) => {
-        console.log("commentlist",data)
-        setCommentList(data["getComments"])
-      },
-      onError: (error) => {
-          console.error('Error:', error.message);
-      }
+    onCompleted: (data) => {
+      console.log("commentlist", data)
+      setCommentList(data["getComments"])
+    },
+    onError: (error) => {
+      console.error('Error:', error.message);
+    }
   });
 
 
@@ -175,76 +178,80 @@ function Comments(props){
 
   useEffect(() => {
     if (data)
-        getComments({
-            variables: {
-                details: {
-                  "postID":props.postID
-                }
-            }
-        })
-}, [data]);
-
-
-  
-    const handleInsertNode = (folderId, item) => {
-     
-     
-      // if(item!="")
-      // {
-        if(folderId=="")
-        {
-            addComments({ variables: { details: {"postID":postID,"commentText":item}}})
+      getComments({
+        variables: {
+          details: {
+            "postID": props.postID
+          }
         }
-        else
-        {
-          addComments({ variables: { details: {"postID":postID,"commentText":item,"repliedTo":folderId}}})
-        }
-      //}
-  
-    };
- 
-    const handleDeleteNode = (folderId) => {
-      console.log("delete the node",folderId)
-      deleteComments({ variables: {"commentId": folderId}})
+      })
+  }, [data]);
 
 
-    };
 
-    const handlevote=(commentid,action)=>{
-      console.log("handle vote: ",action ," ",commentid)
-      updatevotes({variables:{details: {
-        "action": action,
-        "commentID":commentid
-      }}})
+  const handleInsertNode = (folderId, item) => {
+
+
+    // if(item!="")
+    // {
+    if (folderId == "") {
+      addComments({ variables: { details: { "postID": postID, "commentText": item } } })
     }
+    else {
+      addComments({ variables: { details: { "postID": postID, "commentText": item, "repliedTo": folderId } } })
+    }
+    //}
+
+  };
+
+  const handleDeleteNode = (folderId) => {
+    console.log("delete the node", folderId)
+    deleteComments({ variables: { "commentId": folderId } })
 
 
-    return (
-      <div>
-        <div className={'${style.inputContainer}'} style={{display:'flex'}}>
-        <input
-              type="text"
-              className={`${style.inputContainer__input} ${style.first_input}`}
-              style={{marginLeft:"1rem"}}
-              autoFocus
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your reply message here..."
-            />
-            
+  };
 
-            <div className={`${style.reply} ${style.comment}`} onClick={() => handleInsertNode("", input)} style={{marginLeft:"2rem"}}>
-              COMMENT
-            </div>
-        </div>
+  const handlevote = (commentid, action) => {
+    console.log("handle vote: ", action, " ", commentid)
+    updatevotes({
+      variables: {
+        details: {
+          "action": action,
+          "commentID": commentid
+        }
+      }
+    })
+  }
+
+
+  return (
+    <div>
+      <div className={style.commBox}>
         <CommentsSection
-            handleInsertNode={handleInsertNode}
-            handleDeleteNode={handleDeleteNode}
-            handlevote={handlevote}
-            commentList={commentList} 
+          handleInsertNode={handleInsertNode}
+          handleDeleteNode={handleDeleteNode}
+          handlevote={handlevote}
+          commentList={commentList}
         />
       </div>
-    );
+      <div className={'${style.inputContainer}'} style={{ display: 'flex', marginTop: '5px' }}>
+        <input
+          type="text"
+          className={`${style.inputContainer__input} ${style.first_input}`}
+          style={{ marginLeft: "1rem" }}
+          autoFocus
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Type your reply message here..."
+        />
+
+
+        <div className={`${style.reply} ${style.comment}`} onClick={() => handleInsertNode("", input)} style={{ marginLeft: "2rem" }}>
+          COMMENT
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Comments;
