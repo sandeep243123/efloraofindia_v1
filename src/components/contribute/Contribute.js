@@ -21,8 +21,9 @@ import slide_image8 from '../assets/im8.jpg'
 import { IoSend } from "react-icons/io5";
 import useFunction from './useFunction';
 import { commentsData } from './commentsData';
-import { Link ,useLocation} from 'react-router-dom'
-import Comment from './Comment';
+import { Link, useLocation } from 'react-router-dom'
+//import Comment from './Comment';
+
 import pp from './pp.png';
 import AddContribution from '../popup components/add contribution/AddContribution'
 import ViewContribution from '../popup components/view contribution/ViewContribution'
@@ -49,166 +50,166 @@ export default function Contribute(props) {
 
   const location = useLocation();
 
-  const {postinfo} = location.state || {};
+  const { postinfo } = location.state || {};
 
-  const [selectedImage, setSelectedImage] = useState(postinfo.imagesLink[0]); 
+  const [selectedImage, setSelectedImage] = useState(postinfo.imagesLink[0]);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
   };
- 
 
-  const postID=postinfo.postID;
-  console.log("postID",postID)
-  
+
+  const postID = postinfo.postID;
+  console.log("postID", postID)
+
   const [input, setInput] = useState("");
 
 
-  const [commentList,setCommentList]=useState(null)
+  //   const [commentList,setCommentList]=useState(null)
 
-  const { data } = useQuery(gql`
-  query Query($details: getCommentV1Input) {
-    getCommentsV1(details: $details)
-  }
-`, {
-      onCompleted: (data) => {
-        console.log("Comment",data)
-          //setComments(data["getCommentsV1"])
-      },
-      variables: {details:{"postID":props.postID}}
-      ,
-      onError: (error) => {
-          console.error('Error:', error.message);
+  //   const { data } = useQuery(gql`
+  //   query Query($details: getCommentV1Input) {
+  //     getCommentsV1(details: $details)
+  //   }
+  // `, {
+  //       onCompleted: (data) => {
+  //         console.log("Comment",data)
+  //           //setComments(data["getCommentsV1"])
+  //       },
+  //       variables: {details:{"postID":props.postID}}
+  //       ,
+  //       onError: (error) => {
+  //           console.error('Error:', error.message);
 
-      }
-  });
-
-
-
-
-  const addCommentMutation = gql`
-  mutation PostComment($details: PostCommentRequest!) {
-    postComment(details: $details)
-  }
-  `
-  const [addComments] =
-      useMutation(addCommentMutation, {
-          onCompleted: (data) => {
-             //console.log(data,"Success")
-             setInput("")
-             getComments({
-              variables: {
-                  details: {
-                    "postID":props.postID
-                  }
-              }});
-          },
-          onError: (error) => {
-              console.error('Error:', error.message);
-          }
-      })
+  //       }
+  //   });
 
 
 
 
-
-
-      const deleteCommentMutation = gql`
-      mutation DeleteComment($commentId: ID!) {
-        deleteComment(commentID: $commentId)
-      }
-      `
-      const [deleteComments] =
-          useMutation(deleteCommentMutation, {
-              onCompleted: (data) => {
-                  console.log(data,"Success")
-                  getComments({
-                    variables: {
-                        details: {
-                          "postID":props.postID
-                        }
-                    }});
-                 
-              },
-              onError: (error) => {
-                  console.error('Error:', error.message);
-              }
-          })
-
-
-
-  const updateVotemutation = gql`
-  mutation UpdateVote($details: updateVoteDetail!) {
-    updateVote(details: $details)
-  }`
-  const [updatevotes] = useMutation(updateVotemutation,{
-    onCompleted:(data)=>{
-
-    },
-    onError: (error) => {
-      console.error('Error:', error.message);
-  }
-  })
-
-
-
-  const [ getComments ] = useLazyQuery(gql`
-  query Query($details: getCommentV1Input) {
-    getCommentsV1(details: $details)
-  }
-`, {
-      onCompleted: (data) => {
-        console.log("commentlist",data)
-        //setComments(data["getCommentsV1"])
-      },
-      onError: (error) => {
-          console.error('Error:', error.message);
-      }
-  });
+  //   const addCommentMutation = gql`
+  //   mutation PostComment($details: PostCommentRequest!) {
+  //     postComment(details: $details)
+  //   }
+  //   `
+  //   const [addComments] =
+  //       useMutation(addCommentMutation, {
+  //           onCompleted: (data) => {
+  //              //console.log(data,"Success")
+  //              setInput("")
+  //              getComments({
+  //               variables: {
+  //                   details: {
+  //                     "postID":props.postID
+  //                   }
+  //               }});
+  //           },
+  //           onError: (error) => {
+  //               console.error('Error:', error.message);
+  //           }
+  //       })
 
 
 
 
-  useEffect(() => {
-    if (data)
-        getComments({
-            variables: {
-                details: {
-                  "postID":props.postID
-                }
-            }
-        })
-}, [data]);
 
 
-  
-    const handleInsertNode = (folderId, item) => {
+  //       const deleteCommentMutation = gql`
+  //       mutation DeleteComment($commentId: ID!) {
+  //         deleteComment(commentID: $commentId)
+  //       }
+  //       `
+  //       const [deleteComments] =
+  //           useMutation(deleteCommentMutation, {
+  //               onCompleted: (data) => {
+  //                   console.log(data,"Success")
+  //                   getComments({
+  //                     variables: {
+  //                         details: {
+  //                           "postID":props.postID
+  //                         }
+  //                     }});
 
-        if(folderId=="")
-        {
-            addComments({ variables: { details: {"postID":postID,"commentText":item}}})
-        }
-        else
-        {
-          addComments({ variables: { details: {"postID":postID,"commentText":item,"repliedTo":folderId}}})
-        }
-  
-    };
- 
-    const handleDeleteNode = (folderId) => {
-      console.log("delete the node",folderId)
-      deleteComments({ variables: {"commentId": folderId}})
+  //               },
+  //               onError: (error) => {
+  //                   console.error('Error:', error.message);
+  //               }
+  //           })
 
 
-    };
 
-    const handlevote=(commentid,action)=>{
-      console.log("handle vote: ",action ," ",commentid)
-      updatevotes({variables:{details: {
-        "action": action,
-        "commentID":commentid
-      }}})
-    }
+  //   const updateVotemutation = gql`
+  //   mutation UpdateVote($details: updateVoteDetail!) {
+  //     updateVote(details: $details)
+  //   }`
+  //   const [updatevotes] = useMutation(updateVotemutation,{
+  //     onCompleted:(data)=>{
+
+  //     },
+  //     onError: (error) => {
+  //       console.error('Error:', error.message);
+  //   }
+  //   })
+
+
+
+  //   const [ getComments ] = useLazyQuery(gql`
+  //   query Query($details: getCommentV1Input) {
+  //     getCommentsV1(details: $details)
+  //   }
+  // `, {
+  //       onCompleted: (data) => {
+  //         console.log("commentlist",data)
+  //         //setComments(data["getCommentsV1"])
+  //       },
+  //       onError: (error) => {
+  //           console.error('Error:', error.message);
+  //       }
+  //   });
+
+
+
+
+  //   useEffect(() => {
+  //     if (data)
+  //         getComments({
+  //             variables: {
+  //                 details: {
+  //                   "postID":props.postID
+  //                 }
+  //             }
+  //         })
+  // }, [data]);
+
+
+
+  //     const handleInsertNode = (folderId, item) => {
+
+  //         if(folderId=="")
+  //         {
+  //             addComments({ variables: { details: {"postID":postID,"commentText":item}}})
+  //         }
+  //         else
+  //         {
+  //           addComments({ variables: { details: {"postID":postID,"commentText":item,"repliedTo":folderId}}})
+  //         }
+
+  //     };
+
+  //     const handleDeleteNode = (folderId) => {
+  //       console.log("delete the node",folderId)
+  //       deleteComments({ variables: {"commentId": folderId}})
+
+
+  //     };
+
+  //     const handlevote=(commentid,action)=>{
+  //       console.log("handle vote: ",action ," ",commentid)
+  //       updatevotes({variables:{details: {
+  //         "action": action,
+  //         "commentID":commentid
+  //       }}})
+  //     }
 
 
   return (
@@ -235,7 +236,7 @@ export default function Contribute(props) {
             style={{ backgroundColor: 'white' }}
           >
             {
-              postinfo.imagesLink.map((image,index)=>(
+              postinfo.imagesLink.map((image, index) => (
                 <SwiperSlide><img className={style.slide_img} src={`https://eflora.vangyaan.com/images/${image}`} alt="" /></SwiperSlide>))
             }
           </Swiper>
@@ -243,8 +244,9 @@ export default function Contribute(props) {
         <div className={style.tt + " " + style.tt1}>
           <h1>Discussion</h1>
           <div className={style.commentParent}>
-            <div className={style.commentContainer}>
+            {/* <div className={style.commentContainer}>
               <Comment comments={comments} handleAddComments={handleAddComments} handleCommentDelete={handleCommentDelete}></Comment>
+              
             </div>
             <div className={style.discussionFooter}>
               <input type="text" placeholder='comment here..' value={input}
@@ -252,6 +254,9 @@ export default function Contribute(props) {
               <div className={style.cicon} onClick={() => handleInsertNode("", input)}>
                 <IoSend style={{ width: '100%', height: '100%' }}></IoSend>
               </div>
+            </div> */}
+            <div className={style.commentContainer}>
+              <Comments postID={postinfo.postID}></Comments>
             </div>
           </div>
         </div>
@@ -261,7 +266,7 @@ export default function Contribute(props) {
           <h1>Plant information</h1>
           <hr />
           <div className={style.iDetails}>
-             <div className={style.irow}>
+            <div className={style.irow}>
               <p>Posted By:</p>
               <p>{postinfo.postedBy}</p>
             </div>
@@ -273,9 +278,9 @@ export default function Contribute(props) {
               <p>Description</p>
               <p>{postinfo.description}</p>
             </div>
-           
-          </div> 
-          
+
+          </div>
+
         </div>
         <div className={style.infoRight}>
 
@@ -303,7 +308,7 @@ export default function Contribute(props) {
               <p onClick={() => setOpenViewContribution(true)}>View Contribution</p>
             </div>
           </div>
-          {openAddContribution && <AddContribution closeAddContribution={setOpenAddContribution}  postID={postinfo.postID} ></AddContribution>}
+          {openAddContribution && <AddContribution closeAddContribution={setOpenAddContribution} postID={postinfo.postID} ></AddContribution>}
           {openViewContribution && <ViewContribution closeViewContribution={setOpenViewContribution} postID={postinfo.postID}></ViewContribution>}
         </div>
       </div>

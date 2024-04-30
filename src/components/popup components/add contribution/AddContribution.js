@@ -3,7 +3,6 @@ import styles from './style.module.css';
 import Selector from './Selector'
 function AddContribution(props) {
 
-    console.log(props)
     return (
         <div className={`${styles["modalBackground"]}`}>
             <div className={`${styles["modalContainer"]}`}>

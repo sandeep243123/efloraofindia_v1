@@ -20,15 +20,16 @@ import Profile from './components/profile/Profile.js'
 import OTPSignup from './components/signup/OtpForm.js'
 
 function App() {
+  const [theme, setTheme] = useState("dark");
   return (
     <div>
-      <Navbar></Navbar>
+      <Navbar setTheme={setTheme} theme={theme}></Navbar>
       <Routes>
-        <Route path='/' element={<Home></Home>}></Route>
+        <Route path='/' element={<Home theme={theme}></Home>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/signup' element={<Signup></Signup>}></Route>
         <Route path='/discussion' element={<Contribute></Contribute>}></Route>
-        
+
         <Route path='/otpsignup' element={<OTPSignup></OTPSignup>}></Route>
         <Route path='/showposts/:postID' element={<Contribute></Contribute>}></Route>
         <Route path='/terms' element={<Terms></Terms>}></Route>

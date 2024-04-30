@@ -135,7 +135,7 @@ export default function ViewContribution(props) {
                                                     {
                                                         Object.keys(nestedList[partName]).map((featureName) => (
                                                             <li key={featureName} onClick={() => setProperty(nestedList[partName][featureName])}>
-                                                                <div className="bg-white p-3  bg-blue-50 font-bold rounded-md flex gap-20 cursor-pointer">
+                                                                <div className="bg-gray-200 p-3  bg-blue-50 font-bold rounded-md flex gap-20 cursor-pointer">
                                                                     <p className="text-gray-800">{featureName}</p>
                                                                 </div>
                                                             </li>

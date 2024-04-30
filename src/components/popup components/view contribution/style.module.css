@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
     font-family: Georgia, 'Times New Roman', Times, serif;
     box-sizing: border-box;
@@ -22,6 +23,7 @@
     transform: translate(-50%, -50%);
     z-index: 10;
     background: rgba(81, 80, 80, 0.878);
+    /* background-color: rgb(255, 255, 255); */
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(40px);
@@ -44,9 +46,13 @@
 /* h1 {
     color: white;
 } */
-.topSection h1,
+
 .leftSection h1,
 .rightSection h1 {
+    color: black;
+}
+
+.topSection h1 {
     color: white;
 }
 
@@ -58,6 +64,7 @@
     margin-left: 2%;
     font-style: italic;
 }
+
 
 .btn {
     height: 30px;
@@ -140,7 +147,7 @@
 
 
 .rightListContainer {
-    margin: 0 2%;
+    margin: 20px 4%;
     height: 83%;
     overflow-x: auto;
 }
@@ -150,7 +157,7 @@
     width: 97%;
     height: 60px;
     border-radius: 10px;
-    box-shadow: 3px 3px 8px 1px rgb(180, 180, 180);
+    box-shadow: 1px 1px 2px 1px rgb(180, 180, 180);
     display: flex;
     justify-content: space-between;
     padding: 10px;
@@ -181,4 +188,8 @@
     height: 30px;
     width: 30px;
     margin-right: 2%;
+}
+
+.rightListT1 h1 {
+    font-size: 1em;
 }
