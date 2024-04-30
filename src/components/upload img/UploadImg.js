@@ -120,7 +120,6 @@ export default function UploadImg(props) {
 
             const reader = new FileReader();
             reader.readAsDataURL(file);
-
             reader.onload = () => {
                 const p = reader.result
                 setImages((prevImages) => [
