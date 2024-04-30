@@ -46,14 +46,14 @@ function Home() {
             <img src={sample2} alt="No image found" />
             <div className={styles.infoSection}>
               <Link to={'/showposts'}><h1>Show Posts</h1></Link>
-              <h2>If you wanna give your valuable contribution, then this is the right place</h2>
+              <h2>Explore the world of greenery with our latest series, offering extensive plant identification</h2>
             </div>
           </div>
           <div className={styles.card3}>
             <img src={sample3} alt="No image found" />
             <div className={styles.infoSection}>
               <Link to={'/dashboard'}><h1>Dashboard</h1></Link>
-              <h2>If you wanna give your valuable contribution, then this is the right place</h2>
+              <h2>Effortlessly monitor plant identification, contributors, and moderators with our streamlined dashboard</h2>
             </div>
           </div>
 

@@ -14,12 +14,12 @@ export default function UploadImg(props) {
     const fileInputRef = useRef(null)
     const btnRef = useRef()
     const labelRef = useRef()
-    
+
     const navigate = useNavigate();
 
     const notifySuccess = (msg) => {
         toast.success(` ${msg}!`, {
-            position: "bottom-right",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -71,16 +71,16 @@ export default function UploadImg(props) {
         for (let i = 0; i < files.length; i++) {
             if (files[i].type.split('/')[0] !== 'image') continue;
             if (!images.some((e) => e.name === files[i].name)) {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(files[i]);
-                    
-                    reader.onload = () => {
-                        const p = reader.result
-                        setImages((prevImages) => [
-                            ...prevImages,p
-                        ]);
-                    }
-               
+                const reader = new FileReader();
+                reader.readAsDataURL(files[i]);
+
+                reader.onload = () => {
+                    const p = reader.result
+                    setImages((prevImages) => [
+                        ...prevImages, p
+                    ]);
+                }
+
             }
             notifySuccess("Image uploaded Successfully");
         }
@@ -115,17 +115,16 @@ export default function UploadImg(props) {
         const files = event.dataTransfer.files
         const x = []
 
-        for (let i = 0; i < files.length; i++)
-        {
+        for (let i = 0; i < files.length; i++) {
             const file = files[i];
-      
+
             const reader = new FileReader();
             reader.readAsDataURL(file);
-      
+
             reader.onload = () => {
                 const p = reader.result
                 setImages((prevImages) => [
-                    ...prevImages,p
+                    ...prevImages, p
                 ]);
             }
             notifySuccess("Image uploaded Successfully");
@@ -205,13 +204,13 @@ export default function UploadImg(props) {
                         setDescription(e.target.value);
                     }}></textarea>
                     <div className={styles.btnSection}>
-                        <Link to={'contribute'}><buttot className={styles.submit}  onClick={() => {
+                        <Link to={'contribute'}><buttot className={styles.submit} onClick={() => {
                             CreatePostfunc({ variables: { details: { "description": description, "images": images } } })
                         }}>Submit</buttot></Link>
                     </div>
                 </div>
             </div>
-            
+
             <ToastContainer containerId="Success" />
             <ToastContainer containerId="Error" />
             <ToastContainer containerId="Warning" />
