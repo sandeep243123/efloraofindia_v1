@@ -1,10 +1,9 @@
-import React, { useEffect, useRef,useState } from 'react'
+import React, {useRef,useState } from 'react'
 import styles from './Otp.module.css'
-import { ToastContainer, toast } from 'react-toastify';
-
-import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
+import { ToastContainer, toast } from 'react-toastify'
+import { useQuery, gql, useMutation } from "@apollo/client";
 import 'react-toastify/dist/ReactToastify.css';
-import { Link,useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Otp() {
     const inputRef = useRef()
@@ -58,13 +57,14 @@ function Otp() {
 const [resetpasswordfunction] =
     useMutation(resetpasswordmutation, {
         onCompleted: (data) => {
-            alert(data.forgetPassword);
+            //alert(data.forgetPassword);
 
             navigate('/login');
         },
         onError: (error) => {
             console.error('Error:', error.message);
 
+            notifyWarning(error.message)
         }
     })
 
@@ -79,7 +79,7 @@ const [resetpasswordfunction] =
     
         function validatePass() {
             if (inputData.pass == '' || inputData.confirmPass == '') {
-                toast("Please enter your new password")
+                notifyWarning("Please enter your new password")
             } else if (inputData.confirmPass == inputData.pass) {
                 
                 resetpasswordfunction({variables: {details: {
@@ -88,7 +88,7 @@ const [resetpasswordfunction] =
                     "otp": parseInt(otp)
                 }}})
             } else {
-                toast("passwrod do not match")
+                notifyWarning("passwords do not match")
             }
         }
     
@@ -107,9 +107,10 @@ const [resetpasswordfunction] =
                         if (/^\d{0,4}$/.test(input)) {
                             setOTP(input);
                         }
+                        
                         }}
-                        maxLength={4} // Limit the input to 4 characters
-                        pattern="\d*" // Only allow numeric input
+                        maxLength={4} 
+                        pattern="\d*" 
                         required/>
                         
                         <input name='pass' type="password" placeholder='Set New password' onChange={handleInputData} />
@@ -121,6 +122,7 @@ const [resetpasswordfunction] =
                 
             </div>
             <ToastContainer containerId="Error" />
+            <ToastContainer containerId="Warning"/>
         </div>
     )}
 

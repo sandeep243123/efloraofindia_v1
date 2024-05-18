@@ -6,38 +6,6 @@ import useNode from '../hooks/useNode';
 import Action from "./Action"
 
 
-// const commentList= [
-//   {
-//     "commentID": "65ec52a589e64a665a0079cc",
-//     "commentText": "Color green",
-//     "postedBy": "Anjali",
-//     "repliedTo": null
-//   },
-//   {
-//     "commentID": "65f0b47f4ea91f9d5a9f32ca",
-//     "commentText": "Hello Everyone",
-//     "postedBy": "ar2",
-//     "repliedTo": null
-//   },
-//   {
-//     "commentID": "65f0b48e4ea91f9d5a9f32cd",
-//     "commentText": "Bye Bye",
-//     "postedBy": "ar2",
-//     "repliedTo": null},
-// {
-//   "commentID": "65f0b4a54ea91f9d5a9f32d0",
-//   "commentText": "Hello are you",
-//   "postedBy": "ar2",
-//   "repliedTo": "65f0b48e4ea91f9d5a9f32cd"
-// },
-// {
-//   "commentID": "65f0b4b34ea91f9d5a9f32d3",
-//   "commentText": "Color of flower is pink",
-//   "postedBy": "ar2",
-//   "repliedTo": "65f0b48e4ea91f9d5a9f32cd"
-// }
-// ]
-
 function Comments(props) {
 
   const postID = props.postID;

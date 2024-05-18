@@ -16,6 +16,34 @@ function Otp() {
     console.log(location.state)
     console.log("email",props)
 
+
+    const notifyError = () => {
+        toast.error(' Invalid user!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            containerId: 'Error'
+        });
+    }
+    const notifyWarning = (msg) => {
+        toast.warning(` ${msg}!`, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            containerId: 'Warning'
+        });
+    }
+
     const {data} = useQuery(gql`
     query Query($details: sendOTPDetail!) {
         sendOTP(details: $details)
@@ -69,7 +97,7 @@ function Otp() {
             },
             onError: (error) => {
                 console.error('Error signing up:', error.message);
-
+                notifyError(error.message);
             }
         })
 
@@ -146,6 +174,7 @@ function Otp() {
                 </div>
             </div>
             <ToastContainer containerId="Error" />
+            <ToastContainer containerId="Warning" />
         </div>
     )
 }

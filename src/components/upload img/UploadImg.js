@@ -121,13 +121,13 @@ export default function UploadImg(props) {
     }
 
     useEffect(() => {
-        if (images.length < 3) {
-            labelRef.current.style.display = "inline"
-            setPath('')
-        } else {
-            labelRef.current.style.display = "none"
-            setPath('/next')
-        }
+        // if (images.length < 3) {
+        //     labelRef.current.style.display = "inline"
+        //     setPath('')
+        // } else {
+        //     labelRef.current.style.display = "none"
+        //     setPath('/next')
+        // }
     })
 
 
@@ -142,14 +142,20 @@ export default function UploadImg(props) {
     const [CreatePostfunc] =
         useMutation(createpostmut, {
             onCompleted: (data) => {
-                notifySuccess("Successfully Uploaded")
-                navigate("/")
+                notifySuccess("Successfully Posted");
+                console.log("SetTimeout Implementd")
+                setTimeout(() => {
+                    navigate("/")
+                },3000)
+                
             },
             onError: (error) => {
                 console.error('Error signing up:', error.message);
                 notifyError(error.message)
             }
         })
+
+    
 
     return (
         <div className={styles.parent}>
@@ -192,9 +198,9 @@ export default function UploadImg(props) {
                         setDescription(e.target.value);
                     }}></textarea>
                     <div className={styles.btnSection}>
-                        <Link to={'contribute'}><buttot className={styles.submit} onClick={() => {
+                        <button className={styles.submit} onClick={() => {
                             CreatePostfunc({ variables: { details: { "description": description, "images": images } } })
-                        }}>Submit</buttot></Link>
+                        }}>Submit</button>
                     </div>
                 </div>
             </div>

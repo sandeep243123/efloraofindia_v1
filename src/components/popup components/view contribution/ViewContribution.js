@@ -29,7 +29,6 @@ export default function ViewContribution(props) {
             }
         },
         onCompleted: (data) => {
-            //setcList(data["getContribution"])
             getList(data["getContribution"]);
         },
         onError: (error) => {
@@ -53,7 +52,6 @@ export default function ViewContribution(props) {
       }
     `, {
         onCompleted: (data) => {
-            //setcList(data["getContribution"])
             getList(data["getContribution"]);
         },
         onError: (error) => {

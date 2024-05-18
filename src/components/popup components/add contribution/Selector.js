@@ -119,8 +119,6 @@ function Selector(props) {
 
             setOpen1(false);
             setPartID(partdetail.partID)
-            // setPartID(partdetail.partID);
-            // Trigger the GraphQL query for additional information
             getPlantPartInfo({ variables: { partID: partdetail.partID } });
         }
     };
@@ -154,7 +152,7 @@ function Selector(props) {
                 getcList({
                     variables: {
                         details: {
-                            "postID": props.postID,//"65c4d17fece4f07550c6b3c0",
+                            "postID": props.postID,
                             "showMyContribution": true
                         }
                     }

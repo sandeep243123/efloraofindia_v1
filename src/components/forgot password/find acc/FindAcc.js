@@ -18,9 +18,6 @@ const navigate = useNavigate();
             console.log("biye");
             
             navigate('/otp', { state: { email: email } });
-            // <Link
-            // to={{ pathname: '/otp', state: { email: email } }}>
-            // </Link>
         }
       };
 
