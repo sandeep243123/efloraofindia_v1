@@ -19,8 +19,8 @@ export default function Login() {
     const btnRef = useRef(null);
 
 
-    const notifyError = () => {
-        toast.error(' Invalid user!', {
+    const notifyError = (msg) => {
+        toast.error(`${msg}!`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -34,7 +34,7 @@ export default function Login() {
     }
     const notifyWarning = (msg) => {
         toast.warning(` ${msg}!`, {
-            position: "bottom-right",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -68,8 +68,9 @@ export default function Login() {
                 email
                 accountType
             }
-        }`, {
+        }`,{
         onCompleted: (data) => {
+            console.log(data)
             if (data.login && data.login.token) {
 
                 const { token, ...userData } = data.login;
@@ -77,13 +78,15 @@ export default function Login() {
                 setUser(userData);
                 setLoggedIn(true);
                 login();
-            } else {
-                console.error('Error signing up: No token received.');
             }
+            
+            
+            console.log(data.errors[0])
         },
-        onError: (error) => {
-            console.error('Error signing up:', error.message);
-            notifyWarning(error.message)
+        onError: (errors) => {
+            console.log(errors)
+            console.log('Error hi :', errors.message);
+            notifyWarning(errors.message)
         }
     });
 
@@ -110,9 +113,8 @@ export default function Login() {
                 <div ref={btnRef} className={styles.btn1} onClick={() => {
                     if (validateLogin())
                         Loginfunc({ variables: { details: { "usermail": inputemail, "password": inputpassword } } }).then(() => {
-                            if (!loggedIn)
-                                notifyError()
-                        })
+                         
+                        }).catch(err =>{console.log(err)})
                 }}>
                     <p>Login</p>
                 </div>

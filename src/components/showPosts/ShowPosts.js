@@ -33,7 +33,7 @@ function ShowPost() {
         variables: detailVar
         ,
         onError: (error) => {
-            console.error('Error signing up:', error.message);
+            console.error('Error:', error.message);
         }
     });
 
@@ -52,7 +52,7 @@ function ShowPost() {
             setpList(data["getPosts"])
         },
         onError: (error) => {
-            console.error('Error signing up:', error.message);
+            console.error('Error:', error.message);
 
         }
 

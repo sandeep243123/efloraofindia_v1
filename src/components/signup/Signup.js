@@ -1,20 +1,68 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext,useRef } from 'react'
 import styles from '../signup/signup.module.css'
 import { Link } from 'react-router-dom'
 import { gql, useMutation } from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../services/AuthContext.js';
 import img from './t1.png'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Signup() {
     const [inputname, setName] = useState("");
     const [inputpassword, setPassword] = useState("");
     const [inputemail, setEmail] = useState("");
     const navigate = useNavigate();
+    const inputRef1 = useRef(null);
+    const inputRef2 = useRef(null);
+    const inputRef3 = useRef(null);
+    const [signup,setsignup]=useState(false)
 
-    
+    const notifyError = (msg) => {
+        toast.error(`${msg}!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            containerId: 'Error'
+        });
+    }
+    const notifyWarning = (msg) => {
+        toast.warning(` ${msg}!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            containerId: 'Warning'
+        });
+    }
 
-
+    const validatesignup = () => {
+        if (inputRef1.current.value == '') {
+            inputRef1.current.focus()
+            notifyWarning("Please enter your user name")
+            return false
+        }
+        else   if (inputRef2.current.value == '') {
+            inputRef2.current.focus()
+            notifyWarning("Please enter your email")
+            return false
+        }
+        else   if (inputRef3.current.value == '') {
+            inputRef3.current.focus()
+            notifyWarning("Please enter your password")
+            return false
+        }
+        return true
+    };
     return (
         <div className={styles.d1}>
             <div className={styles.parent1}>
@@ -25,21 +73,21 @@ export default function Signup() {
                     <div className={styles.inputForm1}>
                         <div className={styles.ifield1}>
                             <p>Full name</p>
-                            <input type="text" placeholder='Your name' value={inputname}
+                            <input ref={inputRef1} type="text" placeholder='Your name' value={inputname}
                                 onChange={(e) => {
                                     setName(e.target.value.toLowerCase());
                                 }} />
                         </div>
                         <div className={styles.ifield1}>
                             <p>Email address</p>
-                            <input type="text" placeholder='xyz@gmail.com' value={inputemail}
+                            <input ref={inputRef2} type="text" placeholder='xyz@gmail.com' value={inputemail}
                                 onChange={(e) => {
                                     setEmail(e.target.value.toLowerCase());
                                 }} />
                         </div>
                         <div className={styles.ifield1}>
                             <p>Create password</p>
-                            <input type="password1" placeholder='Pasword' value={inputpassword}
+                            <input ref={inputRef3} type="password1" placeholder='Pasword' value={inputpassword}
                                 onChange={(e) => {
                                     setPassword(e.target.value.toLowerCase());
                                 }} />
@@ -49,7 +97,16 @@ export default function Signup() {
                             <p>Password must contain at least one symbol e.g @,!</p>
                         </div>
                         <div className={styles.btn11}>
-                        <p><Link to={'/otpsignup'} state={{email:inputemail,password:inputpassword,name:inputname}}>Sign Up</Link></p>  
+                       
+                                <p onClick={()=>{if(validatesignup()){setsignup(true)}}}>
+                                {
+                                signup && (
+                                <Link to='/otpsignup' state={{ email: inputemail, password: inputpassword, name: inputname }}>
+                                </Link>)
+                                }
+                                Sign Up
+                                </p>
+                            
                         </div>
                         <div className={styles.tc1}>
                             <div>
@@ -68,6 +125,9 @@ export default function Signup() {
                 </div>
             </div>
             <img src={img} alt="" />
+            
+            <ToastContainer containerId="Error" />
+            <ToastContainer containerId="Warning" />
         </div>
     )
 }

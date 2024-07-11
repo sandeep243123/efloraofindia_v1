@@ -32,7 +32,7 @@ export default function ViewContribution(props) {
             getList(data["getContribution"]);
         },
         onError: (error) => {
-            console.error('Error signing up:', error.message);
+            console.error('Error:', error.message);
 
         }
 
@@ -55,7 +55,7 @@ export default function ViewContribution(props) {
             getList(data["getContribution"]);
         },
         onError: (error) => {
-            console.error('Error signing up:', error.message);
+            console.error('Error:', error.message);
 
         }
 
@@ -124,7 +124,7 @@ export default function ViewContribution(props) {
                                         <summary className="flex gap-1 bg-gray-200 pt-4 pb-4 pl-2 rounded-lg cursor-pointer shadow-md mb-4 w-60 mt-2">
                                             <span className="-mt-1">{partName}</span>
                                             <div className='-mt-3'>
-                                                <h1 className='text-green-500 font-bold'>12</h1>
+                                                <h1 className='text-green-500 font-bold'>{Object.keys(nestedList[partName]).length}</h1>
                                             </div>
                                         </summary>
                                         {
@@ -158,7 +158,7 @@ export default function ViewContribution(props) {
                                         </div>
                                         <div className={styles.rightListT2}>
                                             <img src={img1} alt="" />
-                                            <p>12</p>
+                                            {/* <p></p>count of likes or dislikes */}
                                         </div>
                                     </div>
                                 ))

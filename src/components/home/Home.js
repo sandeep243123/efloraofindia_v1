@@ -39,7 +39,7 @@ function Home({ theme }) {
             <img src={sample1} alt="No image found" />
             <div className={styles.infoSection}>
               <Link to={'/upload'}><h1>Contribute</h1></Link>
-              <h2>If you wanna give your valuable contribution, then this is the right place</h2>
+              <h2>If you want to give your valuable contribution, then this is the right place</h2>
             </div>
           </div>
           <div className={styles.card2}>

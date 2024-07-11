@@ -150,7 +150,7 @@ export default function UploadImg(props) {
                 
             },
             onError: (error) => {
-                console.error('Error signing up:', error.message);
+                console.error('Error:', error.message);
                 notifyError(error.message)
             }
         })
@@ -182,7 +182,7 @@ export default function UploadImg(props) {
                             <input name='file' type="file" className={styles.file} accept='image/*' multiple ref={fileInputRef} onChange={onFileSelect} />
                         </div>
                     </div>
-                    <label htmlFor="" ref={labelRef} style={{ color: 'orange' }}>*Please upload atleast 3 images</label>
+                    <label htmlFor="" ref={labelRef} style={{ color: 'orange' }}>*Please upload atleast 1 images</label>
                     <div className={styles.imgContainer}>
                         {
                             images.map((images, index) => (
@@ -199,7 +199,13 @@ export default function UploadImg(props) {
                     }}></textarea>
                     <div className={styles.btnSection}>
                         <button className={styles.submit} onClick={() => {
-                            CreatePostfunc({ variables: { details: { "description": description, "images": images } } })
+                            if(description === ''  || images.length===0)
+                                {
+                                    notifyError("provide images and its description")
+                                }
+                                else {
+                                    CreatePostfunc({ variables: { details: { "description": description, "images": images } } })
+                                }
                         }}>Submit</button>
                     </div>
                 </div>

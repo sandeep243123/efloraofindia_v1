@@ -94,7 +94,7 @@ function Selector(props) {
       }
     `, {
         onCompleted: (data) => {
-            setcList(data["getContribution"])
+            setcList(data["getContribution"].reverse())
         }
 
     })
@@ -119,7 +119,7 @@ function Selector(props) {
 
             setOpen1(false);
             setPartID(partdetail.partID)
-            getPlantPartInfo({ variables: { partID: partdetail.partID } });
+            getPlantPartInfo({ variables: { partId: partdetail.partID } });
         }
     };
 
@@ -159,7 +159,7 @@ function Selector(props) {
                 })
             },
             onError: (error) => {
-                console.error('Error signing up:', error.message);
+                console.error('Error:', error.message);
 
             }
         })
@@ -173,10 +173,14 @@ function Selector(props) {
     const [addPlantPart] =
         useMutation(addPlantPartMutation, {
             onCompleted: (data) => {
+                setOpen1(false);
+                setPartID(data.addPlantPart)
+                getPlantPartInfo({ variables: { partId: data.addPlantPart } });
                 getPlantPartsList();
+
             },
             onError: (error) => {
-                console.error('Error signing up:', error.message);
+                console.error('Error:', error.message);
 
             }
         })
@@ -190,10 +194,12 @@ function Selector(props) {
     const [addPartFeature] =
         useMutation(addPartFeatureMutation, {
             onCompleted: (data) => {
-                getPlantPartInfo({ variables: { partID: partID } });
+                getPlantPartInfo({ variables: { partId: partID } });
+                
+                setfeatureID(data.addPartFeature)
             },
             onError: (error) => {
-                console.error('Error signing up:', error.message);
+                console.error('Error:', error.message);
 
             }
         })
@@ -211,7 +217,7 @@ function Selector(props) {
                 
             },
             onError: (error) => {
-                console.error('Error signing up:', error.message);
+                console.error('Error:', error.message);
 
             }
         })
@@ -239,26 +245,30 @@ function Selector(props) {
 
                                 />
                                 <div onClick={
-                                    () => {
-                                        addPlantPart({ variables: { partName: inputPart } })
+                                    async () => {
+                                        await addPlantPart({ variables: { partName: inputPart } })
                                         setInputPart('');
+                                        setSelected(inputPart);
+                                    setSelected1('');
+                                        
                                     }
                                 }>
-                                    <img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' />
+                                    <abbr title="Create new part"><img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' /></abbr>
                                 </div>
                             </div>
                         </div>
 
-                        {part?.map((partdetail) => (
+                        {part?.map((partdetail, index) => (
                             <li
-                                key={partdetail?.name}
-                                className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${partdetail?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
+                                key={part[part.length - index-1]?.name}
+                                className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${part[part.length - index-1]?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
                             `}
                                 onClick={() => {
-                                    handleItemClick(partdetail)
+                                    handleItemClick(part[part.length - index-1])
+                                    setSelected1('');
                                 }}
                             >
-                                {partdetail?.name}
+                                {part[part.length - index-1]?.name}
                             </li>
                         ))}
                     </ul>
@@ -281,34 +291,35 @@ function Selector(props) {
                                     value={inputFeature}
                                     onChange={(e) => {
                                         setInputFeature(e.target.value.toLowerCase());
-                                        getPlantPartInfo({ variables: { "partId":partID } })
                                     }}
                                 />
                                 <div onClick={
                                     () => {
                                         addPartFeature({ variables: { details: { "partID": partID, featureName: inputFeature } } })
                                         setInputFeature('');
+                                        setSelected1(inputFeature);
+                                        setOpen2(false);
                                     }
                                 }>
-                                    <img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' />
+                                    <abbr title="Create new Property"><img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' /></abbr>
                                 </div>
                             </div>
                         </div>
-                        {partFeatures?.map((eachPart) => (
+                        {partFeatures?.map((eachPart, index) => (
                             <li
-                                key={eachPart?.name}
-                                className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${eachPart?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
+                                key={partFeatures[partFeatures.length - index-1]?.name}
+                                className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${partFeatures[partFeatures.length - index-1]?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
                             `}
                                 onClick={() => {
-                                    if (eachPart?.name?.toLowerCase() !== selected.toLocaleLowerCase()) {
-                                        setSelected1(eachPart?.name);
-                                        setfeatureID(eachPart.featureID)
-                                        console.log(eachPart.featureID)
+                                    if (partFeatures[partFeatures.length - index-1]?.name?.toLowerCase() !== selected.toLocaleLowerCase()) {
+                                        setSelected1(partFeatures[partFeatures.length - index-1]?.name);
+                                        setfeatureID(partFeatures[partFeatures.length - index-1].featureID)
+                                        console.log(partFeatures[partFeatures.length - index-1].featureID)
                                         setOpen2(false);
                                     }
                                 }}
                             >
-                                {eachPart?.name}
+                                {partFeatures[partFeatures.length - index-1]?.name}
                             </li>
                         ))}
                     </ul>
@@ -348,7 +359,7 @@ function Selector(props) {
                                         setInputPart('');
                                     }
                                 }>
-                                <img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' />
+                                <abbr title="Create Value"><img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' /></abbr>
                             </div>
 
                         </div>

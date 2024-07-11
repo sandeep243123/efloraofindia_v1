@@ -12,15 +12,12 @@ function Navbar({ setTheme, theme }) {
   const { isLoggedIn, login, logout, user, setUser } = useContext(AuthContext);
   const [islogin, setLogin] = useState(false);
   useEffect(() => {
-
-
-    // Add event listener to the document object
     document.addEventListener('mousedown', handleClickOutside);
-    // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
 
   useEffect(() => {
     if (localStorage.getItem('authToken'))
@@ -50,15 +47,15 @@ function Navbar({ setTheme, theme }) {
         <Link to={' '}>eFloraOfIndia</Link>
         <div >
           <ul ref={sideNavRef} className={toggle ? style.navBar + " " + style.active : style.navBar}>
-            <li onClick={() => theme == "dark" ? setTheme("light") : setTheme("dark")} style={{ marginTop: '20px' }}>{theme === "light" ? "Dark" : "Light"}</li>
+            <li onClick={() => theme == "dark" ? setTheme("light") : setTheme("dark")} style={{ marginTop: '20px', cursor: 'pointer' }}>{theme === "light" ? "Dark" : "Light"}</li>
             <li><Link to={' '}>Home</Link></li>
-            <li><Link to={'/profile'}>Profile</Link></li>
             <li><Link to={'/about'}>About us</Link></li>
             <li><Link to={'/contact'}>Contact us</Link></li>
 
             {
               islogin ? (
                 <>
+                  <li><Link to={'/profile'}>Profile</Link></li>
                   <li><Link to={'/showposts'}>Show posts</Link></li>
                   <li><Link to={'/upload'}>Contribute</Link></li>
                   <li><Link to={'/dashboard'}>Dashboard</Link></li>

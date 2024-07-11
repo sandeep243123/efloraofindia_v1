@@ -15,7 +15,7 @@ function Otp() {
     
     const notifyWarning = (msg) => {
         toast.warning(` ${msg}!`, {
-            position: "bottom-right",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,

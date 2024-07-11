@@ -32,7 +32,7 @@ function Otp() {
     }
     const notifyWarning = (msg) => {
         toast.warning(` ${msg}!`, {
-            position: "bottom-right",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -96,7 +96,7 @@ function Otp() {
                 }
             },
             onError: (error) => {
-                console.error('Error signing up:', error.message);
+                console.error('Error:', error.message);
                 notifyError(error.message);
             }
         })
