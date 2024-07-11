@@ -1,7 +1,7 @@
 import React, { useState, useContext,useRef } from 'react'
 import styles from '../signup/signup.module.css'
 import { Link } from 'react-router-dom'
-import { gql, useMutation } from "@apollo/client";
+import { gql, useLazyQuery} from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../services/AuthContext.js';
 import img from './t1.png'
@@ -33,7 +33,7 @@ export default function Signup() {
     }
     const notifyWarning = (msg) => {
         toast.warning(` ${msg}!`, {
-            position: "top-right",
+            position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -63,6 +63,38 @@ export default function Signup() {
         }
         return true
     };
+
+
+
+    const handleSignup = () => {
+        if (validatesignup()) {
+            console.log(inputname,inputemail,inputpassword)
+            sendOtpQuery({variables:{
+                details:{
+                    "emailID": inputemail,
+                    "isNew": true
+                }}})
+        }
+    };
+
+
+     const [sendOtpQuery] = useLazyQuery(gql`
+        query Query($details: sendOTPDetail!) {
+            sendOTP(details: $details)
+          }
+        `,{
+            onCompleted:(data) => {
+                console.log("otp sucessfully send")
+                navigate('/otpsignup', { state: { email: inputemail, password: inputpassword, name: inputname }});
+            },
+            onError: (error) => {
+                console.log("hisfds",error.message);
+                console.error('Error hi :', error.message);
+                notifyError(error.message);
+            }
+    
+        })
+    
     return (
         <div className={styles.d1}>
             <div className={styles.parent1}>
@@ -87,7 +119,7 @@ export default function Signup() {
                         </div>
                         <div className={styles.ifield1}>
                             <p>Create password</p>
-                            <input ref={inputRef3} type="password1" placeholder='Pasword' value={inputpassword}
+                            <input ref={inputRef3} type="password" placeholder='Password' value={inputpassword}
                                 onChange={(e) => {
                                     setPassword(e.target.value.toLowerCase());
                                 }} />
@@ -96,17 +128,10 @@ export default function Signup() {
                             <p>Password must contain a minimum 8 characters</p>
                             <p>Password must contain at least one symbol e.g @,!</p>
                         </div>
-                        <div className={styles.btn11}>
-                       
-                                <p onClick={()=>{if(validatesignup()){setsignup(true)}}}>
-                                {
-                                signup && (
-                                <Link to='/otpsignup' state={{ email: inputemail, password: inputpassword, name: inputname }}>
-                                </Link>)
-                                }
-                                Sign Up
-                                </p>
-                            
+                        <div className={styles.btn11} onClick={handleSignup}>
+                                <p>
+                                    Sign Up
+                                </p>   
                         </div>
                         <div className={styles.tc1}>
                             <div>

@@ -13,12 +13,13 @@ function Otp() {
     const location = useLocation();
 
     const props = location.state || {}
+    console.log("hsdfds",location)
     console.log(location.state)
     console.log("email",props)
 
 
-    const notifyError = () => {
-        toast.error(' Invalid user!', {
+    const notifyError = (msg) => {
+        toast.error(`${msg}`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -43,29 +44,6 @@ function Otp() {
             containerId: 'Warning'
         });
     }
-
-    const {data} = useQuery(gql`
-    query Query($details: sendOTPDetail!) {
-        sendOTP(details: $details)
-      }
-    `, {
-        onCompleted: (data) => {
-            console.log("otp sucessfully send")
-        },
-        variables:{
-            details:{
-                "emailID": props.email,
-                "isNew": true
-            }
-        }
-        ,
-        onError: (error) => {
-            console.error('Error signing up:', error.message);
-            toast(error.msg)
-        }
-
-    })
-
     const [loggedIn, setLoggedIn] = useState(false);
     const { isLoggedIn, login, setUser } = useContext(AuthContext);
 

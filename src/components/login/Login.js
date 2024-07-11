@@ -68,27 +68,27 @@ export default function Login() {
                 email
                 accountType
             }
-        }`,{
-        onCompleted: (data) => {
-            console.log(data)
-            if (data.login && data.login.token) {
+        }`,
+        {
+            onCompleted: (data) => {
+                console.log(data)
+                if (data.login && data.login.token) {
 
-                const { token, ...userData } = data.login;
-                localStorage.setItem('authToken', token);
-                setUser(userData);
-                setLoggedIn(true);
-                login();
+                    const { token, ...userData } = data.login;
+                    localStorage.setItem('authToken', token);
+                    setUser(userData);
+                    setLoggedIn(true);
+                    login();
+                }
+
+
+                //console.log(data.errors[0])
+            },
+            onError: (errors) => {
+                console.log('Error hi :', errors.message);
+                notifyWarning(errors.message)
             }
-            
-            
-            console.log(data.errors[0])
-        },
-        onError: (errors) => {
-            console.log(errors)
-            console.log('Error hi :', errors.message);
-            notifyWarning(errors.message)
-        }
-    });
+        });
 
     useEffect(() => {
         if (loggedIn) {
@@ -112,9 +112,7 @@ export default function Login() {
 
                 <div ref={btnRef} className={styles.btn1} onClick={() => {
                     if (validateLogin())
-                        Loginfunc({ variables: { details: { "usermail": inputemail, "password": inputpassword } } }).then(() => {
-                         
-                        }).catch(err =>{console.log(err)})
+                        Loginfunc({ variables: { details: { "usermail": inputemail, "password": inputpassword } } }).then(() => { }).catch(err => { console.log(err) })
                 }}>
                     <p>Login</p>
                 </div>

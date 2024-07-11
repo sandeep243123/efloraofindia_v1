@@ -3,7 +3,8 @@ import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import List from "./List";
 import addImg from "./add.png";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 
 function Selector(props) {
@@ -48,6 +49,11 @@ function Selector(props) {
     `, {
         onCompleted: (data) => {
             setpart(data.getPlantParts);
+        },
+        onError: (errors) => {
+            console.error('Error:', errors.message);
+            
+            notifyWarning("please enter all the details")
         }
     }
     );
@@ -64,6 +70,11 @@ function Selector(props) {
     `, {
         onCompleted: (plantPartInfo) => {
             setpartFeatures(plantPartInfo.getPartsFeature)
+        },
+        onError: (errors) => {
+            console.error('Error:', errors.message);
+            
+            notifyWarning("please enter all the details")
         }
     }
     );
@@ -78,6 +89,11 @@ function Selector(props) {
     `, {
         onCompleted: (data) => {
             setsearchArray(data["getFeatureProperty"])
+        },
+        onError: (errors) => {
+            console.error('Error:', errors.message);
+            
+            notifyWarning("please enter all the details")
         }
     })
 
@@ -95,6 +111,11 @@ function Selector(props) {
     `, {
         onCompleted: (data) => {
             setcList(data["getContribution"].reverse())
+        },
+        onError: (errors) => {
+            console.error('Error:', errors.message);
+            
+        notifyWarning("please enter all the details")
         }
 
     })
@@ -158,9 +179,10 @@ function Selector(props) {
                     }
                 })
             },
-            onError: (error) => {
-                console.error('Error:', error.message);
-
+            onError: (errors) => {
+                console.error('Error:', errors.message);
+                
+            notifyWarning("please enter all the details")
             }
         })
 
@@ -179,9 +201,10 @@ function Selector(props) {
                 getPlantPartsList();
 
             },
-            onError: (error) => {
-                console.error('Error:', error.message);
-
+            onError: (errors) => {
+                console.error('Error:', errors.message);
+                
+            notifyWarning("please enter all the details")
             }
         })
 
@@ -198,9 +221,10 @@ function Selector(props) {
                 
                 setfeatureID(data.addPartFeature)
             },
-            onError: (error) => {
-                console.error('Error:', error.message);
-
+            onError: (errors) => {
+                console.error('Error:', errors.message);
+                
+            notifyWarning("please enter all the details")
             }
         })
 
@@ -216,12 +240,45 @@ function Selector(props) {
                 setpropertyID(data["addFeatureProperty"])
                 
             },
-            onError: (error) => {
-                console.error('Error:', error.message);
-
+            onError: (errors) => {
+                console.error('Error:', errors.message);
+                
+            notifyWarning("please enter all the details")
             }
         })
 
+
+
+
+    
+        const notifyError = (msg) => {
+            toast.error(`${msg}!`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                containerId: 'Error'
+            });
+        }
+        const notifyWarning = (msg) => {
+            toast.warning(` ${msg}!`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                containerId: 'Warning'
+            });
+        }
+        
+        
 
     return (
         <div className='flex flex-col gap-6'>
@@ -395,6 +452,10 @@ function Selector(props) {
                 
                 <List contributionList={cList} />
             </div>
+
+            
+            <ToastContainer containerId="Error" />
+            <ToastContainer containerId="Warning" />
         </div>
     );
 }

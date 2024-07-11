@@ -7,16 +7,13 @@ import 'react-toastify/dist/ReactToastify.css';
 function FindAcc() {
 
     const [email,setemail]=useState("");
-const navigate = useNavigate();
+    const navigate = useNavigate();
     const handleResetPassword = () => {
         if (!email) {
-            console.log("Hi")
           notifyWarning('Please provide your email address');
         }
         else
         {
-            console.log("biye");
-            
             navigate('/otp', { state: { email: email } });
         }
       };
