@@ -71,7 +71,6 @@ export default function Login() {
         }`,
         {
             onCompleted: (data) => {
-                console.log(data)
                 if (data.login && data.login.token) {
 
                     const { token, ...userData } = data.login;
@@ -80,12 +79,9 @@ export default function Login() {
                     setLoggedIn(true);
                     login();
                 }
-
-
-                //console.log(data.errors[0])
             },
             onError: (errors) => {
-                console.log('Error hi :', errors.message);
+                console.log('Error:', errors.message);
                 notifyWarning(errors.message)
             }
         });

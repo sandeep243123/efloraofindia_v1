@@ -9,7 +9,6 @@ function Otp() {
     const inputRef = useRef()
     const location = useLocation();
     const {email} = location.state|| {};
-    console.log(email)
     const navigate = useNavigate();
 
     

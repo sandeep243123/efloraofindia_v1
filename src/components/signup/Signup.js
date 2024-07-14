@@ -68,7 +68,6 @@ export default function Signup() {
 
     const handleSignup = () => {
         if (validatesignup()) {
-            console.log(inputname,inputemail,inputpassword)
             sendOtpQuery({variables:{
                 details:{
                     "emailID": inputemail,
@@ -88,8 +87,7 @@ export default function Signup() {
                 navigate('/otpsignup', { state: { email: inputemail, password: inputpassword, name: inputname }});
             },
             onError: (error) => {
-                console.log("hisfds",error.message);
-                console.error('Error hi :', error.message);
+                console.error('Error:', error.message);
                 notifyError(error.message);
             }
     

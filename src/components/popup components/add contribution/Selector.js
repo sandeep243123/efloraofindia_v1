@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 
 function Selector(props) {
-    console.log(props.postID)
 
     const [inputValue, setInputValue] = useState("");
     const [inputPart, setInputPart] = useState("");
@@ -236,7 +235,6 @@ function Selector(props) {
     const [addFeatureProperty] =
         useMutation(addFeaturePropertyMutation, {
             onCompleted: (data) => {
-                console.log(data)
                 setpropertyID(data["addFeatureProperty"])
                 
             },
@@ -371,7 +369,6 @@ function Selector(props) {
                                     if (partFeatures[partFeatures.length - index-1]?.name?.toLowerCase() !== selected.toLocaleLowerCase()) {
                                         setSelected1(partFeatures[partFeatures.length - index-1]?.name);
                                         setfeatureID(partFeatures[partFeatures.length - index-1].featureID)
-                                        console.log(partFeatures[partFeatures.length - index-1].featureID)
                                         setOpen2(false);
                                     }
                                 }}

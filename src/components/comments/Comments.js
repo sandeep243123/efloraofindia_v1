@@ -52,7 +52,6 @@ function Comments(props) {
   const [addComments] =
     useMutation(addCommentMutation, {
       onCompleted: (data) => {
-        //console.log(data,"Success")
         setInput("")
         getComments({
           variables: {
