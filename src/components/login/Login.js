@@ -105,9 +105,9 @@ export default function Login() {
 
                 <div className={styles.ifield}>
                     <input ref={inputRef1} type="input" placeholder='Email' value={inputemail}
-                        onChange={(e) => setEmail(e.target.value.toLowerCase())} required />
+                        onChange={(e) => setEmail(e.target.value)} required />
                     <input ref={inputRef2} id='input2' type="password" placeholder='password'
-                        onChange={(e) => setPassword(e.target.value.toLowerCase())} required />
+                        onChange={(e) => setPassword(e.target.value)} required />
                 </div>
 
                 <div ref={btnRef} className={styles.btn1} onClick={() => {

@@ -107,21 +107,21 @@ export default function Signup() {
                             <p>Full name</p>
                             <input ref={inputRef1} type="text" placeholder='Your name' value={inputname}
                                 onChange={(e) => {
-                                    setName(e.target.value.toLowerCase());
+                                    setName(e.target.value);
                                 }} />
                         </div>
                         <div className={styles.ifield1}>
                             <p>Email address</p>
                             <input ref={inputRef2} type="text" placeholder='xyz@gmail.com' value={inputemail}
                                 onChange={(e) => {
-                                    setEmail(e.target.value.toLowerCase());
+                                    setEmail(e.target.value);
                                 }} />
                         </div>
                         <div className={styles.ifield1}>
                             <p>Create password</p>
                             <input ref={inputRef3} type="password" placeholder='Password' value={inputpassword}
                                 onChange={(e) => {
-                                    setPassword(e.target.value.toLowerCase());
+                                    setPassword(e.target.value);
                                 }} />
                         </div>
                         <div className={styles.passwordConstraints}>
