@@ -69,7 +69,12 @@ export default function Login() {
                 accountType
             }
         }`,
-        {
+        {   
+            errorPolicy: "all",
+            onError: (errors) => {
+                console.log('Error:', errors.message);
+                notifyWarning(errors.message)
+            },
             onCompleted: (data) => {
                 if (data.login && data.login.token) {
 
@@ -79,10 +84,7 @@ export default function Login() {
                     setLoggedIn(true);
                     login();
                 }
-            },
-            onError: (errors) => {
-                console.log('Error:', errors.message);
-                notifyWarning(errors.message)
+                console.log(data)
             }
         });
 
@@ -108,7 +110,7 @@ export default function Login() {
 
                 <div ref={btnRef} className={styles.btn1} onClick={() => {
                     if (validateLogin())
-                        Loginfunc({ variables: { details: { "usermail": inputemail, "password": inputpassword } } }).then(() => { }).catch(err => { console.log(err) })
+                        Loginfunc({ variables: { details: { "usermail": inputemail, "password": inputpassword } } })
                 }}>
                     <p>Login</p>
                 </div>

@@ -13,7 +13,6 @@ function Otp() {
     const location = useLocation();
 
     const props = location.state || {}
-    console.log("hsdfds",location)
     console.log(location.state)
     console.log("email",props)
 

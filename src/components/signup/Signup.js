@@ -82,6 +82,7 @@ export default function Signup() {
             sendOTP(details: $details)
           }
         `,{
+            errorPolicy: "all",
             onCompleted:(data) => {
                 console.log("otp sucessfully send")
                 navigate('/otpsignup', { state: { email: inputemail, password: inputpassword, name: inputname }});
