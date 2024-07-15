@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect , useContext } from 'react'
 import style from './Profile.module.css'
 import pp from '../contribute/pp.png'
 import { gql, useMutation } from "@apollo/client";
-
+import { AuthContext } from '../../services/AuthContext.js';
 import { useNavigate } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,6 +12,13 @@ function Profile() {
         color:'red'
     }
     
+    const { user} = useContext(AuthContext);
+    const [password, setPassword1] = useState("");
+    const [confirmpass, setPassword2] = useState("");
+    const [inputname, setName] = useState("");
+    const inputRef1 = useRef(null);
+    const inputRef2 = useRef(null);
+    const inputRef3 = useRef(null);
     const navigate = useNavigate();
 
     const notifySuccess = (msg) => {
@@ -76,32 +83,30 @@ function Profile() {
         }
     })
 
-    
-
-    const [inputData, setInputData] = useState({})
-    function handleInputData(e) {
-        setInputData({
-            ...inputData,
-            [e.target.name]: e.target.value
-        })
-    }
 
     function validatePass() {
-        if (inputData.pass == '' || inputData.confirmPass == '') {
-            notifyWarning("Please enter correct passwords")
-        } else if (inputData.confirmPass == inputData.pass) {
-            if(inputData.name!='')
+            if (inputRef2.current.value === '' || inputRef3.current.value === '') 
             {
-            updateProfileFunction({variables:{details:{"name":inputData.username,"password":inputData.pass}}})
+                notifyWarning("Please enter the passwords")
             }
-            else
+            else if(inputRef2.current.value !== inputRef3.current.value)
             {
-                notifyWarning("please enter correct username")
+                
+                notifyWarning("passwords do not match")
             }
-        } else {
-            notifyWarning("passwords do not match")
-        }
+            else 
+            {
+                if(inputRef1.current.value !== '')
+                {
+                    updateProfileFunction({variables:{details:{"name":inputRef1.current.value,"password":inputRef2.current.value}}})
+                }
+                else
+                {
+                    notifyWarning("please enter correct username")
+                }
+            } 
     }
+
     return (
         <div className={style.parent}>
             <div className={style.Profile}>
@@ -112,11 +117,14 @@ function Profile() {
                 <div className={style.userInfo}>
                     <div className={style.field}>
                         <h1>Username<span style={mandatory}>*</span></h1>
-                        <input name="username" type="text" placeholder='username' onChange={handleInputData} required/>
+                        <input ref={inputRef1} name="username" type="text" placeholder='username' value={inputname}
+                                onChange={(e) => {
+                                    setName(e.target.value);
+                                }} required/>
                     </div>
                     <div className={style.field}>
                         <h1>Email</h1>
-                        <input type="text" placeholder='xyz@gmail.com' />
+                        <input type="text" value={user.email} readOnly />
                     </div>
                     <div className={style.field}>
                         <h1>Phone</h1>
@@ -136,12 +144,12 @@ function Profile() {
                     </div>
                     <div className={style.field}>
                         <h1>Change Password<span style={mandatory}>*</span></h1>
-                        <input name='pass' type="password" placeholder='Set New password' onChange={handleInputData} required/>
+                        <input ref={inputRef2} name='pass' type="password" placeholder='Set New password' value={password} onChange={(e) => setPassword1(e.target.value)} required/>
                     </div>
 
                     <div className={style.field}>
                         <h1>Confirm Password<span style={mandatory}>*</span></h1>
-                        <input name='confirmPass' type="password" placeholder='Confirm password' onChange={handleInputData} required/>
+                        <input ref={inputRef3} name='confirmPass' type="password" placeholder='Confirm password' value={confirmpass} onChange={(e) => setPassword2(e.target.value)} required/>
                     </div>
                 </div>
             </div>
