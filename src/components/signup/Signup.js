@@ -7,6 +7,7 @@ import { AuthContext } from '../../services/AuthContext.js';
 import img from './t1.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import validator from 'validator'
 
 export default function Signup() {
     const [inputname, setName] = useState("");
@@ -18,6 +19,8 @@ export default function Signup() {
     const inputRef3 = useRef(null);
     const inputRef4 = useRef(null);
     const [signup, setsignup] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('') 
+    const [colorState, setColor] = useState('red');
 
     const notifyError = (msg) => {
         toast.error(`${msg}!`, {
@@ -85,8 +88,10 @@ export default function Signup() {
             inputRef4.current.focus()
             notifyWarning("Please accept our terms and condition")
             return false;
-        } else {
-            // notifyLoading("Please wait..")
+        } 
+        if(!isPasswordValid(inputRef3.current.value)){
+            notifyWarning("Please enter strong password");
+            return false;
         }
 
         return true
@@ -106,6 +111,28 @@ export default function Signup() {
             })
         }
     };
+
+
+
+    const isPasswordValid = (value) => {
+        return validator.isStrongPassword(value, { 
+            minLength: 8, minLowercase: 1, 
+            minUppercase: 1, minNumbers: 1, minSymbols: 1 
+        })
+    }
+    const validate = (value) => { 
+  
+        if (isPasswordValid(value)) { 
+            setErrorMessage('Is Strong Password');
+            setColor('green');
+        } else { 
+            setErrorMessage('Is Not Strong Password'); 
+            setColor('red');
+        } 
+        return value;
+    } 
+
+
     const [sendOtpQuery] = useLazyQuery(gql`
         query Query($details: sendOTPDetail!) {
             sendOTP(details: $details)
@@ -148,8 +175,17 @@ export default function Signup() {
                             <p>Create password</p>
                             <input ref={inputRef3} type="password" placeholder='Password' value={inputpassword}
                                 onChange={(e) => {
-                                    setPassword(e.target.value);
+                                    setPassword(validate(e.target.value));
                                 }} />
+                                <br></br>
+                                {errorMessage === '' ? null : 
+                                        <span style={{ 
+                                            fontWeight: 'bold', 
+                                            color: colorState,
+                                            fontSize:'0.8rem',
+                                            marginLeft: '20px'
+                                        }}>{errorMessage}</span>
+                                }
                         </div>
                         <div className={styles.passwordConstraints}>
                             <p>Password must contain a minimum 8 characters</p>
@@ -180,6 +216,7 @@ export default function Signup() {
             <ToastContainer containerId="Error" />
             <ToastContainer containerId="Warning" />
             <ToastContainer containerId="Loading" />
+            <ToastContainer containerId="Success" />
         </div>
     )
 }

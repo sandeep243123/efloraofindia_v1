@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { AuthContext } from '../../services/AuthContext.js';
 import { useNavigate } from 'react-router-dom';
+import OtpInput from 'react-otp-input';
 
 function Otp() {
     const inputRef = useRef()
@@ -57,6 +58,7 @@ function Otp() {
 
     const [loggedIn, setLoggedIn] = useState(false);
     const { isLoggedIn, login, setUser } = useContext(AuthContext);
+    const [Otp, setOtp] = useState('');
 
     const signupMutation = gql`
         mutation Signup($details: signupDetails!) {
@@ -138,24 +140,27 @@ function Otp() {
         });
     })
 
-    const [inputotp, setotp] = useState(0);
+    const [inputotp, setInputotp] = useState(0);
 
     const getotp = () => {
-        const inputValues = Array.from(inputRef.current.children)
-            .map(input => input.value)
-            .join('');
+        const otp = parseInt(Otp);
 
-        const otp = parseInt(inputValues, 10);
-
-        if (inputValues.length < 4) {
-            console.log("** heii")
-            notifyWarning("Please enter the complete OTP");
-        } else {
-
-            setotp(otp);
-            signupfunc({ variables: { details: { "email": props.email, "name": props.name, "password": props.password, "otp": otp } } })
-        }
+        console.log(otp);
+        setInputotp(otp);
+        signupfunc({ variables: { details: { "email": props.email, "name": props.name, "password": props.password,"otp":otp } } })
+        
     };
+
+    const otpRef = useRef(null);
+
+    useEffect(() => {
+      // Autofocus on the first input when the component mounts
+      if (otpRef.current) {
+        otpRef.current.focus();
+      }
+    }, []);
+
+
     return (
         <div className={styles.container}>
             <div className={styles.contentContainer}>
@@ -164,14 +169,31 @@ function Otp() {
 
                 <div className={styles.ifield}>
                     <div ref={inputRef} id="inputs" class={styles.inputs}>
-                        <input class={styles.input} type="text"
-                            inputmode="numeric" maxlength="1" />
-                        <input class={styles.input} type="text"
-                            inputmode="numeric" maxlength="1" />
-                        <input class={styles.input} type="text"
-                            inputmode="numeric" maxlength="1" />
-                        <input class={styles.input} type="text"
-                            inputmode="numeric" maxlength="1" />
+                    <OtpInput
+                                value={Otp}
+                                onChange={setOtp}
+                                numInputs={4}
+                                ref={otpRef}
+                                inputStyle={{
+                                    color: 'black',
+                                    width: "30px",
+                                    marginBottom: "10px",
+                                    height: "30px",
+                                    borderTop: "none",
+                                    borderLeft: "none",
+                                    borderRight: "none",
+                                }}
+                                renderSeparator={<span
+                                    style={{
+                                      fontSize: "7px",
+                                      marginLeft: "5px",
+                                      marginRight: "5px",
+                                    }}
+                                  >
+                                    {" "}
+                                  </span>}
+                                renderInput={(props) => <input {...props} />}
+                            />
                     </div>
 
                     {/* here connect to landing page */}
