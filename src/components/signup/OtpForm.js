@@ -74,10 +74,7 @@ function Otp() {
         useMutation(signupMutation, {
             onCompleted: (data) => {
                 if (data.signup && data.signup.token) {
-                    notifySuccess("You are successfully registered")
-                    setTimeout(() => {
-                        navigate("/")
-                    }, 1000)
+                    
                     const { token, ...userData } = data.signup;
                     localStorage.setItem('authToken', token);
                     setUser(userData);
@@ -95,9 +92,17 @@ function Otp() {
             }
         })
 
-    if (isLoggedIn) {
-        navigate('/');
-    }
+    useEffect(() => {
+        if (loggedIn) {
+            notifySuccess("You are successfully registered")
+            setTimeout(() => {
+                navigate("/")
+            }, 1000)
+
+        }
+    }, [loggedIn, navigate]);
+
+
     useEffect(() => {
         notifySuccess('OTP sent Successfully');
     }, [])
