@@ -103,13 +103,16 @@ export default function UploadImg(props) {
         event.preventDefault();
         setIsDragging(false);
         const files = event.dataTransfer.files
-        const x = []
-
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
-
+            const str = file.name.substring(file.name.indexOf(".") + 1);
+            if (str != "jpg" && str != "jpeg" && str != "png") {
+                notifyError(`.${str} Image formate not supported!!`)
+                continue;
+            }
             const reader = new FileReader();
             reader.readAsDataURL(file);
+
             reader.onload = () => {
                 const p = reader.result
                 setImages((prevImages) => [
@@ -179,7 +182,7 @@ export default function UploadImg(props) {
                                     </p>
                                 )
                             }
-                            <input name='file' type="file" className={styles.file} accept='image/*' multiple ref={fileInputRef} onChange={onFileSelect} />
+                            <input name='file' type="file" className={styles.file} accept='image/jpg,image/jpeg,image/png' multiple ref={fileInputRef} onChange={onFileSelect} />
                         </div>
                     </div>
                     <label htmlFor="" ref={labelRef} style={{ color: 'orange' }}>*Please upload atleast 1 images</label>

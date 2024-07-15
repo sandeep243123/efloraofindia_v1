@@ -9,7 +9,7 @@ function Navbar({ setTheme, theme }) {
   const sideNavRef = useRef(null);
 
 
-  const { isLoggedIn,logout} = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -17,8 +17,8 @@ function Navbar({ setTheme, theme }) {
     };
   }, []);
 
-  
- 
+
+
 
 
   function handleClickOutside(event) {
@@ -39,7 +39,7 @@ function Navbar({ setTheme, theme }) {
         <Link to={' '}>eFloraOfIndia</Link>
         <div >
           <ul ref={sideNavRef} className={toggle ? style.navBar + " " + style.active : style.navBar}>
-            <li onClick={() => theme == "dark" ? setTheme("light") : setTheme("dark")} style={{ marginTop: '20px' }}>{theme === "light" ? "Dark" : "Light"}</li>
+            <li onClick={() => theme == "dark" ? setTheme("light") : setTheme("dark")} style={{ marginTop: '20px', cursor: "pointer" }}>{theme === "light" ? "Dark" : "Light"}</li>
             <li><Link to={' '}>Home</Link></li>
             <li><Link to={'/about'}>About us</Link></li>
             <li><Link to={'/contact'}>Contact us</Link></li>
