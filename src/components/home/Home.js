@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import styles from './style.module.css';
 import simg from './search.png';
 import timg from './t2.png';
 import sample1 from './l1.jpg'
 import sample2 from './l2.jpg'
 import sample3 from './l3.jpg'
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../services/AuthContext.js';
 function Home({ theme }) {
+
+  const { isLoggedIn,logout} = useContext(AuthContext);
+  const navigate = useNavigate();
 
   return (
     <div className={styles.t}>
@@ -15,12 +19,6 @@ function Home({ theme }) {
           <p>
             To plant a garden is to believe in Tommorrow
           </p>
-          {/* <div className={styles.quote}>
-            <p>“Even a plant is a living being, therefore we must also consider its mind and soul; just like we do in the case of a human being.”
-              
-              
-              ― Mwanandeke Kindembo</p>
-          </div> */}
           <div className={styles.search} type='text'>
             <input type="text" placeholder='Enter text to search' />
             <a>
@@ -38,21 +36,27 @@ function Home({ theme }) {
           <div className={styles.card1}>
             <img src={sample1} alt="No image found" />
             <div className={styles.infoSection}>
-              <Link to={'/upload'}><h1>Contribute</h1></Link>
+              <h1 onClick={()=>{
+                if(isLoggedIn){navigate('/upload')} 
+                else {navigate('/login')}}}>Contribute</h1>
               <h2>If you want to give your valuable contribution, then this is the right place</h2>
             </div>
           </div>
           <div className={styles.card2}>
             <img src={sample2} alt="No image found" />
             <div className={styles.infoSection}>
-              <Link to={'/showposts'}><h1>Show Posts</h1></Link>
+              <h1 onClick={()=>{
+                if(isLoggedIn){navigate('/showposts')} 
+                else {navigate('/login')}}}>Show Posts</h1>
               <h2>Explore the world of greenery with our latest series, offering extensive plant identification</h2>
             </div>
           </div>
           <div className={styles.card3}>
             <img src={sample3} alt="No image found" />
             <div className={styles.infoSection}>
-              <Link to={'/dashboard'}><h1>Dashboard</h1></Link>
+              <h1 onClick={()=>{
+                if(isLoggedIn){navigate('/dashboard')} 
+                else {navigate('/login')}}}>Dashboard</h1>
               <h2>Effortlessly monitor plant identification, contributors, and moderators with our streamlined dashboard</h2>
             </div>
           </div>

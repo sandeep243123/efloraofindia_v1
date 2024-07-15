@@ -9,8 +9,7 @@ function Navbar({ setTheme, theme }) {
   const sideNavRef = useRef(null);
 
 
-  const { isLoggedIn, login, logout, user, setUser } = useContext(AuthContext);
-  const [islogin, setLogin] = useState(false);
+  const { isLoggedIn,logout} = useContext(AuthContext);
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -19,12 +18,7 @@ function Navbar({ setTheme, theme }) {
   }, []);
 
   
-  useEffect(() => {
-    if (localStorage.getItem('authToken'))
-      setLogin(true);
-    else
-      setLogin(false);
-  })
+ 
 
 
   function handleClickOutside(event) {
@@ -36,8 +30,6 @@ function Navbar({ setTheme, theme }) {
 
   const handleLogout = () => {
     logout();
-    setUser(null);
-    localStorage.removeItem('authToken');
   };
 
   return (
@@ -53,7 +45,7 @@ function Navbar({ setTheme, theme }) {
             <li><Link to={'/contact'}>Contact us</Link></li>
 
             {
-              islogin ? (
+              isLoggedIn ? (
                 <>
                   <li><Link to={'/profile'}>Profile</Link></li>
                   <li><Link to={'/showposts'}>Show posts</Link></li>

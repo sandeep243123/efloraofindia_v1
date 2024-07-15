@@ -4,6 +4,8 @@ import img1 from './check.png'
 import React, { useEffect, useState } from 'react'
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 import { propTypeChildren } from '@material-tailwind/react/types/components/timeline';
+import like from '../../assets/like.png';
+import dislike from '../../assets/dont-like.png';
 
 export default function ViewContribution(props) {
 
@@ -157,8 +159,19 @@ export default function ViewContribution(props) {
                                             <h1>{property.FeaturePropertyName}</h1>
                                         </div>
                                         <div className={styles.rightListT2}>
-                                            <img src={img1} alt="" />
-                                            {/* <p></p>count of likes or dislikes */}
+                                            {/* <img src={img1} alt="" /> */}
+                                            {/* like and dislike button */}
+
+                                            <div className={styles.vote}>
+                                                <div className={styles.upvote}>
+                                                <img src={like} alt="like" name="vote" onClick={() => {}} />
+                                                <p>12</p>
+                                                 </div>
+                                                <div className={styles.downvote}>
+                                                <img src={dislike} alt="dislike" name="vote" onClick={() => {}} />
+                                                <p>12</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 ))
