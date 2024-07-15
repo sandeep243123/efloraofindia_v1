@@ -18,7 +18,7 @@ export default function UploadImg(props) {
     const notifySuccess = (msg) => {
         toast.success(` ${msg}!`, {
             position: "top-right",
-            autoClose: 5000,
+            autoClose: 700,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -146,8 +146,8 @@ export default function UploadImg(props) {
                 console.log("SetTimeout Implementd")
                 setTimeout(() => {
                     navigate("/")
-                },3000)
-                
+                }, 1000)
+
             },
             onError: (error) => {
                 console.error('Error:', error.message);
@@ -155,7 +155,7 @@ export default function UploadImg(props) {
             }
         })
 
-    
+
 
     return (
         <div className={styles.parent}>
@@ -199,13 +199,16 @@ export default function UploadImg(props) {
                     }}></textarea>
                     <div className={styles.btnSection}>
                         <button className={styles.submit} onClick={() => {
-                            if(description === ''  || images.length===0)
-                                {
-                                    notifyError("provide images and its description")
-                                }
-                                else {
-                                    CreatePostfunc({ variables: { details: { "description": description, "images": images } } })
-                                }
+                            if (description === '' && images.length === 0) {
+                                notifyWarning("provide images and its description")
+                            } else if (images.length === 0) {
+                                notifyWarning("Please upload atleast 1 image");
+                            } else if (description === '') {
+                                notifyWarning("Please provide the description")
+                            }
+                            else {
+                                CreatePostfunc({ variables: { details: { "description": description, "images": images } } })
+                            }
                         }}>Submit</button>
                     </div>
                 </div>

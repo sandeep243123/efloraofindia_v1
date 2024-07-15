@@ -1,7 +1,7 @@
-import React, { useState, useContext,useRef } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import styles from '../signup/signup.module.css'
 import { Link } from 'react-router-dom'
-import { gql, useLazyQuery} from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../services/AuthContext.js';
 import img from './t1.png'
@@ -16,7 +16,8 @@ export default function Signup() {
     const inputRef1 = useRef(null);
     const inputRef2 = useRef(null);
     const inputRef3 = useRef(null);
-    const [signup,setsignup]=useState(false)
+    const inputRef4 = useRef(null);
+    const [signup, setsignup] = useState(false)
 
     const notifyError = (msg) => {
         toast.error(`${msg}!`, {
@@ -33,7 +34,7 @@ export default function Signup() {
     }
     const notifyWarning = (msg) => {
         toast.warning(` ${msg}!`, {
-            position: "bottom-right",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -44,23 +45,50 @@ export default function Signup() {
             containerId: 'Warning'
         });
     }
+    const notifySuccess = (msg) => {
+        toast.success(` ${msg}!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
 
+        });
+    }
+    const notifyLoading = (msg) => {
+        toast.loading(` ${msg}!`, {
+            pending: "pending",
+            success: "success",
+            error: "rejected",
+            containerId: 'Loading'
+        });
+    }
     const validatesignup = () => {
         if (inputRef1.current.value == '') {
             inputRef1.current.focus()
             notifyWarning("Please enter your user name")
             return false
         }
-        else   if (inputRef2.current.value == '') {
+        else if (inputRef2.current.value == '') {
             inputRef2.current.focus()
             notifyWarning("Please enter your email")
             return false
         }
-        else   if (inputRef3.current.value == '') {
+        else if (inputRef3.current.value == '') {
             inputRef3.current.focus()
             notifyWarning("Please enter your password")
             return false
+        } else if (!inputRef4.current.checked) {
+            inputRef4.current.focus()
+            notifyWarning("Please accept our terms and condition")
+            return false;
+        } else {
+            // notifyLoading("Please wait..")
         }
+
         return true
     };
 
@@ -68,32 +96,32 @@ export default function Signup() {
 
     const handleSignup = () => {
         if (validatesignup()) {
-            sendOtpQuery({variables:{
-                details:{
-                    "emailID": inputemail,
-                    "isNew": true
-                }}})
+            sendOtpQuery({
+                variables: {
+                    details: {
+                        "emailID": inputemail,
+                        "isNew": true
+                    }
+                }
+            })
         }
     };
-
-
-     const [sendOtpQuery] = useLazyQuery(gql`
+    const [sendOtpQuery] = useLazyQuery(gql`
         query Query($details: sendOTPDetail!) {
             sendOTP(details: $details)
           }
-        `,{
-            errorPolicy: "all",
-            onCompleted:(data) => {
-                console.log("otp sucessfully send")
-                navigate('/otpsignup', { state: { email: inputemail, password: inputpassword, name: inputname }});
-            },
-            onError: (error) => {
-                console.error('Error:', error.message);
-                notifyError(error.message);
-            }
-    
-        })
-    
+        `, {
+        errorPolicy: "all",
+        onCompleted: (data) => {
+            navigate('/otpsignup', { state: { email: inputemail, password: inputpassword, name: inputname } });
+        },
+        onError: (error) => {
+            // console.error('Error:', error.message);
+            notifyError(error.message);
+        }
+
+    })
+
     return (
         <div className={styles.d1}>
             <div className={styles.parent1}>
@@ -128,13 +156,13 @@ export default function Signup() {
                             <p>Password must contain at least one symbol e.g @,!</p>
                         </div>
                         <div className={styles.btn11} onClick={handleSignup}>
-                                <p>
-                                    Sign Up
-                                </p>   
+                            <p>
+                                Sign Up
+                            </p>
                         </div>
                         <div className={styles.tc1}>
                             <div>
-                                <input type="checkbox" id='accept' style={{ marginRight: '4px' }} />
+                                <input ref={inputRef4} type="checkbox" id='accept' style={{ marginRight: '4px' }} />
                                 <label htmlFor="accept" >I accept this</label>
                             </div>
                             <div>
@@ -149,9 +177,9 @@ export default function Signup() {
                 </div>
             </div>
             <img src={img} alt="" />
-            
             <ToastContainer containerId="Error" />
             <ToastContainer containerId="Warning" />
+            <ToastContainer containerId="Loading" />
         </div>
     )
 }

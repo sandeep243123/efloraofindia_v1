@@ -1,29 +1,14 @@
-// import { Navbar } from '@material-tailwind/react'
 import React, { useEffect, useState } from 'react'
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 import style from './Contribute.module.css'
 import Comments from '../comments/Comments';
-import img1 from '../assets/t1.png';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import slide_image1 from '../assets/im1.jpg'
-import slide_image2 from '../assets/im2.jpg'
-import slide_image3 from '../assets/im3.jpg'
-import slide_image4 from '../assets/im4.jpg'
-import slide_image5 from '../assets/im5.jpg'
-import slide_image6 from '../assets/im6.jpg'
-import slide_image7 from '../assets/im7.jpg'
-import slide_image8 from '../assets/im8.jpg'
-import { IoSend } from "react-icons/io5";
-import useFunction from './useFunction';
-import { commentsData } from './commentsData';
 import { Link, useLocation } from 'react-router-dom'
-//import Comment from './Comment';
-
 import pp from './pp.png';
 import AddContribution from '../popup components/add contribution/AddContribution'
 import ViewContribution from '../popup components/view contribution/ViewContribution'

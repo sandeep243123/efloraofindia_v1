@@ -45,6 +45,19 @@ export default function Login() {
             containerId: 'Warning'
         });
     }
+    const notifySuccess = (msg) => {
+        toast.success(` ${msg}!`, {
+            position: "top-center",
+            autoClose: 500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            containerId: 'Success'
+        });
+    }
     const validateLogin = () => {
         if (inputRef1.current.value == '') {
             inputRef1.current.focus()
@@ -69,11 +82,11 @@ export default function Login() {
                 accountType
             }
         }`,
-        {   
+        {
             errorPolicy: "all",
             onError: (errors) => {
                 console.log('Error:', errors.message);
-                notifyWarning(errors.message)
+                notifyError(errors.message)
             },
             onCompleted: (data) => {
                 if (data.login && data.login.token) {
@@ -90,7 +103,11 @@ export default function Login() {
 
     useEffect(() => {
         if (loggedIn) {
-            navigate('/');
+            notifySuccess("Login successfull");
+            setTimeout(() => {
+                navigate("/")
+            }, 1000)
+
         }
     }, [loggedIn, navigate]);
 
@@ -127,6 +144,7 @@ export default function Login() {
             </div>
             <ToastContainer containerId="Error" />
             <ToastContainer containerId="Warning" />
+            <ToastContainer containerId="Success" />
         </div>
     )
 }

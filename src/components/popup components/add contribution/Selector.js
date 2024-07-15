@@ -12,18 +12,18 @@ function Selector(props) {
     const [inputValue, setInputValue] = useState("");
     const [inputPart, setInputPart] = useState("");
     const [inputFeature, setInputFeature] = useState("");
+    const [partStatus, setPartStatus] = useState(true);
+    const [valueStatus, setValueStatus] = useState(true);
+    const [featureStatus, setFeatureStatus] = useState(true);
     const [part, setpart] = useState(null)
     const [selected, setSelected] = useState("Select Item")
     const [selected1, setSelected1] = useState("Select Item")
     const [open1, setOpen1] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [show, setShow] = useState(false);
-
-
     const [partFeatures, setpartFeatures] = useState([]);
     const [featureID, setfeatureID] = useState("");
     const [partID, setPartID] = useState("");
-    const [inputProperty, setInputProperty] = useState("");
 
     const [searchArray, setsearchArray] = useState([]);
 
@@ -51,7 +51,7 @@ function Selector(props) {
         },
         onError: (errors) => {
             console.error('Error:', errors.message);
-            
+
             notifyWarning("please enter all the details")
         }
     }
@@ -72,7 +72,7 @@ function Selector(props) {
         },
         onError: (errors) => {
             console.error('Error:', errors.message);
-            
+
             notifyWarning("please enter all the details")
         }
     }
@@ -91,7 +91,7 @@ function Selector(props) {
         },
         onError: (errors) => {
             console.error('Error:', errors.message);
-            
+
             notifyWarning("please enter all the details")
         }
     })
@@ -113,8 +113,8 @@ function Selector(props) {
         },
         onError: (errors) => {
             console.error('Error:', errors.message);
-            
-        notifyWarning("please enter all the details")
+
+            notifyWarning("please enter all the details")
         }
 
     })
@@ -180,8 +180,8 @@ function Selector(props) {
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-                
-            notifyWarning("please enter all the details")
+
+                notifyWarning("please enter all the details")
             }
         })
 
@@ -202,8 +202,8 @@ function Selector(props) {
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-                
-            notifyWarning("please enter all the details")
+
+                notifyWarning("please enter all the details")
             }
         })
 
@@ -217,13 +217,13 @@ function Selector(props) {
         useMutation(addPartFeatureMutation, {
             onCompleted: (data) => {
                 getPlantPartInfo({ variables: { partId: partID } });
-                
+
                 setfeatureID(data.addPartFeature)
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-                
-            notifyWarning("please enter all the details")
+
+                notifyWarning("please enter all the details")
             }
         })
 
@@ -236,47 +236,47 @@ function Selector(props) {
         useMutation(addFeaturePropertyMutation, {
             onCompleted: (data) => {
                 setpropertyID(data["addFeatureProperty"])
-                
+
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-                
-            notifyWarning("please enter all the details")
+
+                notifyWarning("please enter all the details")
             }
         })
 
 
 
 
-    
-        const notifyError = (msg) => {
-            toast.error(`${msg}!`, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                containerId: 'Error'
-            });
-        }
-        const notifyWarning = (msg) => {
-            toast.warning(` ${msg}!`, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                containerId: 'Warning'
-            });
-        }
-        
-        
+
+    const notifyError = (msg) => {
+        toast.error(`${msg}!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            containerId: 'Error'
+        });
+    }
+    const notifyWarning = (msg) => {
+        toast.warning(` ${msg}!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            containerId: 'Warning'
+        });
+    }
+
+
 
     return (
         <div className='flex flex-col gap-6'>
@@ -304,26 +304,27 @@ function Selector(props) {
                                         await addPlantPart({ variables: { partName: inputPart } })
                                         setInputPart('');
                                         setSelected(inputPart);
-                                    setSelected1('');
-                                        
+                                        setSelected1('');
+
                                     }
                                 }>
-                                    <abbr title="Create new part"><img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' /></abbr>
+                                    {partStatus && <abbr title="Create new part" style={{ cursor: "pointer" }}><img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' /></abbr>}
                                 </div>
                             </div>
                         </div>
 
                         {part?.map((partdetail, index) => (
                             <li
-                                key={part[part.length - index-1]?.name}
-                                className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${part[part.length - index-1]?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
+                                key={part[part.length - index - 1]?.name}
+                                className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${part[part.length - index - 1]?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
                             `}
                                 onClick={() => {
-                                    handleItemClick(part[part.length - index-1])
+                                    handleItemClick(part[part.length - index - 1])
                                     setSelected1('');
+                                    // setPartStatus(false);
                                 }}
                             >
-                                {part[part.length - index-1]?.name}
+                                {part[part.length - index - 1]?.name}
                             </li>
                         ))}
                     </ul>
@@ -350,30 +351,31 @@ function Selector(props) {
                                 />
                                 <div onClick={
                                     () => {
+                                        // setFeatureStatus(false);
                                         addPartFeature({ variables: { details: { "partID": partID, featureName: inputFeature } } })
                                         setInputFeature('');
                                         setSelected1(inputFeature);
                                         setOpen2(false);
                                     }
                                 }>
-                                    <abbr title="Create new Property"><img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' /></abbr>
+                                    {featureStatus && <abbr title="Create new Property" style={{ cursor: "pointer" }}><img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' /></abbr>}
                                 </div>
                             </div>
                         </div>
                         {partFeatures?.map((eachPart, index) => (
                             <li
-                                key={partFeatures[partFeatures.length - index-1]?.name}
-                                className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${partFeatures[partFeatures.length - index-1]?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
+                                key={partFeatures[partFeatures.length - index - 1]?.name}
+                                className={`p-2 text-sm hover:bg-sky-600 hover:text-white ${partFeatures[partFeatures.length - index - 1]?.name?.toLowerCase().startsWith(inputValue) ? 'block' : 'hidden'}
                             `}
                                 onClick={() => {
-                                    if (partFeatures[partFeatures.length - index-1]?.name?.toLowerCase() !== selected.toLocaleLowerCase()) {
-                                        setSelected1(partFeatures[partFeatures.length - index-1]?.name);
-                                        setfeatureID(partFeatures[partFeatures.length - index-1].featureID)
+                                    if (partFeatures[partFeatures.length - index - 1]?.name?.toLowerCase() !== selected.toLocaleLowerCase()) {
+                                        setSelected1(partFeatures[partFeatures.length - index - 1]?.name);
+                                        setfeatureID(partFeatures[partFeatures.length - index - 1].featureID)
                                         setOpen2(false);
                                     }
                                 }}
                             >
-                                {partFeatures[partFeatures.length - index-1]?.name}
+                                {partFeatures[partFeatures.length - index - 1]?.name}
                             </li>
                         ))}
                     </ul>
@@ -403,7 +405,7 @@ function Selector(props) {
                                     () => {
                                         addFeatureProperty({
                                             variables: {
-                                                
+
                                                 details: {
                                                     featureID: featureID,
                                                     value: inputString
@@ -411,9 +413,10 @@ function Selector(props) {
                                             }
                                         })
                                         setInputPart('');
+                                        // setValueStatus(false);
                                     }
                                 }>
-                                <abbr title="Create Value"><img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' /></abbr>
+                                {valueStatus && <abbr title="Create Value" style={{ cursor: "pointer" }}><img src={addImg} style={{ height: '3vh', width: '2vw' }} className='mt-2 mx-2' /></abbr>}
                             </div>
 
                         </div>
@@ -422,6 +425,7 @@ function Selector(props) {
                         <div className={`z-10 bg-gray-200 max-w-32 overflow-x-hidden rounded-md max-h-52 overflow-auto ${showList ? '' : 'hidden'}`}>
                             <ul>
                                 {
+
                                     searchArray?.map((eachProperty) => (
                                         <li key={eachProperty.featurePropertyID} onClick={() => {
                                             setpropertyID(eachProperty.featurePropertyID)
@@ -446,11 +450,11 @@ function Selector(props) {
                 </div>
             </div>
             <div className='-mt-72 py-5 flex flex-col justify-end gap-6 w-full'>
-                
+
                 <List contributionList={cList} />
             </div>
 
-            
+
             <ToastContainer containerId="Error" />
             <ToastContainer containerId="Warning" />
         </div>
