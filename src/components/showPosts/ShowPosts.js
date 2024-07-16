@@ -47,18 +47,20 @@ function ShowPost() {
             }
         }
     `, {
+        errorPolicy: "all",
         onCompleted: (data) => {
             setpList(data["getPosts"])
         },
         variables: detailVar
         ,
         onError: (error) => {
-
-            console.error('Error:', error.message);
+            console.error('Error:', error);
                 notifyError(error.message)
-                if(error.message==="Please Login First !!!")
+                if(error.graphQLErrors[0].code===601)
                 {
-                    logout();
+                    setTimeout(() => {
+                        logout();
+                    }, 1000)
                 }
         }
     });
@@ -74,15 +76,18 @@ function ShowPost() {
             }
         }
         `, {
+            errorPolicy: "all",
         onCompleted: (data) => {
             setpList(data["getPosts"])
         },
         onError: (error) => {
-           console.error('Error:', error.message);
+           console.error('Error:', error);
                 notifyError(error.message)
-                if(error.message==="Please Login First !!!")
+                if(error.graphQLErrors[0].code===601)
                 {
-                    logout();
+                    setTimeout(() => {
+                        logout();
+                    }, 1000)
                 }
         }
 

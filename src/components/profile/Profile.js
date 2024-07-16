@@ -69,6 +69,9 @@ function Profile() {
       }`
 
     const [updateProfileFunction]=useMutation(updateProfileMutation, {
+        
+        errorPolicy: "all",
+        
         onCompleted: (data) => {
             notifySuccess("Successfully updated");
             console.log("SetTimeout Implementd")
@@ -80,10 +83,12 @@ function Profile() {
         onError: (error) => {
             console.error('Error:', error.message);
                 notifyError(error.message)
-                if(error.message==="Please Login First !!!")
-                {
-                    logout();
-                }
+                if(error.graphQLErrors[0].code===601)
+                    {
+                        setTimeout(() => {
+                            logout();
+                        }, 1000)
+                    }
         }
     })
 

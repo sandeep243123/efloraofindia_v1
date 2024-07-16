@@ -43,22 +43,28 @@ export default function ViewContribution(props) {
         }
       }
     `, {
+        
+        errorPolicy: "all",
+
         variables: {
             details: {
                 "postID": props.postID,
                 "showMyContribution": false
             }
         },
+
         onCompleted: (data) => {
             getList(data["getContribution"]);
         },
         onError: (error) => {
             console.error('Error:', error.message);
                 notifyError(error.message)
-                if(error.message==="Please Login First !!!")
-                {
-                    logout();
-                }
+                if(error.graphQLErrors[0].code===601)
+                    {
+                        setTimeout(() => {
+                            logout();
+                        }, 1000)
+                    }
         }
 
 
@@ -76,16 +82,20 @@ export default function ViewContribution(props) {
         }
       }
     `, {
+        
+    errorPolicy: "all",
         onCompleted: (data) => {
             getList(data["getContribution"]);
         },
         onError: (error) => {
             console.error('Error:', error.message);
                 notifyError(error.message)
-                if(error.message==="Please Login First !!!")
-                {
-                    logout();
-                }
+                if(error.graphQLErrors[0].code===601)
+                    {
+                        setTimeout(() => {
+                            logout();
+                        }, 1000)
+                    }
         }
 
     })

@@ -14,7 +14,6 @@ function Otp() {
     const location = useLocation();
     const props = location.state || {}
     console.log(location.state)
-    console.log("email", props)
 
     const notifyError = (msg) => {
         toast.error(`${msg}`, {

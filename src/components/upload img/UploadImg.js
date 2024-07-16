@@ -147,6 +147,8 @@ export default function UploadImg(props) {
 `
     const [CreatePostfunc] =
         useMutation(createpostmut, {
+            
+            errorPolicy: "all",
             onCompleted: (data) => {
                 notifySuccess("Successfully Posted");
                 console.log("SetTimeout Implementd")
@@ -159,10 +161,12 @@ export default function UploadImg(props) {
                 
                 console.error('Error:', error.message);
                 notifyError(error.message)
-                if(error.message==="Please Login First !!!")
-                {
-                    logout();
-                }
+                if(error.graphQLErrors[0].code===601)
+                    {
+                        setTimeout(() => {
+                            logout();
+                        }, 1000)
+                    }
             }
         })
 

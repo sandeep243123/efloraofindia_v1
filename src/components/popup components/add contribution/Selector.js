@@ -48,16 +48,21 @@ function Selector(props) {
         }
       }
     `, {
+        
+        errorPolicy: "all",
+
         onCompleted: (data) => {
             setpart(data.getPlantParts);
         },
         onError: (errors) => {
                 console.error('Error:', errors.message);
-                if(errors.message==="Please Login First !!!")
-                {
-                    notifyError(errors.message)
-                    logout();
-                }
+                if(errors.graphQLErrors[0].code===601)
+                    {
+                        notifyError(errors.message)
+                        setTimeout(() => {
+                            logout();
+                        }, 1000)
+                    }
                 else
                 {
                     notifyWarning("please enter all the details")
@@ -76,15 +81,20 @@ function Selector(props) {
         }
       }
     `, {
+        
+    errorPolicy: "all",
+
         onCompleted: (plantPartInfo) => {
             setpartFeatures(plantPartInfo.getPartsFeature)
         },
         onError: (errors) => {
             console.error('Error:', errors.message);
-                if(errors.message==="Please Login First !!!")
+            if(errors.graphQLErrors[0].code===601)
                 {
                     notifyError(errors.message)
-                    logout();
+                    setTimeout(() => {
+                        logout();
+                    }, 1000)
                 }
                 else
                 {
@@ -102,16 +112,21 @@ function Selector(props) {
         }
       }
     `, {
+        
+    errorPolicy: "all",
+
         onCompleted: (data) => {
             setsearchArray(data["getFeatureProperty"])
         },
         onError: (errors) => {
             console.error('Error:', errors.message);
-            if(errors.message==="Please Login First !!!")
-            {
-                notifyError(errors.message)
-                logout();
-            }
+            if(errors.graphQLErrors[0].code===601)
+                {
+                    notifyError(errors.message)
+                    setTimeout(() => {
+                        logout();
+                    }, 1000)
+                }
             else
             {
                 notifyWarning("please enter all the details")
@@ -131,17 +146,22 @@ function Selector(props) {
         }
       }
     `, {
+        
+    errorPolicy: "all",
+
         onCompleted: (data) => {
             setcList(data["getContribution"].reverse())
         },
         onError: (errors) => {
             
             console.error('Error:', errors.message);
-            if(errors.message==="Please Login First !!!")
-            {
-                notifyError(errors.message)
-                logout();
-            }
+            if(errors.graphQLErrors[0].code===601)
+                {
+                    notifyError(errors.message)
+                    setTimeout(() => {
+                        logout();
+                    }, 1000)
+                }
             else
             {
                 notifyWarning("please enter all the details")
@@ -198,6 +218,8 @@ function Selector(props) {
     `
     const [addContribution] =
         useMutation(contributionMutation, {
+            
+            errorPolicy: "all",
             onCompleted: (data) => {
 
                 getcList({
@@ -211,11 +233,13 @@ function Selector(props) {
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-                if(errors.message==="Please Login First !!!")
-                {
-                    notifyError(errors.message)
-                    logout();
-                }
+                if(errors.graphQLErrors[0].code===601)
+                    {
+                        notifyError(errors.message)
+                        setTimeout(() => {
+                            logout();
+                        }, 1000)
+                    }
                 else
                 {
                     notifyWarning("please enter all the details")
@@ -231,6 +255,8 @@ function Selector(props) {
 
     const [addPlantPart] =
         useMutation(addPlantPartMutation, {
+            
+            errorPolicy: "all",
             onCompleted: (data) => {
                 setOpen1(false);
                 setPartID(data.addPlantPart)
@@ -240,11 +266,13 @@ function Selector(props) {
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-                if(errors.message==="Please Login First !!!")
-                {
-                    notifyError(errors.message)
-                    logout();
-                }
+                if(errors.graphQLErrors[0].code===601)
+                    {
+                        notifyError(errors.message)
+                        setTimeout(() => {
+                            logout();
+                        }, 1000)
+                    }
                 else
                 {
                     notifyWarning("please enter all the details")
@@ -260,6 +288,8 @@ function Selector(props) {
     `
     const [addPartFeature] =
         useMutation(addPartFeatureMutation, {
+            
+            errorPolicy: "all",
             onCompleted: (data) => {
                 getPlantPartInfo({ variables: { partId: partID } });
 
@@ -267,11 +297,13 @@ function Selector(props) {
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-                if(errors.message==="Please Login First !!!")
-                {
-                    notifyError(errors.message)
-                    logout();
-                }
+                if(errors.graphQLErrors[0].code===601)
+                    {
+                        notifyError(errors.message)
+                        setTimeout(() => {
+                            logout();
+                        }, 1000)
+                    }
                 else
                 {
                     notifyWarning("please enter all the details")
@@ -286,17 +318,21 @@ function Selector(props) {
     `
     const [addFeatureProperty] =
         useMutation(addFeaturePropertyMutation, {
+            
+            errorPolicy: "all",
             onCompleted: (data) => {
                 setpropertyID(data["addFeatureProperty"])
 
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-                if(errors.message==="Please Login First !!!")
-                {
-                    notifyError(errors.message)
-                    logout();
-                }
+                if(errors.graphQLErrors[0].code===601)
+                    {
+                        notifyError(errors.message)
+                        setTimeout(() => {
+                            logout();
+                        }, 1000)
+                    }
                 else
                 {
                     notifyWarning("please enter all the details")
@@ -338,6 +374,7 @@ function Selector(props) {
 
 
     return (
+        <div>
         <div className='flex flex-col gap-6'>
             <div className='flex gap-2'>
                 <div className='w-72 font-medium h-80 z-10'>
@@ -512,10 +549,10 @@ function Selector(props) {
 
                 <List contributionList={cList} />
             </div>
+        </div>
 
-
-            <ToastContainer containerId="Error" />
-            <ToastContainer containerId="Warning" />
+        <ToastContainer containerId="Error" />
+        <ToastContainer containerId="Warning" />
         </div>
     );
 }

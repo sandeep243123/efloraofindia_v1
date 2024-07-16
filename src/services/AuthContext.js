@@ -1,10 +1,10 @@
 // AuthContext.js
 import React, { createContext, useState,useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     // Load the initial state from localStorage
     const savedIsLoggedIn = localStorage.getItem('isLoggedIn');
@@ -25,6 +25,9 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
     setUser(null)
     localStorage.removeItem("authToken")
+    localStorage.removeItem("user")
+    localStorage.removeItem("isLoggedIn")
+    navigate('/'); // Navigate to home page after logout
   };
 
 

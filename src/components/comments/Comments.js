@@ -48,6 +48,7 @@ function Comments(props) {
     }
   }
 `, {
+  errorPolicy: "all",
     onCompleted: (data) => {
       console.log("Comment", data)
       setCommentList(data["getComments"])
@@ -56,11 +57,13 @@ function Comments(props) {
     ,
     onError: (error) => {
       console.error('Error:', error.message);
-                // notifyError(error.message)
-                if(error.message==="Please Login First !!!")
-                {
-                    logout();
-                }
+      if(error.graphQLErrors[0].code===601)
+        {
+          notifyError(error.message)
+            setTimeout(() => {
+                logout();
+            }, 1500)
+        }
     }
   });
 
@@ -74,6 +77,7 @@ function Comments(props) {
   `
   const [addComments] =
     useMutation(addCommentMutation, {
+      errorPolicy: "all",
       onCompleted: (data) => {
         setInput("")
         getComments({
@@ -86,11 +90,13 @@ function Comments(props) {
       },
       onError: (error) => {
         console.error('Error:', error.message);
-                //notifyError(error.message)
-                if(error.message==="Please Login First !!!")
-                {
-                    logout();
-                }
+        if(error.graphQLErrors[0].code===601)
+          {
+            notifyError(error.message)
+              setTimeout(() => {
+                  logout();
+              }, 1500)
+          }
       }
     })
 
@@ -106,6 +112,7 @@ function Comments(props) {
       `
   const [deleteComments] =
     useMutation(deleteCommentMutation, {
+      errorPolicy: "all",
       onCompleted: (data) => {
         console.log(data, "Success")
         getComments({
@@ -119,11 +126,13 @@ function Comments(props) {
       },
       onError: (error) => {
         console.error('Error:', error.message);
-                //notifyError(error.message)
-                if(error.message==="Please Login First !!!")
-                {
-                    logout();
-                }
+        if(error.graphQLErrors[0].code===601)
+          {
+            notifyError(error.message)
+              setTimeout(() => {
+                  logout();
+              }, 1500)
+          }
       }
     })
 
@@ -134,6 +143,7 @@ function Comments(props) {
     updateVote(details: $details)
   }`
   const [updatevotes] = useMutation(updateVotemutation, {
+    errorPolicy: "all",
     onCompleted: (data) => {
       getComments({
         variables: {
@@ -146,11 +156,13 @@ function Comments(props) {
     },
     onError: (error) => {
       console.error('Error:', error.message);
-                //notifyError(error.message)
-                if(error.message==="Please Login First !!!")
-                {
-                    logout();
-                }
+      if(error.graphQLErrors[0].code===601)
+        {
+          notifyError(error.message)
+            setTimeout(() => {
+                logout();
+            }, 1500)
+        }
     }
   })
 
@@ -169,6 +181,7 @@ function Comments(props) {
     }
   }
 `, {
+  errorPolicy: "all",
     onCompleted: (data) => {
       console.log("commentlist", data)
       setCommentList(data["getComments"])
@@ -176,10 +189,13 @@ function Comments(props) {
     onError: (error) => {
       console.error('Error:', error.message);
                 //notifyError(error.message)
-                if(error.message==="Please Login First !!!")
-                {
-                    logout();
-                }
+                if(error.graphQLErrors[0].code===601)
+                  {
+                    notifyError(error.message)
+                      setTimeout(() => {
+                          logout();
+                      }, 1500)
+                  }
     }
   });
 
