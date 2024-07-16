@@ -127,10 +127,6 @@ function Selector(props) {
                         logout();
                     }, 1000)
                 }
-            else
-            {
-                notifyWarning("please enter all the details")
-            }
         }
     })
 
