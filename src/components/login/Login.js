@@ -13,12 +13,12 @@ export default function Login() {
     const [inputemail, setEmail] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
     const navigate = useNavigate();
-    const { isLoggedIn, login, setUser } = useContext(AuthContext);
+    const { isLoggedIn, login,logout, setUser } = useContext(AuthContext);
     const inputRef1 = useRef(null);
     const inputRef2 = useRef(null);
     const btnRef = useRef(null);
 
-
+    
     const notifyError = (msg) => {
         toast.error(`${msg}!`, {
             position: "top-right",
@@ -85,6 +85,7 @@ export default function Login() {
         {
             errorPolicy: "all",
             onError: (errors) => {
+                
                 console.log('Error:', errors.message);
                 notifyError(errors.message)
             },

@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useContext} from 'react'
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 import CommentsSection from "./CommentsSection"
 import style from './Comment.module.css';
 import useNode from '../hooks/useNode';
 import Action from "./Action"
+import { AuthContext } from '../../services/AuthContext.js';
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 function Comments(props) {
 
@@ -13,8 +16,24 @@ function Comments(props) {
 
   const [input, setInput] = useState("");
 
+  const { logout} = useContext(AuthContext);
 
   const [commentList, setCommentList] = useState(null)
+
+
+  const notifyError = (msg) => {
+    toast.error(` ${msg}!`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        containerId: 'Error'
+    });
+}
 
   const { data } = useQuery(gql`
   query GetComments($details: getComment!) {
@@ -37,7 +56,11 @@ function Comments(props) {
     ,
     onError: (error) => {
       console.error('Error:', error.message);
-
+                // notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
     }
   });
 
@@ -63,6 +86,11 @@ function Comments(props) {
       },
       onError: (error) => {
         console.error('Error:', error.message);
+                //notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
       }
     })
 
@@ -91,6 +119,11 @@ function Comments(props) {
       },
       onError: (error) => {
         console.error('Error:', error.message);
+                //notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
       }
     })
 
@@ -113,6 +146,11 @@ function Comments(props) {
     },
     onError: (error) => {
       console.error('Error:', error.message);
+                //notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
     }
   })
 
@@ -137,6 +175,11 @@ function Comments(props) {
     },
     onError: (error) => {
       console.error('Error:', error.message);
+                //notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
     }
   });
 
@@ -159,15 +202,12 @@ function Comments(props) {
   const handleInsertNode = (folderId, item) => {
 
 
-    // if(item!="")
-    // {
     if (folderId == "") {
       addComments({ variables: { details: { "postID": postID, "commentText": item } } })
     }
     else {
       addComments({ variables: { details: { "postID": postID, "commentText": item, "repliedTo": folderId } } })
     }
-    //}
 
   };
 
@@ -217,6 +257,8 @@ function Comments(props) {
           COMMENT
         </div>
       </div>
+      
+      <ToastContainer containerId="Error" />
     </div>
   );
 }

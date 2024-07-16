@@ -1,11 +1,15 @@
 import styles from '../view contribution/style.module.css'
 import img from './user.png'
 import img1 from './check.png'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useContext} from 'react'
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 import { propTypeChildren } from '@material-tailwind/react/types/components/timeline';
 import like from '../../assets/like.png';
 import dislike from '../../assets/dont-like.png';
+import { AuthContext } from '../../../services/AuthContext';
+
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function ViewContribution(props) {
 
@@ -13,7 +17,22 @@ export default function ViewContribution(props) {
     const [PropertyList, setProperty] = useState([]);
     const [nestedList, setNestedList] = useState([]);
 
+    const {logout} = useContext(AuthContext);
     const [cList, setcList] = useState([]);
+
+    const notifyError = (msg) => {
+        toast.error(` ${msg}!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            containerId: 'Error'
+        });
+    }
     const { data } = useQuery(gql`
     query GetContribution($details: GetContributionRequest!) {
         getContribution(details: $details) {
@@ -35,7 +54,11 @@ export default function ViewContribution(props) {
         },
         onError: (error) => {
             console.error('Error:', error.message);
-
+                notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
         }
 
 
@@ -58,7 +81,11 @@ export default function ViewContribution(props) {
         },
         onError: (error) => {
             console.error('Error:', error.message);
-
+                notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
         }
 
     })
@@ -181,6 +208,8 @@ export default function ViewContribution(props) {
                     </div>
                 </div>
             </div>
+            
+            <ToastContainer containerId="Error" />
         </div>
     );
 

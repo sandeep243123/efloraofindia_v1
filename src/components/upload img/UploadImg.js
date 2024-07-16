@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect,useContext } from 'react'
 import styles from './style.module.css'
 import img from './t1.png'
 import { Link } from 'react-router-dom'
@@ -7,7 +7,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { gql, useMutation } from "@apollo/client";
 
+import { AuthContext } from '../../services/AuthContext.js';
+
 export default function UploadImg(props) {
+    const { logout} = useContext(AuthContext);
     const [images, setImages] = useState([])
     const [isDragging, setIsDragging] = useState(false)
     const [path, setPath] = useState('')
@@ -153,8 +156,13 @@ export default function UploadImg(props) {
 
             },
             onError: (error) => {
+                
                 console.error('Error:', error.message);
                 notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
             }
         })
 

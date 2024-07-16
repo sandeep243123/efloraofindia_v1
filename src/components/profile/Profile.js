@@ -12,7 +12,7 @@ function Profile() {
         color:'red'
     }
     
-    const { user} = useContext(AuthContext);
+    const { user,logout} = useContext(AuthContext);
     const [password, setPassword1] = useState("");
     const [confirmpass, setPassword2] = useState("");
     const [inputname, setName] = useState("");
@@ -79,7 +79,11 @@ function Profile() {
         },
         onError: (error) => {
             console.error('Error:', error.message);
-            notifyError(error.message)
+                notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
         }
     })
 

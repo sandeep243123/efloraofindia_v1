@@ -1,14 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 import styles from '../showPosts/style.module.css';
 import Contribute from '../contribute/Contribute.js';
 import img1 from './a1.jpg';
 import img from '../assets/t1.png'
 import { Link } from 'react-router-dom';
+
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import { AuthContext } from '../../services/AuthContext.js';
+
 function ShowPost() {
 
     const [postinfo, setpost] = useState(null);
-
+    
+    const {logout} = useContext(AuthContext);
+    
+    const notifyError = (msg) => {
+        toast.error(` ${msg}!`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            containerId: 'Error'
+        });
+    }
     const detailVar = {
         details: {
             "showMyPosts": false
@@ -33,7 +53,13 @@ function ShowPost() {
         variables: detailVar
         ,
         onError: (error) => {
+
             console.error('Error:', error.message);
+                notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
         }
     });
 
@@ -52,8 +78,12 @@ function ShowPost() {
             setpList(data["getPosts"])
         },
         onError: (error) => {
-            console.error('Error:', error.message);
-
+           console.error('Error:', error.message);
+                notifyError(error.message)
+                if(error.message==="Please Login First !!!")
+                {
+                    logout();
+                }
         }
 
     })
@@ -108,6 +138,8 @@ function ShowPost() {
 
 
             </div>
+            
+            <ToastContainer containerId="Error" />
         </div >
     )
 }

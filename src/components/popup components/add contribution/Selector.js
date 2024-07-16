@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import List from "./List";
@@ -7,8 +7,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useQuery, useLazyQuery, gql, useMutation } from "@apollo/client";
 
+import { AuthContext } from '../../../services/AuthContext.js';
 function Selector(props) {
 
+    const { logout} = useContext(AuthContext);
     const [inputValue, setInputValue] = useState("");
     const [inputPart, setInputPart] = useState("");
     const [inputFeature, setInputFeature] = useState("");
@@ -50,9 +52,16 @@ function Selector(props) {
             setpart(data.getPlantParts);
         },
         onError: (errors) => {
-            console.error('Error:', errors.message);
-
-            notifyWarning("please enter all the details")
+                console.error('Error:', errors.message);
+                if(errors.message==="Please Login First !!!")
+                {
+                    notifyError(errors.message)
+                    logout();
+                }
+                else
+                {
+                    notifyWarning("please enter all the details")
+                }
         }
     }
     );
@@ -72,8 +81,15 @@ function Selector(props) {
         },
         onError: (errors) => {
             console.error('Error:', errors.message);
-
-            notifyWarning("please enter all the details")
+                if(errors.message==="Please Login First !!!")
+                {
+                    notifyError(errors.message)
+                    logout();
+                }
+                else
+                {
+                    notifyWarning("please enter all the details")
+                }
         }
     }
     );
@@ -91,8 +107,15 @@ function Selector(props) {
         },
         onError: (errors) => {
             console.error('Error:', errors.message);
-
-            notifyWarning("please enter all the details")
+            if(errors.message==="Please Login First !!!")
+            {
+                notifyError(errors.message)
+                logout();
+            }
+            else
+            {
+                notifyWarning("please enter all the details")
+            }
         }
     })
 
@@ -112,9 +135,17 @@ function Selector(props) {
             setcList(data["getContribution"].reverse())
         },
         onError: (errors) => {
+            
             console.error('Error:', errors.message);
-
-            notifyWarning("please enter all the details")
+            if(errors.message==="Please Login First !!!")
+            {
+                notifyError(errors.message)
+                logout();
+            }
+            else
+            {
+                notifyWarning("please enter all the details")
+            }
         }
 
     })
@@ -180,8 +211,15 @@ function Selector(props) {
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-
-                notifyWarning("please enter all the details")
+                if(errors.message==="Please Login First !!!")
+                {
+                    notifyError(errors.message)
+                    logout();
+                }
+                else
+                {
+                    notifyWarning("please enter all the details")
+                }
             }
         })
 
@@ -202,8 +240,15 @@ function Selector(props) {
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-
-                notifyWarning("please enter all the details")
+                if(errors.message==="Please Login First !!!")
+                {
+                    notifyError(errors.message)
+                    logout();
+                }
+                else
+                {
+                    notifyWarning("please enter all the details")
+                }
             }
         })
 
@@ -222,8 +267,15 @@ function Selector(props) {
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-
-                notifyWarning("please enter all the details")
+                if(errors.message==="Please Login First !!!")
+                {
+                    notifyError(errors.message)
+                    logout();
+                }
+                else
+                {
+                    notifyWarning("please enter all the details")
+                }
             }
         })
 
@@ -240,8 +292,15 @@ function Selector(props) {
             },
             onError: (errors) => {
                 console.error('Error:', errors.message);
-
-                notifyWarning("please enter all the details")
+                if(errors.message==="Please Login First !!!")
+                {
+                    notifyError(errors.message)
+                    logout();
+                }
+                else
+                {
+                    notifyWarning("please enter all the details")
+                }
             }
         })
 
