@@ -109,7 +109,11 @@ export default function UploadImg(props) {
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             const str = file.name.substring(file.name.indexOf(".") + 1);
-            if (str != "jpg" && str != "jpeg" && str != "png") {
+            // if (str != "jpg" && str != "jpeg" && str != "png") {
+            //     notifyError(`.${str} Image formate not supported!!`)
+            //     continue;
+            // }
+            if (str != "webp" && str != "avif" && str != "jpg" && str != "jpeg" && str != "png" ) {
                 notifyError(`.${str} Image formate not supported!!`)
                 continue;
             }
@@ -194,7 +198,7 @@ export default function UploadImg(props) {
                                     </p>
                                 )
                             }
-                            <input name='file' type="file" className={styles.file} accept='image/jpg,image/jpeg,image/png' multiple ref={fileInputRef} onChange={onFileSelect} />
+                            <input name='file' type="file" className={styles.file} accept='image/webp,image/avif' multiple ref={fileInputRef} onChange={onFileSelect} />
                         </div>
                     </div>
                     <label htmlFor="" ref={labelRef} style={{ color: 'orange' }}>*Please upload atleast 1 images</label>

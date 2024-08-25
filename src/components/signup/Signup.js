@@ -190,6 +190,7 @@ export default function Signup() {
                         <div className={styles.passwordConstraints}>
                             <p>Password must contain a minimum 8 characters</p>
                             <p>Password must contain at least one symbol e.g @,!</p>
+                            <p>Password must contain at least one numeric character</p>
                         </div>
                         <div className={styles.btn11} onClick={handleSignup}>
                             <p>
