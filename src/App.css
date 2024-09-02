@@ -1,7 +1,18 @@
 body {
     overflow-x: hidden;
 }
-
 body::-webkit-scrollbar {
     display: none;
+}
+.mainNav{
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Keeps it on top of other elements */
+    background-color: #fff; 
+    height: 7vh;
+}
+.content{
+    overflow-y: auto;
 }
