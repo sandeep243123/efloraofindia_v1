@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+.parent {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+    background-color: white
+}
+
+.container {
+    position: absolute;
+    margin: 0.5%;
+    height: 95vh;
+    /* background-color: rgb(47, 47, 47); */
+    background-color: gray;
+    backdrop-filter: blur(15px);
+    color: white;
+    margin-top: 2%;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    left: 30%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    overflow-y: scroll;
+    border-radius: 10px;
+    padding-bottom: 100px;
+    transition: 0.2s;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.uploadT {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.card {
+    padding: 10px;
+    box-shadow: 0 0#ffdfdf;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 1%;
+
+}
+
+
+.card p {
+    font-weight: bold;
+    color: #0086fe;
+
+}
+
+.card .dragArea {
+    height: 150px;
+    width: 740px;
+    border-radius: 5px;
+    border: 2px dashed #0086fe;
+    color: #0086fe;
+    background-color: rgb(216, 216, 216);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    -webkit-user-select: none;
+    margin-top: 10px;
+    font-size: 1.7em;
+}
+
+.card .dragArea .visible {
+    font-size: 18px;
+}
+
+.card .select {
+    color: #5256ad;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: 0.4s;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 1.2em;
+}
+
+.card p {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.card .select:hover {
+    opacity: 0.6;
+}
+
+.card .imgContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.card .imgContainer .image {
+    width: 75px;
+    margin-right: 5px;
+    height: 75px;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.card .container .image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.card .container .image span {
+    position: absolute;
+    top: -2px;
+    right: 9px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.card input,
+.card .dragArea .on-drop,
+.card .dragArea.dragover .visible {
+    display: none;
+}
+
+.imgContainer {
+    display: flex;
+    justify-content: center;
+    height: 250px;
+    width: 750px;
+    max-width: 750px;
+    margin-top: 2%;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background-color: rgb(64, 64, 64);
+    border-radius: 10px;
+    overflow-x: auto;
+}
+
+.delete {
+    z-index: 999;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 13px;
+}
+
+.image {
+    height: 85%;
+    width: 300px;
+    border-radius: 5px;
+    margin: 0 3px;
+    border-radius: 10px;
+}
+
+.imgContainer img {
+    height: 100%;
+    width: 100%;
+}
+
+.desc {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.tt {
+    height: 300px;
+    width: 750px;
+    background-color: rgb(64, 64, 64);
+    color: rgb(186, 186, 186);
+    resize: none;
+    padding-top: 10px;
+}
+
+.tt::-webkit-scrollbar {
+    display: none;
+}
+
+
+.btnSection {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.submit {
+    background-color: rgb(21, 81, 191);
+    width: 10vw;
+    height: 4.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    transition: 0.5s;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background-color: rgb(5, 62, 169);
+    transition: 0.8s;
+
+}
+
+@media (max-width:980px) {
+    .container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        transition: 0.2s;
+    }
+}
