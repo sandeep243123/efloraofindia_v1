@@ -23,7 +23,6 @@ function App() {
   const [theme, setTheme] = useState("dark");
   return (
     <div>
-      
       <Navbar setTheme={setTheme} theme={theme}></Navbar>
       <Routes>
 

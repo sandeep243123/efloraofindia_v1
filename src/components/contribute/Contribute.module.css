@@ -14,6 +14,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px; 
 }
 
 .wrapper h1 {
@@ -21,71 +22,117 @@
     font-weight: 500;
     font-style: normal;
     font-size: 1.5em;
+    margin-bottom: 20px;
+    /* for spacing */
 }
 
 .container {
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* centers the container */
 }
 
 .swiper_container {
     color: black;
     height: 600px;
-    width: 600px;
+    /* width: 600px; */
+    /* width: 100%; */
     border-radius: 10px;
+    margin-bottom: 20px;
+    /* for spacing */
 }
 
 .imageAndDesc {
     margin-top: 10px;
-    width: 100%;
+    width: 90%;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    /* responsive */
 }
 
 .swiper_container img {
     width: 100%;
-    height: 570px;
+    /* height: 570px; */
+    height: 100%;
+    object-fit: cover;
     border-radius: 0 0 10px 10px;
 
 }
 
 .tt {
-    width: 550px;
+    /* width: 550px; */
+    width: 100%;
     text-align: center;
     white-space: nowrap;
     background-color: rgb(237, 237, 237);
     border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
 
 }
 
 .tt1 {
     height: 600px;
-    width: 700px;
+    /* width: 700px; */
+    width: 100%;
     box-shadow: 2px 2px 30px rgba(110, 110, 110, 0.667);
     background-color: rgb(119, 119, 119);
+    margin-bottom: 20px;
+    /* added */
 }
 
 .imageGallary {
     box-shadow: 2px 2px 30px rgba(110, 110, 110, 0.667);
     border-radius: 18px;
+    width: 100%;
+    /* added */
 
     /* border-left: 3px solid rgb(0, 130, 130);
     border-right: 3px solid rgb(0, 130, 130); */
 }
 
-@media only screen and (min-width: 640px) {
+/* @media only screen and (min-width: 600px) {
     .imageAndDesc {
         grid-template-columns: 47.5%;
         grid-column-gap: 5%;
         grid-row-gap: 40px;
     }
-}
+} */
 
-@media only screen and (min-width: 981px) {
-    .imageAndDesc {
-        grid-template-columns: 30% 30%;
-        grid-row-gap: 50px;
+@media only screen and (max-width: 768px) {
+    
+    .swiper_container {
+        height: 400px;
+        width: 400px;
+    }
+    .tt1{
+        height: 400px;
     }
 }
+
+@media only screen and (max-width: 600px) {
+    .swiper_container{
+        height: 300px;
+    }
+    .tt1{
+        height: 300px;
+    }
+    .imageAndDesc{
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .swiper_container {
+        height: 200px;
+    }
+    .tt1{
+        height: 200px;
+    }
+}
+
 
 .commentContainer {
     width: 100%;
