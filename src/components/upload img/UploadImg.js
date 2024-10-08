@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { gql, useMutation } from "@apollo/client";
-
 import { AuthContext } from '../../services/AuthContext.js';
 
 export default function UploadImg(props) {
@@ -19,7 +18,7 @@ export default function UploadImg(props) {
     const navigate = useNavigate();
 
     const notifySuccess = (msg) => {
-        toast.success(` ${msg}!`, {
+        toast.success(`${msg}!`, {
             position: "top-right",
             autoClose: 700,
             hideProgressBar: false,
@@ -33,7 +32,7 @@ export default function UploadImg(props) {
     }
     
     const notifyError = (msg) => {
-        toast.error(` ${msg}!`, {
+        toast.error(`${msg}!`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -47,7 +46,7 @@ export default function UploadImg(props) {
     }
     
     const notifyWarning = (msg) => {
-        toast.warning(` ${msg}!`, {
+        toast.warning(`${msg}!`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -64,13 +63,39 @@ export default function UploadImg(props) {
         fileInputRef.current.click();
     }
 
-    function onFileSelect(event) {
+    async function checkImageSimilarity(files) {
+        const formData = new FormData();
+        files.forEach(file => formData.append('images', file));
+
+        try {
+            const response = await fetch('/api/check-similarity', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await response.json();
+            if (data.similar) {
+                notifyError("Similar images detected. Please upload different images.");
+                return false;
+            }
+            return true;
+        } catch (error) {
+            console.error('Error during image similarity check:', error);
+            notifyError("Failed to check image similarity.");
+            return false;
+        }
+    }
+
+    async function onFileSelect(event) {
         const files = Array.from(event.target.files);
 
         if (images.length + files.length > 4) {
             notifyError("You can upload a maximum of 4 images.");
             return;
         }
+
+        const areImagesUnique = await checkImageSimilarity(files);
+        if (!areImagesUnique) return;
 
         files.forEach((file) => {
             if (file.type.split('/')[0] !== 'image') return;
@@ -87,25 +112,7 @@ export default function UploadImg(props) {
         });
     }
 
-    function deleteImage(index) {
-        setImages((prevImages) =>
-            prevImages.filter((_, i) => i !== index)
-        );
-        notifyWarning("Image deleted Successfully");
-    }
-
-    function onDragOver(event) {
-        event.preventDefault();
-        setIsDragging(true);
-        event.dataTransfer.dropEffect = "copy";
-    }
-
-    function onDragLeave(event) {
-        event.preventDefault();
-        setIsDragging(false);
-    }
-
-    function onDrop(event) {
+    async function onDrop(event) {
         event.preventDefault();
         setIsDragging(false);
         const files = Array.from(event.dataTransfer.files);
@@ -115,10 +122,13 @@ export default function UploadImg(props) {
             return;
         }
 
+        const areImagesUnique = await checkImageSimilarity(files);
+        if (!areImagesUnique) return;
+
         files.forEach((file) => {
             const fileType = file.name.substring(file.name.indexOf(".") + 1);
             if (fileType !== "jpg" && fileType !== "jpeg" && fileType !== "png") {
-                notifyError(`.${fileType} Image format not supported!!`);
+                notifyError(`${fileType} Image format not supported!!`);
                 return;
             }
             const reader = new FileReader();
@@ -132,8 +142,7 @@ export default function UploadImg(props) {
     }
 
     useEffect(() => {
-        // Set a condition to disable/enable the submit button or show a warning
-        if (images.length < 2 || images.length > 4) {
+        if (images.length < 2) {
             labelRef.current.style.display = "inline";
         } else {
             labelRef.current.style.display = "none";
@@ -167,6 +176,10 @@ export default function UploadImg(props) {
         }
     });
 
+    function getWordCount(text) {
+        return text.trim().split(/\s+/).length;
+    }
+
     return (
         <div className={styles.parent}>
             <img src={img} alt="" />
@@ -174,11 +187,11 @@ export default function UploadImg(props) {
                 <div>
                     <h1 className={styles.uploadT}>Upload Images</h1>
                     <div className={styles.card}>
-                        <div className={styles.dragArea} onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
+                        <div className={styles.dragArea} onDragOver={(e) => setIsDragging(true)} onDragLeave={() => setIsDragging(false)} onDrop={onDrop}>
                             {
                                 isDragging ? (
                                     <span className={styles.select}>
-                                        drop images here
+                                        Drop images here
                                     </span>
                                 ) : (
                                     <p>
@@ -197,24 +210,30 @@ export default function UploadImg(props) {
                         {
                             images.map((image, index) => (
                                 <div className={styles.image} key={index}>
-                                    <span className={styles.delete} onClick={() => deleteImage(index)}>&times;</span>
+                                    <span className={styles.delete} onClick={() => setImages(images.filter((_, i) => i !== index))}>&times;</span>
                                     <img src={image} alt={`uploaded-${index}`} />
                                 </div>
                             ))
                         }
                     </div>
                     <div className={styles.desc}>Description</div>
-                    <textarea name="txtArea" id="" cols="10" rows="5" className={styles.tt} placeholder="Write description.." onChange={(e) => setDescription(e.target.value)}></textarea>
+                    <textarea 
+                        name="txtArea" 
+                        cols="10" 
+                        rows="5" 
+                        className={styles.tt} 
+                        placeholder="Write description.." 
+                        onChange={(e) => setDescription(e.target.value)}>
+                    </textarea>
                     <div className={styles.btnSection}>
                         <button className={styles.submit} onClick={() => {
-                            if (description === '' && images.length < 2) {
-                                notifyWarning("Provide at least 2 images and a description");
+                            const wordCount = getWordCount(description);
+                            if (wordCount < 10) {
+                                notifyWarning("Please provide a description of at least 10 words.");
                             } else if (images.length < 2) {
                                 notifyWarning("Please upload at least 2 images");
                             } else if (images.length > 4) {
                                 notifyWarning("You can upload a maximum of 4 images.");
-                            } else if (description === '') {
-                                notifyWarning("Please provide the description");
                             } else {
                                 CreatePostfunc({ variables: { details: { "description": description, "images": images } } });
                             }
@@ -229,4 +248,6 @@ export default function UploadImg(props) {
         </div>
     )
 }
+
+
 
