@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
-import styles from './style.module.css'
-import img from './t1.png'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import styles from './style.module.css';
+import img from './t1.png';
+import { Link, useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { gql, useMutation } from "@apollo/client";
@@ -11,9 +11,7 @@ export default function UploadImg(props) {
     const { logout } = useContext(AuthContext);
     const [images, setImages] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
-    const [path, setPath] = useState('');
     const fileInputRef = useRef(null);
-    const btnRef = useRef();
     const labelRef = useRef();
     const navigate = useNavigate();
 
@@ -29,8 +27,8 @@ export default function UploadImg(props) {
             theme: "light",
             containerId: 'Success'
         });
-    }
-    
+    };
+
     const notifyError = (msg) => {
         toast.error(`${msg}!`, {
             position: "top-right",
@@ -43,8 +41,8 @@ export default function UploadImg(props) {
             theme: "dark",
             containerId: 'Error'
         });
-    }
-    
+    };
+
     const notifyWarning = (msg) => {
         toast.warning(`${msg}!`, {
             position: "top-right",
@@ -57,7 +55,7 @@ export default function UploadImg(props) {
             theme: "light",
             containerId: 'Warning'
         });
-    }
+    };
 
     function selectFiles() {
         fileInputRef.current.click();
@@ -105,7 +103,7 @@ export default function UploadImg(props) {
 
                 reader.onload = () => {
                     setImages((prevImages) => [...prevImages, reader.result]);
-                }
+                };
 
                 notifySuccess("Image uploaded Successfully");
             }
@@ -136,7 +134,7 @@ export default function UploadImg(props) {
 
             reader.onload = () => {
                 setImages((prevImages) => [...prevImages, reader.result]);
-            }
+            };
             notifySuccess("Image uploaded Successfully");
         });
     }
@@ -162,7 +160,7 @@ export default function UploadImg(props) {
         onCompleted: (data) => {
             notifySuccess("Successfully Posted");
             setTimeout(() => {
-                navigate("/")
+                navigate("/");
             }, 1000);
         },
         onError: (error) => {
@@ -187,7 +185,15 @@ export default function UploadImg(props) {
                 <div>
                     <h1 className={styles.uploadT}>Upload Images</h1>
                     <div className={styles.card}>
-                        <div className={styles.dragArea} onDragOver={(e) => setIsDragging(true)} onDragLeave={() => setIsDragging(false)} onDrop={onDrop}>
+                        <div 
+                            className={`${styles.dragArea} ${isDragging ? styles.dragActive : ''}`} 
+                            onDragOver={(e) => {
+                                e.preventDefault(); // Prevent default behavior
+                                setIsDragging(true); // Show drag feedback
+                            }} 
+                            onDragLeave={() => setIsDragging(false)} 
+                            onDrop={onDrop}
+                        >
                             {
                                 isDragging ? (
                                     <span className={styles.select}>
@@ -202,7 +208,15 @@ export default function UploadImg(props) {
                                     </p>
                                 )
                             }
-                            <input name='file' type="file" className={styles.file} accept='image/jpg,image/jpeg,image/png' multiple ref={fileInputRef} onChange={onFileSelect} />
+                            <input 
+                                name='file' 
+                                type="file" 
+                                className={styles.file} 
+                                accept='image/jpg,image/jpeg,image/png' 
+                                multiple 
+                                ref={fileInputRef} 
+                                onChange={onFileSelect} 
+                            />
                         </div>
                     </div>
                     <label htmlFor="" ref={labelRef} style={{ color: 'orange' }}>*Please upload between 2 to 4 images</label>
@@ -223,7 +237,8 @@ export default function UploadImg(props) {
                         rows="5" 
                         className={styles.tt} 
                         placeholder="Write description.." 
-                        onChange={(e) => setDescription(e.target.value)}>
+                        onChange={(e) => setDescription(e.target.value)}
+                    >
                     </textarea>
                     <div className={styles.btnSection}>
                         <button className={styles.submit} onClick={() => {
@@ -246,8 +261,6 @@ export default function UploadImg(props) {
             <ToastContainer containerId="Error" />
             <ToastContainer containerId="Warning" />
         </div>
-    )
+    );
 }
-
-
 
