@@ -75,29 +75,9 @@ export default function Signup() {
             notifyWarning("Please enter your user name");
             return false;
         }
-<<<<<<< HEAD
         else if (inputRef2.current.value === '') {
             inputRef2.current.focus();
             notifyWarning("Please enter your email");
-=======
-        else if (inputRef2.current.value == '') {
-            inputRef2.current.focus()
-            notifyWarning("Please enter your email")
-            return false
-        }
-        else if (!validator.isEmail(inputRef2.current.value)) {
-            inputRef2.current.focus();
-            notifyWarning("Please enter a valid email address");
-            return false;
-        }
-        else if (inputRef3.current.value == '') {
-            inputRef3.current.focus()
-            notifyWarning("Please enter your password")
-            return false
-        } else if (!inputRef4.current.checked) {
-            inputRef4.current.focus()
-            notifyWarning("Please accept our terms and condition")
->>>>>>> 07d7c2b4b364a76abd7723a05a683efe87694e84
             return false;
         } 
         else if (!validator.isEmail(inputRef2.current.value)) {
@@ -189,7 +169,7 @@ export default function Signup() {
                         </div>
                         <div className={styles.ifield1}>
                             <p>Email address</p>
-                            <input ref={inputRef2} type="email" placeholder='xyz@gmail.com' value={inputemail}
+                            <input ref={inputRef2} type="text" placeholder='xyz@gmail.com' value={inputemail}
                                 onChange={(e) => {
                                     setEmail(e.target.value);
                                 }} />
