@@ -13,7 +13,6 @@ export default function UploadImg(props) {
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
     const labelRef = useRef();
-    const navigate = useNavigate();
 
     const notifySuccess = (msg) => {
         toast.success(`${msg}!`, {
@@ -159,20 +158,35 @@ export default function UploadImg(props) {
         errorPolicy: "all",
         onCompleted: (data) => {
             notifySuccess("Successfully Posted");
-            setTimeout(() => {
-                navigate("/");
-            }, 1000);
+
+            // Reset the form by clearing the images and description state
+            setImages([]); // Clear uploaded images
+            setDescription(""); // Clear description text
         },
         onError: (error) => {
-            console.error('Error:', error.message);
+            console.error('Full Error Object:', error);
             notifyError(error.message);
-            if (error.graphQLErrors[0].code === 601) {
-                setTimeout(() => {
-                    logout();
-                }, 1000);
+
+            // Handle GraphQL errors safely
+            if (error.graphQLErrors && error.graphQLErrors.length > 0) {
+                const graphqlError = error.graphQLErrors[0]; // Safe access to the first error
+                const graphqlErrorCode = graphqlError?.code;
+
+                if (graphqlErrorCode === 601) {
+                    setTimeout(() => {
+                        logout();
+                    }, 1000);
+                }
+            } else if (error.networkError) {
+                console.error('Network Error:', error.networkError);
+                notifyError('A network error occurred. Please check your connection.');
+            } else {
+                notifyError('An unexpected error occurred. Please try again.');
             }
         }
     });
+
+
 
     function getWordCount(text) {
         return text.trim().split(/\s+/).length;
@@ -185,13 +199,13 @@ export default function UploadImg(props) {
                 <div>
                     <h1 className={styles.uploadT}>Upload Images</h1>
                     <div className={styles.card}>
-                        <div 
-                            className={`${styles.dragArea} ${isDragging ? styles.dragActive : ''}`} 
+                        <div
+                            className={`${styles.dragArea} ${isDragging ? styles.dragActive : ''}`}
                             onDragOver={(e) => {
                                 e.preventDefault(); // Prevent default behavior
                                 setIsDragging(true); // Show drag feedback
-                            }} 
-                            onDragLeave={() => setIsDragging(false)} 
+                            }}
+                            onDragLeave={() => setIsDragging(false)}
                             onDrop={onDrop}
                         >
                             {
@@ -208,14 +222,14 @@ export default function UploadImg(props) {
                                     </p>
                                 )
                             }
-                            <input 
-                                name='file' 
-                                type="file" 
-                                className={styles.file} 
-                                accept='image/jpg,image/jpeg,image/png' 
-                                multiple 
-                                ref={fileInputRef} 
-                                onChange={onFileSelect} 
+                            <input
+                                name='file'
+                                type="file"
+                                className={styles.file}
+                                accept='image/jpg,image/jpeg,image/png'
+                                multiple
+                                ref={fileInputRef}
+                                onChange={onFileSelect}
                             />
                         </div>
                     </div>
@@ -231,15 +245,17 @@ export default function UploadImg(props) {
                         }
                     </div>
                     <div className={styles.desc}>Description</div>
-                    <textarea 
-                        name="txtArea" 
-                        cols="10" 
-                        rows="5" 
-                        className={styles.tt} 
-                        placeholder="Write description.." 
+                    <textarea
+                        name="txtArea"
+                        cols="10"
+                        rows="5"
+                        className={styles.tt}
+                        placeholder="Write description.."
+                        value={description} // Bind the value to the description state
                         onChange={(e) => setDescription(e.target.value)}
                     >
                     </textarea>
+
                     <div className={styles.btnSection}>
                         <button className={styles.submit} onClick={() => {
                             const wordCount = getWordCount(description);
@@ -263,4 +279,3 @@ export default function UploadImg(props) {
         </div>
     );
 }
-
