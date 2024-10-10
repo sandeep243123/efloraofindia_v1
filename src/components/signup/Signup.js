@@ -70,34 +70,37 @@ export default function Signup() {
         });
     }
     const validatesignup = () => {
-        if (inputRef1.current.value == '') {
-            inputRef1.current.focus()
-            notifyWarning("Please enter your user name")
-            return false
+        if (inputRef1.current.value === '') {
+            inputRef1.current.focus();
+            notifyWarning("Please enter your user name");
+            return false;
         }
-        else if (inputRef2.current.value == '') {
-            inputRef2.current.focus()
-            notifyWarning("Please enter your email")
-            return false
-        }
-        else if (inputRef3.current.value == '') {
-            inputRef3.current.focus()
-            notifyWarning("Please enter your password")
-            return false
-        } else if (!inputRef4.current.checked) {
-            inputRef4.current.focus()
-            notifyWarning("Please accept our terms and condition")
+        else if (inputRef2.current.value === '') {
+            inputRef2.current.focus();
+            notifyWarning("Please enter your email");
             return false;
         } 
-        if(!isPasswordValid(inputRef3.current.value)){
-            notifyWarning("Please enter strong password");
+        else if (!validator.isEmail(inputRef2.current.value)) {
+            inputRef2.current.focus();
+            notifyWarning("Please enter a valid email address");
             return false;
         }
-
-        return true
+        else if (inputRef3.current.value === '') {
+            inputRef3.current.focus();
+            notifyWarning("Please enter your password");
+            return false;
+        } else if (!inputRef4.current.checked) {
+            inputRef4.current.focus();
+            notifyWarning("Please accept our terms and condition");
+            return false;
+        } 
+        if (!isPasswordValid(inputRef3.current.value)) {
+            notifyWarning("Please enter a strong password");
+            return false;
+        }
+        return true;
     };
-
-
+    
 
     const handleSignup = () => {
         if (validatesignup()) {
