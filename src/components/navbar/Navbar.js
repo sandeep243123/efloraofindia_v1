@@ -8,7 +8,6 @@ function Navbar({ setTheme, theme }) {
   const [toggle, setToggle] = useState(false)
   const sideNavRef = useRef(null);
 
-
   const { isLoggedIn, logout } = useContext(AuthContext);
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -17,16 +16,11 @@ function Navbar({ setTheme, theme }) {
     };
   }, []);
 
-
-
-
-
   function handleClickOutside(event) {
     if (sideNavRef.current && !sideNavRef.current.contains(event.target)) {
       setToggle(false)
     }
   }
-
 
   const handleLogout = () => {
     logout();
@@ -35,9 +29,8 @@ function Navbar({ setTheme, theme }) {
   return (
     <>
       <nav>
-        {/* <a href="#">eFloraOfIndia</a> */}
         <Link to={' '}>eFloraOfIndia</Link>
-        <div >
+        <div>
           <ul ref={sideNavRef} className={toggle ? style.navBar + " " + style.active : style.navBar}>
             <li onClick={() => theme == "dark" ? setTheme("light") : setTheme("dark")} style={{ marginTop: '20px', cursor: "pointer" }}>{theme === "light" ? "Dark" : "Light"}</li>
             <li><Link to={' '}>Home</Link></li>
