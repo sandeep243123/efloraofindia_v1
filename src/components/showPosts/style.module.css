@@ -194,8 +194,8 @@ option {
 
 @media (max-width:830px) {
     .parent1 {
-        /* width: 90%; */
-        transition: 0.8s;
+         width: 90%; 
+         transition: 0.8s;
     }
 }
 
@@ -204,4 +204,4 @@ option {
         width: 90%;
         transition: 0.8s;
     }
-}
+} 

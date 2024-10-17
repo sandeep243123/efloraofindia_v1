@@ -83,6 +83,7 @@ function Otp() {
         setResendTimer(60);
 
         refetch(); // Resend the OTP by re-triggering the query
+        refetch(); // Resend the OTP by re-triggering the query
     };
 
     useEffect(() => {
@@ -180,3 +181,6 @@ function Otp() {
 }
 
 export default Otp;
+
+
+
