@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.9.6",
+    "@apollo/client": "^3.11.4",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
@@ -17,7 +17,7 @@
     "efloraofindia": "file:",
     "flowbite-react": "^0.9.0",
     "gql-query-builder": "^3.8.0",
-    "graphql": "^16.8.1",
+    "graphql": "^16.9.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
