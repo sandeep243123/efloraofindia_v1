@@ -34,7 +34,8 @@
     top: 50%;
     left: 70%;
     transform: translateY(-50%) translateX(-50%);
-    transition: 0.8s;
+    /* transition: 0.8s; */
+    transition: 0.2s;
 }
 
 .it,

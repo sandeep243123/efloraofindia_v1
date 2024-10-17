@@ -7,14 +7,13 @@
     display: flex;
     justify-content: flex-end;
     overflow: hidden;
-    background-color: white
+    background-color: white;
 }
 
 .container {
     position: absolute;
     margin: 0.5%;
-    height: 95vh;
-    /* background-color: rgb(47, 47, 47); */
+    height: 85vh;
     background-color: gray;
     backdrop-filter: blur(15px);
     color: white;
@@ -22,13 +21,15 @@
     padding: 1%;
     display: flex;
     flex-direction: column;
-    left: 30%;
+    left: 45%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
     overflow-y: scroll;
     border-radius: 10px;
     padding-bottom: 100px;
     transition: 0.2s;
+    width: 70vw;
+    align-items: center;
 }
 
 .container::-webkit-scrollbar {
@@ -43,23 +44,18 @@
 
 .card {
     padding: 10px;
-    box-shadow: 0 0#ffdfdf;
+    box-shadow: 0 0 #ffdfdf;
     border-radius: 5px;
     overflow: hidden;
-    margin-top: 1%;
-
-}
-
+    margin-top: 1%;}
 
 .card p {
     font-weight: bold;
-    color: #0086fe;
-
-}
+    color: #0086fe;}
 
 .card .dragArea {
     height: 150px;
-    width: 740px;
+    width: 100%;
     border-radius: 5px;
     border: 2px dashed #0086fe;
     color: #0086fe;
@@ -68,7 +64,6 @@
     justify-content: center;
     align-items: center;
     user-select: none;
-    -webkit-user-select: none;
     margin-top: 10px;
     font-size: 1.7em;
 }
@@ -87,13 +82,6 @@
     font-style: normal;
     font-size: 1.2em;
 }
-
-.card p {
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-}
-
 .card .select:hover {
     opacity: 0.6;
 }
@@ -132,25 +120,17 @@
     cursor: pointer;
 }
 
-.card input,
-.card .dragArea .on-drop,
-.card .dragArea.dragover .visible {
-    display: none;
-}
-
 .imgContainer {
     display: flex;
     justify-content: center;
     height: 250px;
-    width: 750px;
+    width: 100%;
     max-width: 750px;
     margin-top: 2%;
     flex-direction: row;
     overflow-x: auto;
-    overflow-y: hidden;
     background-color: rgb(64, 64, 64);
     border-radius: 10px;
-    overflow-x: auto;
 }
 
 .delete {
@@ -180,8 +160,8 @@
 }
 
 .tt {
-    height: 300px;
-    width: 750px;
+    height: 100px;
+    width: 80%;
     background-color: rgb(64, 64, 64);
     color: rgb(186, 186, 186);
     resize: none;
@@ -191,7 +171,6 @@
 .tt::-webkit-scrollbar {
     display: none;
 }
-
 
 .btnSection {
     width: 100%;
@@ -217,15 +196,56 @@
 .submit:hover {
     background-color: rgb(5, 62, 169);
     transition: 0.8s;
-
+}  
+@media (max-width: 1200px) {
+    .container {
+        width: 80vw;
+    }
+    .card .dragArea {
+        font-size: 1.5em;
+    }
+    .submit {
+        width: 12vw;
+    }
 }
 
-@media (max-width:1305px) {
+@media (max-width: 768px) {
     .container {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translateX(-50%) translateY(-50%);
-        transition: 0.2s;
+        width: 90vw;
+        height: auto;
+        padding-bottom: 20px;
+    }
+    .card .dragArea {
+        width: 100%;
+        font-size: 1.2em;
+    }
+    .imgContainer {
+        width: 100%;
+        height: 200px;
+    }
+    .image {
+        width: 45%;
+    }
+    .submit {
+        width: 50vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95vw;
+        height: auto;
+    }
+    .card .dragArea {
+        font-size: 1em;
+    }
+    .imgContainer {
+        height: 150px;
+    }
+    .image {
+        width: 60%;
+    }
+    .submit {
+        width: 80vw;
     }
 }

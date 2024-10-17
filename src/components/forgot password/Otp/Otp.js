@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useQuery, gql, useMutation } from "@apollo/client";
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function Otp() {
     const inputRef = useRef();
@@ -14,9 +15,11 @@ function Otp() {
     const [resendTimer, setResendTimer] = useState(60);
     const [otp, setOTP] = useState('');
     const [inputData, setInputData] = useState({});
+    const [passwordVisible, setPasswordVisible] = useState(false); // State for "Set New Password"
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false); // State for "Confirm Password"
 
     const notifyWarning = (msg) => {
-        toast.warning(`${msg}!`, {
+        toast.warning(` ${msg}!`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -26,20 +29,6 @@ function Otp() {
             progress: undefined,
             theme: "light",
             containerId: 'Warning'
-        });
-    };
-
-    const notifyInfo = (msg) => {
-        toast.info(`${msg}`, {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            containerId: 'Info'
         });
     };
 
@@ -71,50 +60,21 @@ function Otp() {
         });
     };
 
-    const validatePasswordStrength = (password) => {
-        const minLength = 8;
-        const hasUpperCase = /[A-Z]/.test(password);
-        const hasNumber = /\d/.test(password);
-        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-        
-        let errors = [];
-
-        if (password.length < minLength) {
-            errors.push('at least 8 characters long');
-        }
-        if (!hasUpperCase) {
-            errors.push('at least one uppercase letter');
-        }
-        if (!hasNumber) {
-            errors.push('at least one number');
-        }
-        if (!hasSpecialChar) {
-            errors.push('at least one special character');
-        }
-
-        return errors;
-    };
-
     const validatePass = () => {
-        if (!inputData.pass || !inputData.confirmPass) {
+        if (inputData.pass === '' || inputData.confirmPass === '') {
             notifyWarning("Please enter your new password");
-        } else if (inputData.pass !== inputData.confirmPass) {
-            notifyWarning("Passwords do not match");
-        } else {
-            const passwordErrors = validatePasswordStrength(inputData.pass);
-            if (passwordErrors.length > 0) {
-                notifyWarning(`Password must contain: ${passwordErrors.join(', ')}`);
-            } else {
-                resetPasswordFunction({
-                    variables: {
-                        details: {
-                            "emailID": email,
-                            "newPassword": inputData.pass,
-                            "otp": parseInt(otp)
-                        }
+        } else if (inputData.confirmPass === inputData.pass) {
+            resetPasswordFunction({
+                variables: {
+                    details: {
+                        "emailID": email,
+                        "newPassword": inputData.pass,
+                        "otp": parseInt(otp)
                     }
-                });
-            }
+                }
+            });
+        } else {
+            notifyWarning("Passwords do not match");
         }
     };
 
@@ -122,8 +82,8 @@ function Otp() {
         setOtpSent(false);
         setResendTimer(60);
 
-        // Resend the OTP by re-triggering the query
-        refetch();
+        refetch(); // Resend the OTP by re-triggering the query
+        refetch(); // Resend the OTP by re-triggering the query
     };
 
     useEffect(() => {
@@ -161,7 +121,11 @@ function Otp() {
                 <h1>Reset Password</h1>
                 <p>Enter the OTP and reset your password</p>
                 <div className={styles.ifield}>
-                    <input type="text" id="otp" placeholder="OTP" value={otp}
+                    <input
+                        type="text"
+                        id="otp"
+                        placeholder="OTP"
+                        value={otp}
                         onChange={(e) => {
                             const input = e.target.value;
                             if (/^\d{0,4}$/.test(input)) {
@@ -173,9 +137,29 @@ function Otp() {
                         required
                     />
 
-                    <input name='pass' type="password" placeholder='Set New password' onChange={handleInputData} />
+                    <div className={styles.passwordContainer}>
+                        <input
+                            name='pass'
+                            type={passwordVisible ? 'text' : 'password'}
+                            placeholder='Set New Password'
+                            onChange={handleInputData}
+                        />
+                        <span onClick={() => setPasswordVisible(!passwordVisible)} className={styles.eyeIcon}>
+                            {passwordVisible ? <FaEye /> : <FaEyeSlash />}
+                        </span>
+                    </div>
 
-                    <input name='confirmPass' type="password" placeholder='Confirm password' onChange={handleInputData} />
+                    <div className={styles.passwordContainer}>
+                        <input
+                            name='confirmPass'
+                            type={confirmPasswordVisible ? 'text' : 'password'}
+                            placeholder='Confirm Password'
+                            onChange={handleInputData}
+                        />
+                        <span onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)} className={styles.eyeIcon}>
+                            {confirmPasswordVisible ? <FaEye /> : <FaEyeSlash />}
+                        </span>
+                    </div>
 
                     <div className={styles.resetBtn} onClick={validatePass}>Reset Password</div>
 
@@ -190,10 +174,13 @@ function Otp() {
                     )}
                 </div>
             </div>
-            <ToastContainer containerId="Info" />
+            <ToastContainer containerId="Error" />
             <ToastContainer containerId="Warning" />
         </div>
     );
 }
 
 export default Otp;
+
+
+

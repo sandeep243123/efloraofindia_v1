@@ -13,6 +13,7 @@ import { AuthContext } from '../../services/AuthContext.js';
 function ShowPost() {
 
     const [postinfo, setpost] = useState(null);
+    const [comment, setComment] = useState(''); //state to track comment
     
     const {logout} = useContext(AuthContext);
     
@@ -105,8 +106,8 @@ function ShowPost() {
             })
     }, [data]);
 
-
-
+    
+    
     return (
         <div className={styles.top} >
             <img src={img} className={styles.im1} alt="" />
@@ -141,7 +142,7 @@ function ShowPost() {
                     }
                 </ul>
 
-
+               
             </div>
             
             <ToastContainer containerId="Error" />
